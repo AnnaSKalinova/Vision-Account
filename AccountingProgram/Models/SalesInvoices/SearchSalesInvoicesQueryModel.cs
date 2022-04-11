@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AccountingProgram.Services.SalesInvoices;
+    
     public class SearchSalesInvoicesQueryModel
     {
         public const int SalesInvoicesPerPage = 6;
@@ -20,6 +22,6 @@
 
         public SalesInvoiceSorting Sorting { get; init; }
 
-        public IEnumerable<SalesInvoiceListingViewModel> SalesInvoices { get; set; }
+        public IEnumerable<SalesInvoiceServiceModel> SalesInvoices { get; set; }
     }
 }

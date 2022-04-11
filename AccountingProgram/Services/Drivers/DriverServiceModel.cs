@@ -1,8 +1,9 @@
-﻿namespace AccountingProgram.Models.Drivers
+﻿namespace AccountingProgram.Services.Drivers
 {
-    public class DriverListingViewModel
+    public class DriverServiceModel
     {
         public int Id { get; init; }
+
         public string Name { get; init; }
 
         public char Route { get; init; }

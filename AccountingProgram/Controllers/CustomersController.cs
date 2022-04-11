@@ -11,14 +11,40 @@
     using AccountingProgram.Data.Models;
     using AccountingProgram.Data.Models.Enums;
     using AccountingProgram.Models.Drivers;
+    using AccountingProgram.Services.Customers;
 
     public class CustomersController : Controller
     {
+        private readonly ICustomerService customers;
         private readonly AccountingDbContext data;
 
-        public CustomersController(AccountingDbContext data)
+        public CustomersController(AccountingDbContext data, ICustomerService customers)
         {
             this.data = data;
+            this.customers = customers;
+        }
+
+        public IActionResult All([FromQuery]SearchCustomersQueryModel query)
+        {
+            var queryResult = this.customers.All(
+                query.Chain,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                SearchCustomersQueryModel.CustomersPerPage);
+
+            var customersChains = this.customers.AllCustomersChains();
+
+            query.TotalCustomers = queryResult.TotalCustomers;
+            query.Chains = customersChains;
+            query.Customers = queryResult.Customers.Select(c => new CustomerServiceModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Route = c.Route
+            });
+
+            return View(query);
         }
 
         public IActionResult Add()
@@ -27,59 +53,6 @@
             {
                 Routes = GetRoutes()
             });
-        }
-
-        public IActionResult All([FromQuery]SearchCustomersQueryModel query)
-        {
-            var customersQuery = this.data.Customers.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(query.Chain))
-            {
-                customersQuery = customersQuery.Where(c =>
-                    c.ChainName == query.Chain);
-            }
-
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                customersQuery = customersQuery.Where(c =>
-                    c.Name.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            customersQuery = query.Sorting switch
-            {
-                CustomerSorting.Id => customersQuery.OrderBy(c => c.Id),
-                CustomerSorting.Name => customersQuery.OrderBy(c => c.Name),
-                CustomerSorting.Chain => customersQuery.OrderBy(c => c.ChainName),
-                CustomerSorting.Route => customersQuery.OrderBy(c => c.Route.Code),
-                CustomerSorting.TotalInvoices => customersQuery.OrderBy(c => c.SalesInvoices.Count),
-                _ => customersQuery.OrderBy(c => c.Id)
-            };
-
-            var totalCustomers = customersQuery.Count();
-
-            var customers = customersQuery
-                .Skip((query.CurrentPage - 1) * SearchCustomersQueryModel.CustomersPerPage)
-                .Take(SearchCustomersQueryModel.CustomersPerPage)
-                .Select(c => new CustomerListingViewModel
-                {
-                    Name = c.Name,
-                    Route = c.Route.Code,
-                    SalesInvoices = c.SalesInvoices.Count
-                })
-                .ToList();
-
-            var customerChains = this.data
-                .Customers
-                .Select(c => c.ChainName)
-                .OrderBy(c => c)
-                .Distinct()
-                .ToList();
-
-            query.TotalCustomers = totalCustomers;
-            query.Chains = customerChains;
-            query.Customers = customers;
-
-            return View(query);
         }
 
         [HttpPost]

@@ -1,11 +1,13 @@
 ﻿namespace AccountingProgram.Models.Drivers
-{    
+{
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AccountingProgram.Services.Drivers;
+   
     public class SearchDriversQueryModel
     {
-        public const int DriversPerPage = 2;
+        public const int DriversPerPage = 6;
 
         public char Route { get; init; }
 
@@ -20,6 +22,6 @@
 
         public DriverSorting Sorting { get; init; }
 
-        public IEnumerable<DriverListingViewModel> Drivers { get; set; }
+        public IEnumerable<DriverServiceModel> Drivers { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 ﻿namespace AccountingProgram.Models.Customers
-{    
+{
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AccountingProgram.Services.Customers;
+    
     public class SearchCustomersQueryModel
     {
         public const int CustomersPerPage = 6;
@@ -20,6 +22,6 @@
 
         public CustomerSorting Sorting { get; init; }
 
-        public IEnumerable<CustomerListingViewModel> Customers { get; set; }
+        public IEnumerable<CustomerServiceModel> Customers { get; set; }
     }
 }

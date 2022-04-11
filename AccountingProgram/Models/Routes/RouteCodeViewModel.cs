@@ -1,11 +1,8 @@
 ﻿namespace AccountingProgram.Models.Routes
 {
-    public class RouteListingViewModel
+    public class RouteCodeViewModel
     {
         public int Id { get; init; }
-
         public char Code { get; init; }
-
-        public int Customers { get; init; }
     }
 }

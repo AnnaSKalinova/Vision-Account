@@ -1,6 +1,6 @@
-﻿namespace AccountingProgram.Models.Customers
+﻿namespace AccountingProgram.Services.Customers
 {
-    public class CustomerListingViewModel
+    public class CustomerServiceModel
     {
         public int Id { get; init; }
 

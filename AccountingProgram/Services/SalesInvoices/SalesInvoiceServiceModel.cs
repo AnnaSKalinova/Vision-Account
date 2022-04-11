@@ -1,6 +1,6 @@
-﻿namespace AccountingProgram.Models.SalesInvoices
+﻿namespace AccountingProgram.Services.SalesInvoices
 {
-    public class SalesInvoiceListingViewModel
+    public class SalesInvoiceServiceModel
     {
         public int Id { get; init; }
 

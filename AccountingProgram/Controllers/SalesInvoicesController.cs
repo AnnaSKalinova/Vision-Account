@@ -12,14 +12,42 @@
     using System.Collections.Generic;
     using System;
     using System.Globalization;
-    
+    using AccountingProgram.Services.SalesInvoices;
+
     public class SalesInvoicesController : Controller
     {
+        private readonly ISalesInvoiceService salesInvoices;
         private readonly AccountingDbContext data;
 
-        public SalesInvoicesController(AccountingDbContext data)
+        public SalesInvoicesController(AccountingDbContext data, ISalesInvoiceService salesInvoices)
         {
             this.data = data;
+            this.salesInvoices = salesInvoices;
+        }
+
+        public IActionResult All([FromQuery]SearchSalesInvoicesQueryModel query)
+        {
+            var queryResult = this.salesInvoices.All(
+                query.Chain,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                SearchSalesInvoicesQueryModel.SalesInvoicesPerPage);
+
+            var salesInvoiceChains = this.salesInvoices.AllSalesInvoicesChains();
+
+            query.TotalSalesInvoices = queryResult.TotalSalesInvoices;
+            query.Chains = salesInvoiceChains;
+            query.SalesInvoices = queryResult.SalesInvoices.Select(si => new SalesInvoiceServiceModel
+            {
+                Id = si.Id,
+                Customer = si.Customer,
+                PostingDate = si.PostingDate,
+                TotalAmountExclVat = si.TotalAmountExclVat,
+                TotalAmountInclVat = si.TotalAmountInclVat
+            });
+
+            return View(query);
         }
 
         public IActionResult Add()
@@ -29,60 +57,6 @@
                 Customers = this.GetCustomers(),
                 Items = this.GetItems()
             });
-        }
-
-        public IActionResult All([FromQuery]SearchSalesInvoicesQueryModel query)
-        {
-            var salesInvoicesQuery = this.data.SalesInvoices.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(query.Chain))
-            {
-                salesInvoicesQuery = salesInvoicesQuery.Where(s =>
-                    s.Customer.ChainName == query.Chain);
-            }
-
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                salesInvoicesQuery = salesInvoicesQuery.Where(s =>
-                    s.Customer.Name.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            salesInvoicesQuery = query.Sorting switch
-            {
-                SalesInvoiceSorting.Id => salesInvoicesQuery.OrderBy(si => si.Id),
-                SalesInvoiceSorting.Customer => salesInvoicesQuery.OrderBy(si => si.Customer.Name),
-                SalesInvoiceSorting.PostingDate => salesInvoicesQuery.OrderBy(si => si.PostingDate),
-                SalesInvoiceSorting.TotalAmountExclVat => salesInvoicesQuery.OrderBy(si => si.Item.UnitPriceExclVat * si.Count),
-                _ => salesInvoicesQuery.OrderBy(si => si.Id)
-            };
-
-            var totalSalesInvoices = salesInvoicesQuery.Count();
-
-            var salesInvoices = salesInvoicesQuery
-                .Skip((query.CurrentPage - 1) * SearchSalesInvoicesQueryModel.SalesInvoicesPerPage)
-                .Take(SearchSalesInvoicesQueryModel.SalesInvoicesPerPage)
-                .Select(si => new SalesInvoiceListingViewModel
-                {
-                    Id = si.Id,
-                    Customer = si.Customer.Name,
-                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
-                    TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
-                    TotalAmountInclVat = si.Item.UnitPriceIncVat * si.Count,
-                })
-                .ToList();
-
-            var salesInvoiceChains = this.data
-                .SalesInvoices
-                .Select(si => si.Customer.ChainName)
-                .OrderBy(si => si)
-                .Distinct()
-                .ToList();
-
-            query.TotalSalesInvoices = totalSalesInvoices;
-            query.Chains = salesInvoiceChains;
-            query.SalesInvoices = salesInvoices;
-
-            return View(query);
         }
 
         [HttpPost]

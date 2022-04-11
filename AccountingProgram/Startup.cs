@@ -11,7 +11,13 @@ namespace AccountingProgram
 
     using AccountingProgram.Data;
     using AccountingProgram.Infrastructure;
-    
+    using AccountingProgram.Services.Statistics;
+    using AccountingProgram.Services.SalesInvoices;
+    using AccountingProgram.Services.Customers;
+    using AccountingProgram.Services.Items;
+    using AccountingProgram.Services.Drivers;
+    using AccountingProgram.Services.Routes;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -43,6 +49,13 @@ namespace AccountingProgram
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
+
+            services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<ISalesInvoiceService, SalesInvoiceService>();
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IItemService, ItemService>();
+            services.AddTransient<IDriverService, DriverService>();
+            services.AddTransient<IRouteService, RouteService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

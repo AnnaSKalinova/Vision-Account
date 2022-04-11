@@ -3,9 +3,11 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using AccountingProgram.Services.Items;
+
     public class SearchItemsQueryModel
     {
-        public const int ItemsPerPage = 2;
+        public const int ItemsPerPage = 6;
 
         public string Category { get; init; }
 
@@ -20,6 +22,6 @@
 
         public ItemSorting Sorting { get; init; }
 
-        public IEnumerable<ItemListingViewModel> Items { get; set; }
+        public IEnumerable<ItemServiceModel> Items { get; set; }
     }
 }

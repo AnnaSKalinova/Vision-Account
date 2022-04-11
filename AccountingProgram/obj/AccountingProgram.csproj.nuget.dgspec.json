@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {}
+    "E:\\AnNI\\Programming\\Final Project\\3. Services\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {}
   },
   "projects": {
-    "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
+    "E:\\AnNI\\Programming\\Final Project\\3. Services\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\3. Services\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "projectName": "AccountingProgram",
-        "projectPath": "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectPath": "E:\\AnNI\\Programming\\Final Project\\3. Services\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\obj\\",
+        "outputPath": "E:\\AnNI\\Programming\\Final Project\\3. Services\\AccountingProgram\\AccountingProgram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -49,11 +49,11 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.15, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[5.0.15, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",
@@ -61,11 +61,17 @@
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.15, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.15, )"
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             }
           },
           "imports": [

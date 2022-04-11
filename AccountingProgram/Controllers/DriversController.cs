@@ -45,6 +45,7 @@
             return View(query);
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             return View(new AddDriverFormModel

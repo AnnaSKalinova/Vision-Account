@@ -63,6 +63,20 @@
             };
         }
 
+        public IEnumerable<ItemServiceModel> AllItems()
+        {
+            return this.data
+                .Items
+                .Select(i => new ItemServiceModel
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    UnitPriceExclVat = i.UnitPriceExclVat,
+                    VatGroup = (int)i.VatGroup
+                })
+                .ToList();
+        }
+
         public IEnumerable<string> AllItemsCategories()
         {
             return this.data
@@ -71,6 +85,11 @@
                 .OrderBy(c => c)
                 .Distinct()
                 .ToList();
+        }
+
+        public bool ItemExists(int id)
+        {
+            return this.data.Items.Any(i => i.Id == id);
         }
     }
 }

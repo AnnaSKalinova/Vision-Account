@@ -1,8 +1,8 @@
-﻿namespace AccountingProgram.Views.SalesInvoices
+﻿namespace AccountingProgram.Services.SalesInvoices
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class ItemViewModel
+    public class ItemServiceModel
     {
         public int Id { get; set; }
 

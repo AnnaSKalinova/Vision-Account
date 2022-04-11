@@ -1,0 +1,16 @@
+﻿@model IEnumerable<SalesInvoiceServiceModel>
+
+
+@{
+    ViewBag.Title = "All Sales Invoices";
+    ViewBag.AllowSalesInvoiceEdit = true;
+}
+
+@{
+    if (!Model.Any())
+    {
+        <h2 class="text-center">You do not have any sales invoices yet.</h2>
+    }
+}
+
+<partial name="_SalesInvoicesPartial" model="@Model" />

@@ -5,11 +5,11 @@
 
     using AccountingProgram.Data.Models.Enums;
 
-    using static DataConstants;
+    using static DataConstants.Item;
 
     public class Item
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         [Required]
         [MaxLength(ItemNameMaxLength)]
@@ -20,7 +20,7 @@
         public Measure Measure { get; set; }
 
         public int ItemCategoryId { get; set; }
-        public ItemCategory ItemCategory { get; set; }
+        public ItemCategory ItemCategory { get; init; }
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal UnitPriceExclVat { get; set; }
@@ -32,9 +32,6 @@
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal UnitCost { get; set; }
-
-        //public int VendorId { get; set; }
-        //public Vendor Vendor { get; set; }
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal Profit { get; }

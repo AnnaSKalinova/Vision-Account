@@ -48,6 +48,7 @@
             return View(query);
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             return View(new AddItemFormModel
@@ -81,7 +82,6 @@
                 UnitPriceExclVat = item.UnitPriceExclVat,
                 VatGroup = (VatGroup)item.VatGroup,
                 UnitCost = item.UnitCost,
-                //VendorId = item.VendorId
             };
 
             this.data.Items.Add(itemData);

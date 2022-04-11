@@ -5,27 +5,33 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using AccountingProgram.Data;
-    using AccountingProgram.Data.Models;
     using AccountingProgram.Models.SalesInvoices;
-    using AccountingProgram.Views.SalesInvoices;
-    using System.Collections.Generic;
-    using System;
-    using System.Globalization;
     using AccountingProgram.Services.SalesInvoices;
+    using AccountingProgram.Infrastructure;
+    using AccountingProgram.Services.Accountants;
+    using AccountingProgram.Services.Items;
+    using AccountingProgram.Services.Customers;
 
     public class SalesInvoicesController : Controller
     {
         private readonly ISalesInvoiceService salesInvoices;
-        private readonly AccountingDbContext data;
+        private readonly IAccountantService accountants;
+        private readonly IItemService items;
+        private readonly ICustomerService customers;
 
-        public SalesInvoicesController(AccountingDbContext data, ISalesInvoiceService salesInvoices)
+        public SalesInvoicesController(
+            IAccountantService accountants,
+            ISalesInvoiceService salesInvoices,
+            IItemService items,
+            ICustomerService customers)
         {
-            this.data = data;
+            this.accountants = accountants;
             this.salesInvoices = salesInvoices;
+            this.items = items;
+            this.customers = customers;
         }
 
-        public IActionResult All([FromQuery]SearchSalesInvoicesQueryModel query)
+        public IActionResult All([FromQuery] SearchSalesInvoicesQueryModel query)
         {
             var queryResult = this.salesInvoices.All(
                 query.Chain,
@@ -50,25 +56,46 @@
             return View(query);
         }
 
+        [Authorize]
+        public IActionResult Mine()
+        {
+            var mySalesInvoices = this.salesInvoices.ByUser(this.User.GetId());
+
+            return View(mySalesInvoices);
+        }
+
+        [Authorize]
         public IActionResult Add()
         {
-            return View(new AddSalesInvoiceFormModel
+            if (!this.accountants.IsAccountant(this.User.GetId()))
             {
-                Customers = this.GetCustomers(),
-                Items = this.GetItems()
+                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
+            }
+
+            return View(new SalesInvoiceFormModel
+            {
+                Customers = this.customers.AllCustomers(),
+                Items = this.items.AllItems()
             });
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(AddSalesInvoiceFormModel salesInvoice)
+        public IActionResult Add(SalesInvoiceFormModel salesInvoice)
         {
-            if (!this.data.Customers.Any(c => c.Id == salesInvoice.CustomerId))
+            var accountantId = this.accountants.GetIdByUser(this.User.GetId());
+
+            if (accountantId == 0)
+            {
+                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
+            }
+
+            if (this.customers.CustomerExists(salesInvoice.CustomerId))
             {
                 this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), "Customer does not exist!");
             }
 
-            if (!this.data.Items.Any(i => i.Id == salesInvoice.ItemId))
+            if (this.items.ItemExists(salesInvoice.ItemId))
             {
                 this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
             }
@@ -76,57 +103,85 @@
 
             if (!ModelState.IsValid)
             {
-                salesInvoice.Customers = this.GetCustomers();
-                salesInvoice.Items = this.GetItems();
+                salesInvoice.Customers = this.customers.AllCustomers();
+                salesInvoice.Items = this.items.AllItems();
 
                 return View(salesInvoice);
-
             }
 
-            DateTime salesInvPostingDate;
-            bool isSalesInvPostingDateValid = DateTime.TryParseExact(salesInvoice.PostingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
+            this.salesInvoices.Create(
+                salesInvoice.CustomerId,
+                salesInvoice.PostingDate,
+                salesInvoice.ItemId,
+                salesInvoice.Count,
+                salesInvoice.AccountantId);
 
-            var salesInvoiceData = new SalesInvoice
+            return RedirectToAction(nameof(All));
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = this.User.GetId();
+
+            if (!this.accountants.IsAccountant(userId))
             {
+                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
+            }
+
+            var salesInvoice = this.salesInvoices.Details(id);
+
+            if (salesInvoice.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new SalesInvoiceFormModel
+            {
+                Customers = this.customers.AllCustomers(),
+                Items = this.items.AllItems(),
+                PostingDate = salesInvoice.PostingDate,
+                AccountantId = salesInvoice.AccountantId,
+                Count = salesInvoice.Count,
                 CustomerId = salesInvoice.CustomerId,
-                PostingDate = salesInvPostingDate,
-                ItemId = salesInvoice.ItemId,
-                Count = salesInvoice.Count
-            };
-
-            this.data.SalesInvoices.Add(salesInvoiceData);
-
-            this.data.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
+                ItemId = salesInvoice.ItemId
+            });
         }
 
-        private IEnumerable<ItemViewModel> GetItems()
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, SalesInvoiceFormModel salesInvoice)
         {
-            return this.data
-                .Items
-                .Select(i => new ItemViewModel
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Measure = (int)i.Measure,
-                    UnitPriceExclVat = i.UnitPriceExclVat,
-                    VatGroup = (int)i.VatGroup
-                })
-                .ToList();
-        }
+            var accountantId = this.accountants.GetIdByUser(this.User.GetId());
 
-        private IEnumerable<CustomerViewModel> GetCustomers()
-        {
-            return this.data
-                .Customers
-                .Select(c => new CustomerViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    PaymentTerm = (int)c.PaymentTerm
-                })
-                .ToList();
+            if (accountantId == 0)
+            {
+                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
+            }
+
+            if (this.customers.CustomerExists(salesInvoice.CustomerId))
+            {
+                this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), "Customer does not exist!");
+            }
+
+            if (this.items.ItemExists(salesInvoice.ItemId))
+            {
+                this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
+            }
+
+            if (!this.salesInvoices.IsByAccountant(id, accountantId))
+            {
+                return BadRequest();
+            }
+
+            this.salesInvoices.Edit(
+                id,
+                salesInvoice.CustomerId,
+                salesInvoice.PostingDate,
+                salesInvoice.ItemId,
+                salesInvoice.Count);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

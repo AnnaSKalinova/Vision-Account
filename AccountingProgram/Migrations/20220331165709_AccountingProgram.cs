@@ -74,23 +74,6 @@ namespace AccountingProgram.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vendors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ContactName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    PaymentTerm = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vendors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -109,6 +92,27 @@ namespace AccountingProgram.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Accountants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accountants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Accountants_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,14 +201,39 @@ namespace AccountingProgram.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "Items",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    ItemType = table.Column<int>(type: "int", nullable: false),
+                    Measure = table.Column<int>(type: "int", nullable: false),
+                    ItemCategoryId = table.Column<int>(type: "int", nullable: false),
+                    UnitPriceExclVat = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    VatGroup = table.Column<int>(type: "int", nullable: false),
+                    UnitCost = table.Column<decimal>(type: "decimal(18,4)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Items_ItemCategories_ItemCategoryId",
+                        column: x => x.ItemCategoryId,
+                        principalTable: "ItemCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ChainName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: true),
                     ContactName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PaymentTerm = table.Column<int>(type: "int", nullable: false),
@@ -218,7 +247,7 @@ namespace AccountingProgram.Migrations
                         column: x => x.RouteId,
                         principalTable: "Routes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,57 +271,32 @@ namespace AccountingProgram.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    ItemType = table.Column<int>(type: "int", nullable: false),
-                    Measure = table.Column<int>(type: "int", nullable: false),
-                    ItemCategoryId = table.Column<int>(type: "int", nullable: false),
-                    UnitPriceExclVat = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    VatGroup = table.Column<int>(type: "int", nullable: false),
-                    UnitCost = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    VendorId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Items", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Items_ItemCategories_ItemCategoryId",
-                        column: x => x.ItemCategoryId,
-                        principalTable: "ItemCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Items_Vendors_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SalesInvoices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("SqlServer:Identity", "220001, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     PostingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ItemId = table.Column<int>(type: "int", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false)
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    AccountantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalesInvoices", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_SalesInvoices_Accountants_AccountantId",
+                        column: x => x.AccountantId,
+                        principalTable: "Accountants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_SalesInvoices_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SalesInvoices_Items_ItemId",
                         column: x => x.ItemId,
@@ -300,6 +304,12 @@ namespace AccountingProgram.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accountants_UserId",
+                table: "Accountants",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -356,9 +366,9 @@ namespace AccountingProgram.Migrations
                 column: "ItemCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_VendorId",
-                table: "Items",
-                column: "VendorId");
+                name: "IX_SalesInvoices_AccountantId",
+                table: "SalesInvoices",
+                column: "AccountantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalesInvoices_CustomerId",
@@ -398,7 +408,7 @@ namespace AccountingProgram.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Accountants");
 
             migrationBuilder.DropTable(
                 name: "Customers");
@@ -407,13 +417,13 @@ namespace AccountingProgram.Migrations
                 name: "Items");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Routes");
 
             migrationBuilder.DropTable(
                 name: "ItemCategories");
-
-            migrationBuilder.DropTable(
-                name: "Vendors");
         }
     }
 }

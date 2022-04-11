@@ -47,6 +47,7 @@
             return View(query);
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             return View(new AddCustomerFormModel
@@ -86,7 +87,7 @@
 
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Customers", "All");
         }
 
         private IEnumerable<RouteCustomerViewModel> GetRoutes()

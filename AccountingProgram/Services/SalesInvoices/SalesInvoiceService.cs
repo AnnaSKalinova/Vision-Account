@@ -1,10 +1,12 @@
 ﻿namespace AccountingProgram.Services.SalesInvoices
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
 
     using AccountingProgram.Data;
+    using AccountingProgram.Data.Models;
     using AccountingProgram.Models.SalesInvoices;
 
     public class SalesInvoiceService : ISalesInvoiceService
@@ -43,18 +45,9 @@
 
             var totalSalesInvoices = salesInvoicesQuery.Count();
 
-            var salesInvoices = salesInvoicesQuery
+            var salesInvoices = GetSalesInvoices(salesInvoicesQuery
                 .Skip((currentPage - 1) * salesInvoicesPerPage)
-                .Take(salesInvoicesPerPage)
-                .Select(si => new SalesInvoiceServiceModel
-                {
-                    Id = si.Id,
-                    Customer = si.Customer.Name,
-                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
-                    TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
-                    TotalAmountInclVat = si.Item.UnitPriceIncVat * si.Count,
-                })
-                .ToList();
+                .Take(salesInvoicesPerPage));
 
             return new SalesInvoiceQueryServiceModel
             {
@@ -65,6 +58,36 @@
             };
         }
 
+        public SalesInvoiceDetailsServiceModel Details(int id)
+        {
+            return this.data
+                .SalesInvoices
+                .Where(si => si.Id == id)
+                .Select(si => new SalesInvoiceDetailsServiceModel
+                {
+                    Id = si.Id,
+                    Customer = si.Customer.Name,
+                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
+                    TotalAmountInclVat = si.Item.UnitPriceIncVat * si.Count,
+                    DueDate = si.DueDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    AccountantName = si.Accountant.Name,
+                    AccountantId = si.Accountant.Id,
+                    Count = si.Count,
+                    Item = si.Item.Name,
+                    UserId = si.Accountant.UserId,
+                    Vat = si.Vat
+                })
+                .FirstOrDefault();
+        }
+
+        public IEnumerable<SalesInvoiceServiceModel> ByUser(string userId)
+        {
+            return this.GetSalesInvoices(this.data
+                .SalesInvoices
+                .Where(si => si.Accountant.UserId == userId));
+        }
+
         public IEnumerable<string> AllSalesInvoicesChains()
         {
             return this.data
@@ -73,6 +96,70 @@
                 .OrderBy(si => si)
                 .Distinct()
                 .ToList();
+        }
+
+        private IEnumerable<SalesInvoiceServiceModel> GetSalesInvoices(IQueryable<SalesInvoice> salesInvoiceQuery)
+        { 
+            return salesInvoiceQuery
+                .Select(si => new SalesInvoiceServiceModel
+                {
+                    Id = si.Id,
+                    Customer = si.Customer.Name,
+                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
+                    TotalAmountInclVat = si.Item.UnitPriceIncVat * si.Count,
+                })
+                .ToList();
+        }
+
+        public int Create(int customerId, string postingDate, int itemId, int count, int accountantId)
+        {
+            DateTime salesInvPostingDate;
+            DateTime.TryParseExact(postingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
+
+            var salesInvoiceData = new SalesInvoice
+            {
+                CustomerId = customerId,
+                PostingDate = salesInvPostingDate,
+                ItemId = itemId,
+                Count = count,
+                AccountantId = accountantId
+            };
+
+            this.data.SalesInvoices.Add(salesInvoiceData);
+
+            this.data.SaveChanges();
+
+            return salesInvoiceData.Id;
+        }
+
+        public bool Edit(int id, int customerId, string postingDate, int itemId, int count)
+        {
+            var salesInvoiceData = this.data.SalesInvoices.Find(id);
+
+            if (salesInvoiceData == null)
+            {
+                return false;
+            }
+
+            DateTime salesInvPostingDate;
+            DateTime.TryParseExact(postingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
+
+            salesInvoiceData.CustomerId = customerId;
+            salesInvoiceData.PostingDate = salesInvPostingDate;
+            salesInvoiceData.ItemId = itemId;
+            salesInvoiceData.Count = count;
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
+        public bool IsByAccountant(int salesInvoiceId, int accountantId)
+        {
+            return this.data
+                .SalesInvoices
+                .Any(si => si.Id == salesInvoiceId && si.AccountantId == accountantId);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model SearchSalesInvoicesQueryModel
 
 @{
-    ViewData["Title"] = "All Sales Invoices";
+    ViewBag.Title = "All Sales Invoices";
 }
 
 <form method="get">
@@ -36,25 +36,16 @@
     </div>
 </form>
 
-<div class="container">
-    <div class="row">
-        @foreach (var salesInvoice in Model.SalesInvoices)
-        {
-            <div class="card mr-3" style="width: 18rem;">
-                <div class="card-body">
-                    <h3 class="card-title">@salesInvoice.Id</h3>
-                    <h5 class="card-title">Customer: @salesInvoice.Customer</h5>
-                    <h5 class="card-title">Posting Date: @salesInvoice.PostingDate</h5>
-                    <h5 class="card-title">Total Amount Excl. Vat: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h5>
-                    <h5 class="card-title">Total Amount Incl. Vat: @salesInvoice.TotalAmountInclVat.ToString("0.00") lv.</h5>
-                    <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" class="card-link">More details</a>
-                </div>
-            </div>
-        }
-    </div>
-</div>
+<partial name="_SalesInvoicesPartial" model="@Model.SalesInvoices" />
 
-@{ 
+@{
+    if (!Model.SalesInvoices.Any())
+    {
+        <h2 class="text-center">No sales invoices found by the given criteria.</h2>
+    }
+}
+
+@{
     var previousPage = Model.CurrentPage - 1;
     if (previousPage < 1)
     {
@@ -66,18 +57,18 @@
 
 <div class="row">
     <div class="col-md-6">
-        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)" 
-           asp-controller="SalesInvoices" 
-           asp-action="All" 
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="SalesInvoices"
+           asp-action="All"
            asp-route-currentPage="@previousPage"
            asp-route-chain="@Model.Chain"
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.Sorting)">Previous</a>
     </div>
     <div class="col-md-6">
-        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)" 
-           asp-controller="SalesInvoices" 
-           asp-action="All" 
+        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
+           asp-controller="SalesInvoices"
+           asp-action="All"
            asp-route-currentPage="@(Model.CurrentPage + 1)"
            asp-route-chain="@Model.Chain"
            asp-route-searchTerm="@Model.SearchTerm"

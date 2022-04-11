@@ -1,0 +1,24 @@
+﻿@model IEnumerable<SalesInvoiceServiceModel>
+
+<div class="container">
+    <div class="row">
+        @foreach (var salesInvoice in Model)
+        {
+            <div class="card mr-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">@salesInvoice.Id</h3>
+                    <h5 class="card-title">Customer: @salesInvoice.Customer</h5>
+                    <h5 class="card-title">Posting Date: @salesInvoice.PostingDate</h5>
+                    <h5 class="card-title">Total Amount Excl. Vat: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h5>
+                    <h5 class="card-title">Total Amount Incl. Vat: @salesInvoice.TotalAmountInclVat.ToString("0.00") lv.</h5>
+                    <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" class="btn btn-secondary">More details</a>
+                    @if (ViewBag.AllowSalesInvoiceEdit == true)
+                    {
+                        <a asp-controller="SalesInvoices" asp-action="Edit" asp-route-id="@salesInvoice.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="SalesInvoices" asp-action="Delete" asp-route-id="@salesInvoice.Id" class="btn btn-danger">Delete</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

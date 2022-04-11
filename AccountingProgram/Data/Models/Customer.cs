@@ -5,7 +5,7 @@
 
     using AccountingProgram.Data.Models.Enums;
 
-    using static DataConstants;
+    using static DataConstants.Customer;
 
     public class Customer
     {

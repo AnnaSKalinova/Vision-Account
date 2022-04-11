@@ -1,7 +1,7 @@
 ﻿@model SearchRoutesQueryModel
 
 @{
-    ViewData["Title"] = "All Routes";
+    ViewBag.Title = "All Routes";
 }
 
 <form method="get">
@@ -44,6 +44,13 @@
         }
     </div>
 </div>
+
+@{
+    if (!Model.Routes.Any())
+    {
+        <h2 class="text-center">No routes found by the given criteria.</h2>
+    }
+}
 
 @{
     var previousPage = Model.CurrentPage - 1;

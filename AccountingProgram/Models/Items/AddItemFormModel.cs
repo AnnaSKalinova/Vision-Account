@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using static AccountingProgram.Data.DataConstants;
+    using static AccountingProgram.Data.DataConstants.Item;
 
     public class AddItemFormModel
     {

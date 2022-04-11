@@ -8,5 +8,9 @@
         ItemQueryServiceModel All(string category, string searchTerm, ItemSorting sorting, int currentPage, int itemsPerPage);
 
         IEnumerable<string> AllItemsCategories();
+
+        IEnumerable<ItemServiceModel> AllItems();
+
+        bool ItemExists(int id);
     }
 }

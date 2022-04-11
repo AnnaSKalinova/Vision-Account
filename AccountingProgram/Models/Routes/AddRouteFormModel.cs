@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static AccountingProgram.Data.DataConstants;
+    using static AccountingProgram.Data.DataConstants.Route;
 
     public class AddRouteFormModel
     {

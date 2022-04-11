@@ -44,6 +44,7 @@
             return View(query);
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             return View();
@@ -69,7 +70,7 @@
 
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("All", "Routes");
         }
 
         private IEnumerable<RouteCodeViewModel> GetRoutes()

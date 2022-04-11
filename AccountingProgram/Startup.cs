@@ -17,6 +17,8 @@ namespace AccountingProgram
     using AccountingProgram.Services.Items;
     using AccountingProgram.Services.Drivers;
     using AccountingProgram.Services.Routes;
+    using AccountingProgram.Services.Accountants;
+    using AccountingProgram.Data.Models;
 
     public class Startup
     {
@@ -34,7 +36,7 @@ namespace AccountingProgram
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireDigit = false;
@@ -56,6 +58,7 @@ namespace AccountingProgram
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IDriverService, DriverService>();
             services.AddTransient<IRouteService, RouteService>();
+            services.AddTransient<IAccountantService, AccountantService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

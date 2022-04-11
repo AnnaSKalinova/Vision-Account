@@ -6,7 +6,32 @@
     
     public interface ISalesInvoiceService
     {
-        SalesInvoiceQueryServiceModel All(string chain, string searchTerm, SalesInvoiceSorting sorting, int currentPage, int salesInvoicesPerPage);
+        SalesInvoiceQueryServiceModel All(
+            string chain, 
+            string searchTerm, 
+            SalesInvoiceSorting sorting, 
+            int currentPage, 
+            int salesInvoicesPerPage);
+
+        SalesInvoiceDetailsServiceModel Details(int id);
+
+        int Create(
+                int customerId,
+                string postingDate,
+                int itemId,
+                int count,
+                int accountantId);
+
+        bool Edit(
+                int id,
+                int customerId,
+                string postingDate,
+                int itemId,
+                int count);
+
+        IEnumerable<SalesInvoiceServiceModel> ByUser(string userId);
+
+        bool IsByAccountant(int salesInvoiceId, int accountantId);
 
         IEnumerable<string> AllSalesInvoicesChains();
     }

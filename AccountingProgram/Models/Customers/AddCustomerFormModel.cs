@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using AccountingProgram.Models.Drivers;
-    using static AccountingProgram.Data.DataConstants;
+    using static AccountingProgram.Data.DataConstants.Customer;
 
     public class AddCustomerFormModel
     {

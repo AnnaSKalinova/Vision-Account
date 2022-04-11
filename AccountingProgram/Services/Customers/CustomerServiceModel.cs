@@ -8,6 +8,8 @@
 
         public char Route { get; init; }
 
+        public int PaymentTerm { get; init; }
+
         public int SalesInvoices { get; init; }
     }
 }

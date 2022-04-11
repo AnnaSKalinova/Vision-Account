@@ -1,7 +1,7 @@
 ﻿@model SearchDriversQueryModel
 
 @{
-    ViewData["Title"] = "All Drivers";
+    ViewBag.Title = "All Drivers";
 }
 
 <form method="get">
@@ -47,6 +47,13 @@
         }
     </div>
 </div>
+
+@{
+    if (!Model.Drivers.Any())
+    {
+        <h2 class="text-center">No drivers found by the given criteria.</h2>
+    }
+}
 
 @{
     var previousPage = Model.CurrentPage - 1;

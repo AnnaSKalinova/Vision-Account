@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static AccountingProgram.Data.DataConstants;
+    using static AccountingProgram.Data.DataConstants.Driver;
 
     public class AddDriverFormModel
     {

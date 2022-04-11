@@ -1,7 +1,7 @@
 ﻿@model SearchCustomersQueryModel
 
 @{
-    ViewData["Title"] = "All Customers";
+    ViewBag.Title = "All Customers";
 }
 
 <form method="get">
@@ -52,6 +52,13 @@
         }
     </div>
 </div>
+
+@{ 
+    if (!Model.Customers.Any())
+    {
+        <h2 class="text-center">No customers found by the given criteria.</h2>
+    }
+}
 
 @{
     var previousPage = Model.CurrentPage - 1;

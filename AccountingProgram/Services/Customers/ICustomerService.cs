@@ -9,5 +9,9 @@
         CustomerQueryServiceModel All(string chain, string searchTerm, CustomerSorting sorting, int currentPage, int customersPerPage);
 
         IEnumerable<string> AllCustomersChains();
+
+        IEnumerable<CustomerServiceModel> AllCustomers();
+
+        bool CustomerExists(int id);
     }
 }

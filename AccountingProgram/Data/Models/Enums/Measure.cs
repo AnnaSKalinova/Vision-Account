@@ -2,12 +2,12 @@
 {
     public enum Measure
     {
-        Pcs = 100,
-        Kg = 200,
-        Gr = 300,
-        Ltr = 400,
-        Bag = 500,
-        Box = 600,
-        Bucket = 700
+        Pcs = 1,
+        Kg = 2,
+        Gr = 3,
+        Ltr = 4,
+        Bag = 5,
+        Box = 6,
+        Bucket = 7
     }
 }

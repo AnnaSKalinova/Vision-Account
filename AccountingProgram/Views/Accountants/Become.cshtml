@@ -1,0 +1,26 @@
+﻿@model BecomeAccountantFormModel
+
+@{
+    ViewBag.Title = "Become Accountant";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Georgi Georgiev...">
+                    <span asp-validation-for="Name" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="333-4444">
+                    <span asp-validation-for="PhoneNumber" class=" small text-danger"></span>
+                </div>
+                <input class="btn btn-primary float-right" type="submit" value="Add" />
+            </form>
+        </div>
+    </div>
+</div>

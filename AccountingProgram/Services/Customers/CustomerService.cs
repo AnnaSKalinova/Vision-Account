@@ -63,6 +63,19 @@
             };
         }
 
+        public IEnumerable<CustomerServiceModel> AllCustomers()
+        {
+            return this.data
+                .Customers
+                .Select(c => new CustomerServiceModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    PaymentTerm = (int)c.PaymentTerm
+                })
+                .ToList();
+        }
+
         public IEnumerable<string> AllCustomersChains()
         {
             return this.data
@@ -71,6 +84,11 @@
                 .OrderBy(c => c)
                 .Distinct()
                 .ToList();
+        }
+
+        public bool CustomerExists(int id)
+        {
+            return !this.data.Customers.Any(c => c.Id == id);
         }
     }
 }

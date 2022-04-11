@@ -1,7 +1,7 @@
 ﻿@model SearchItemsQueryModel
 
 @{
-    ViewData["Title"] = "All Items";
+    ViewBag.Title = "All Items";
 }
 
 <form method="get">
@@ -52,6 +52,13 @@
         }
     </div>
 </div>
+
+@{
+    if (!Model.Items.Any())
+    {
+        <h2 class="text-center">No items found by the given criteria.</h2>
+    }
+}
 
 @{
     var previousPage = Model.CurrentPage - 1;

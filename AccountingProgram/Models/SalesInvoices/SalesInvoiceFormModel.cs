@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using AccountingProgram.Services.Customers;
+    using AccountingProgram.Services.Items;
 
-    using AccountingProgram.Views.SalesInvoices;
-
-    public class AddSalesInvoiceFormModel
+    public class SalesInvoiceFormModel
     {
         public int CustomerId { get; init; }
-        public IEnumerable<CustomerViewModel> Customers { get; set; }
+        public IEnumerable<CustomerServiceModel> Customers { get; set; }
 
         [Required]
         [Display(Name = "Posting Date")]
@@ -18,9 +18,11 @@
         public string PostingDate { get; init; }
 
         public int ItemId { get; init; }
-        public IEnumerable<ItemViewModel> Items { get; set; }
+        public IEnumerable<ItemServiceModel> Items { get; set; }
 
         [Range(1, int.MaxValue)]
         public int Count { get; init; }
+
+        public int AccountantId { get; init; }
     }
 }

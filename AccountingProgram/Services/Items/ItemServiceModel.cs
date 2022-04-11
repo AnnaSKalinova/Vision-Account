@@ -10,6 +10,8 @@
 
         public decimal UnitPriceExclVat { get; init; }
 
+        public decimal VatGroup { get; init; }
+
         public decimal UnitCost { get; init; }
     }
 }

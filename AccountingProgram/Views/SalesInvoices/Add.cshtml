@@ -1,0 +1,46 @@
+﻿@model AddSalesInvoiceFormModel
+
+@{
+    ViewData["Title"] = "Add Sales Invoice";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">Add Sales Invoice</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="CustomerId"></label>
+                    <select asp-for="CustomerId" class="form-control">
+                        <option selected>Choose customer...</option>
+                        @foreach (var customer in Model.Customers)
+                        {
+                            <option value="@customer.Id">@customer.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostingDate"></label>
+                    <input asp-for="PostingDate" class="form-control" placeholder="01.01.2022">
+                    <span asp-validation-for="PostingDate" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ItemId"></label>
+                    <select asp-for="ItemId" class="form-control">
+                        <option selected>Choose item...</option>
+                        @foreach (var item in Model.Items)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Count"></label>
+                    <input asp-for="Count" class="form-control">
+                    <span asp-validation-for="Count" class=" small text-danger"></span>
+                </div>
+                <input class="btn btn-primary float-right" type="submit" value="Add" />
+            </form>
+        </div>
+    </div>
+</div>

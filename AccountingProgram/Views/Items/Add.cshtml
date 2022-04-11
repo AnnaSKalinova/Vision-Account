@@ -1,0 +1,64 @@
+﻿@model AddItemFormModel
+@using AccountingProgram.Data.Models.Enums
+
+@{
+    ViewData["Title"] = "Add Item";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">Add Item</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Item name here...">
+                    <span asp-validation-for="Name" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for=ItemType></label>
+                    <select class="form-control" asp-for="@Model.ItemType" asp-items="Html.GetEnumSelectList<ItemType>()">
+                        <option selected>Choose type...</option>
+                    </select>
+                    <span asp-validation-for="ItemType" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for=Measure></label>
+                    <select class="form-control" asp-for="@Model.Measure" asp-items="Html.GetEnumSelectList<Measure>()">
+                        <option selected>Choose measure...</option>
+                    </select>
+                    <span asp-validation-for="Measure" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ItemCategoryId"></label>
+                    <select asp-for="ItemCategoryId" class="form-control">
+                        <option selected>Choose category...</option>
+                        @foreach (var category in Model.ItemCategories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ItemCategoryId" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UnitPriceExclVat"></label>
+                    <input asp-for="UnitPriceExclVat" class="form-control">
+                    <span asp-validation-for="UnitPriceExclVat" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for=VatGroup></label>
+                    <select class="form-control" asp-for="@Model.VatGroup" asp-items="Html.GetEnumSelectList<VatGroup>()">
+                        <option selected>Choose group...</option>
+                    </select>
+                    <span asp-validation-for="VatGroup" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UnitCost"></label>
+                    <input asp-for="UnitCost" class="form-control">
+                    <span asp-validation-for="UnitCost" class=" small text-danger"></span>
+                </div>
+                <input class="btn btn-primary float-right" type="submit" value="Add" />
+            </form>
+        </div>
+    </div>
+</div>

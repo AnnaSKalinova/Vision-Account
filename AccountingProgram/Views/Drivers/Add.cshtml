@@ -1,0 +1,32 @@
+﻿@model AddDriverFormModel
+
+@{
+    ViewData["Title"] = "Add Driver";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">Add Driver</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Georgi Georgiev">
+                    <span asp-validation-for="Name" class=" small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RouteId"></label>
+                    <select asp-for="RouteId" class="form-control">
+                        <option selected>Choose route...</option>
+                        @foreach (var route in Model.Routes)
+                        {
+                            <option value="@route.Id">@route.Code</option>
+                        }
+                    </select>
+                </div>
+                <input class="btn btn-primary float-right" type="submit" value="Add" />
+            </form>
+        </div>
+    </div>
+</div>
+

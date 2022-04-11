@@ -1,8 +1,22 @@
-﻿@{
+﻿@model IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron">
+    <div class="row">
+        <h2 class="col-md-3 text-center">
+            @Model.TotalSalesInvoices Sales Invoices
+        </h2>
+        <h2 class="col-md-3 text-center">
+            @Model.TotalCustomers Customers
+        </h2>
+        <h2 class="col-md-3 text-center">
+            @Model.TotalItems Items
+        </h2>
+        <h2 class="col-md-3 text-center">
+            @Model.TotalDrivers Drivers
+        </h2>
+    </div>
 </div>

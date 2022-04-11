@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "f7c+f2Op59JpIxKlbc5Qsl3gFP1xQCq8FqEd+sCGCKuBBIGX5gII8YHqdT9prCVmUMwKvO92DLFI9+YGu/NYqQ==",
+  "dgSpecHash": "GHV7XGM1pt5fopRoT78+SXTy+8DZCAB/VUn6rrqH/oBJVGQxBoYntzbVL5kcT7bGcA10zur5aQi0qI3UneP9bA==",
   "success": true,
-  "projectFilePath": "E:\\AnNI\\Programming\\Final Project\\2. CreatingMigrations\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+  "projectFilePath": "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ivan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Ivan\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.15\\microsoft.aspnetcore.cryptography.internal.5.0.15.nupkg.sha512",

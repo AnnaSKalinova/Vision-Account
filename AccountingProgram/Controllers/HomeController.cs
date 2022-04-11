@@ -1,22 +1,54 @@
 ﻿namespace AccountingProgram.Controllers
 {
-    using System.Diagnostics;
+    using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
 
-    using AccountingProgram.Models;
+    using AccountingProgram.Data;
+    using AccountingProgram.Models.Drivers;
+    using AccountingProgram.Models.Home;
 
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly AccountingDbContext data;
+
+        public HomeController(AccountingDbContext data)
         {
-            return View();
+            this.data = data;
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Index()
+        {
+            var totalDrivers = this.data.Drivers.Count();
+            var totalSalesInvoices = this.data.SalesInvoices.Count();
+            var totalItems = this.data.Items.Count();
+            var totaCustomers = this.data.Customers.Count();
+
+            var drivers = this.data
+                .Drivers
+                .OrderByDescending(d => d.Id)
+                .Select(d => new DriverListingViewModel
+                {
+                    Name = d.Name,
+                    Route = d.Route.Code
+                })
+                .Take(3)
+                .ToList();
+
+            return View(new IndexViewModel
+            {
+                TotalCustomers = totaCustomers,
+                TotalDrivers = totalDrivers,
+                TotalItems = totalItems,
+                TotalSalesInvoices = totalSalesInvoices
+            });
+
+            
+        }
+        
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }

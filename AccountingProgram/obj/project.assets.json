@@ -6690,11 +6690,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\2. CreatingMigrations\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+      "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
       "projectName": "AccountingProgram",
-      "projectPath": "E:\\AnNI\\Programming\\Final Project\\2. CreatingMigrations\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+      "projectPath": "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
       "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-      "outputPath": "E:\\AnNI\\Programming\\Final Project\\2. CreatingMigrations\\AccountingProgram\\AccountingProgram\\obj\\",
+      "outputPath": "E:\\AnNI\\Programming\\Final Project\\2. SearchSortPaging\\AccountingProgram\\AccountingProgram\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

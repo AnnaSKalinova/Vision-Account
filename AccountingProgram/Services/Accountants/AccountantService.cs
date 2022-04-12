@@ -1,6 +1,5 @@
 ﻿namespace AccountingProgram.Services.Accountants
 {
-    using System;
     using System.Linq;
 
     using AccountingProgram.Data;

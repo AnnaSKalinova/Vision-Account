@@ -1,24 +1,23 @@
 ﻿namespace AccountingProgram.Controllers
 {
-    using System.Linq;
+    using System;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
 
     using AccountingProgram.Models.Home;
     using AccountingProgram.Services.Statistics;
-    using AccountingProgram.Services.Drivers;
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
+    
 
     public class HomeController : Controller
     {
         private readonly IStatisticsService statistics;
-        private readonly IConfigurationProvider mapper;
+        private readonly IMemoryCache cache;
 
-        public HomeController(IStatisticsService statistics, IMapper mapper)
+        public HomeController(IStatisticsService statistics, IMemoryCache cache)
         {
             this.statistics = statistics;
-            this.mapper = mapper.ConfigurationProvider;
+            this.cache = cache;
         }
 
         public IActionResult Index()
@@ -30,7 +29,19 @@
                 .Take(3)
                 .ToList();*/
 
-            var totalStatistics = this.statistics.Total();
+            const string totalStatisticsCacheKey = "TotalStatisticsCacheKey";
+
+            var totalStatistics = this.cache.Get<StatisticsServiceModel>(totalStatisticsCacheKey);
+
+            if (totalStatistics == null)
+            {
+                totalStatistics = this.statistics.Total();
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
+
+                this.cache.Set(totalStatisticsCacheKey, totalStatistics, cacheOptions);
+            }
 
             return View(new IndexViewModel
             {

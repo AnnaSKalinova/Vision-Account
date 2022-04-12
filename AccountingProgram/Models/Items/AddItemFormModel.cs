@@ -4,6 +4,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using AccountingProgram.Services.Items;
+    using AccountingProgram.Services.Items.Models;
     using static AccountingProgram.Data.DataConstants.Item;
 
     public class AddItemFormModel
@@ -25,14 +27,14 @@
 
         [Display(Name = "Item Category")]
         public int ItemCategoryId { get; init; }
-        public IEnumerable<ItemCategoryViewModel> ItemCategories { get; set; }
+        public IEnumerable<ItemCategoryServiceModel> ItemCategories { get; set; }
 
         [Display(Name = "Unit Price excl. VAT")]
         [Column(TypeName = "decimal(18,4)")]
         public decimal UnitPriceExclVat { get; init; }
 
         [Display(Name = "VAT Group")]
-        [Range(0,100)]
+        [Range(0, 100)]
         public int VatGroup { get; init; }
 
         [Display(Name = "Unit Price incl. VAT")]
@@ -40,7 +42,7 @@
         {
             get
             {
-                return (this.UnitPriceExclVat + (int)this.VatGroup * this.UnitPriceExclVat/100);
+                return (this.UnitPriceExclVat + (int)this.VatGroup * this.UnitPriceExclVat / 100);
             }
         }
 
@@ -53,12 +55,8 @@
         {
             get
             {
-                return ((1 - this.UnitCost/this.UnitPriceExclVat) * 100);
+                return ((1 - this.UnitCost / this.UnitPriceExclVat) * 100);
             }
         }
-
-        /*[Display(Name = "Vendor ID")]
-        public int VendorId { get; init; }
-        public Vendor Vendor { get; set; }*/
     }
 }

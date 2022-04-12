@@ -1,5 +1,7 @@
 ﻿namespace AccountingProgram.Models.Drivers
 {
+    using AccountingProgram.Services.Routes;
+    using AccountingProgram.Services.Routes.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +18,6 @@
 
         [Display(Name = "Route")]
         public int RouteId { get; init; }
-        public IEnumerable<RouteDriverViewModel> Routes { get; set; }
+        public IEnumerable<RouteServiceModel> Routes { get; set; }
     }
 }

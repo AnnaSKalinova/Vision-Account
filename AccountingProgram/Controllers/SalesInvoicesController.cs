@@ -72,7 +72,7 @@
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.accountants.IsAccountant(this.User.GetId()))
+            if (!this.accountants.UserIsAlreadyAccountant(this.User.GetId()))
             {
                 return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
             }
@@ -129,7 +129,7 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.accountants.IsAccountant(userId) && !User.IsAdmin())
+            if (!this.accountants.UserIsAlreadyAccountant(userId) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
             }

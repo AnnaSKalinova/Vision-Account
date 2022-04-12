@@ -3,10 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
-    using AccountingProgram.Services.Customers;
+    using AccountingProgram.Services.Customers.Models;
     using AccountingProgram.Services.Items;
-
+    using AccountingProgram.Services.Items.Models;
     using static Data.DataConstants.Customer;
 
     public class SalesInvoiceFormModel

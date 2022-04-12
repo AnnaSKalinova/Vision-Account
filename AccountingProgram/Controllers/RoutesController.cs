@@ -1,24 +1,21 @@
 ﻿namespace AccountingProgram.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
     using AccountingProgram.Data;
-    using AccountingProgram.Data.Models;
     using AccountingProgram.Models.Routes;
     using AccountingProgram.Services.Routes;
-    
+    using AccountingProgram.Services.Routes.Models;
+
     public class RoutesController : Controller
     {
         private readonly IRouteService routes;
-        private readonly AccountingDbContext data;
 
-        public RoutesController(AccountingDbContext data, IRouteService routes)
+        public RoutesController(IRouteService routes)
         {
-            this.data = data;
             this.routes = routes;
         }
 
@@ -59,30 +56,11 @@
                 return View(route);
             }
 
-            var routeData = new Route
-            {
-                Code = route.Code,
-                Description = route.Description,
-                Customers = new List<Customer>()
-            };
+            this.routes.Create(
+                route.Code,
+                route.Description);
 
-            this.data.Routes.Add(routeData);
-
-            this.data.SaveChanges();
-
-            return RedirectToAction("All", "Routes");
-        }
-
-        private IEnumerable<RouteCodeViewModel> GetRoutes()
-        {
-            return this.data
-                .Routes
-                .Select(r => new RouteCodeViewModel
-                {
-                    Id = r.Id,
-                    Code = r.Code
-                })
-                .ToList();
+            return RedirectToAction(nameof(All));
         }
     }
 }

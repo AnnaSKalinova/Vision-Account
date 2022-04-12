@@ -1,25 +1,20 @@
 ﻿namespace AccountingProgram.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
     using AccountingProgram.Models.Items;
-    using AccountingProgram.Data;
-    using AccountingProgram.Data.Models;
-    using AccountingProgram.Data.Models.Enums;
     using AccountingProgram.Services.Items;
+    using AccountingProgram.Services.Items.Models;
 
     public class ItemsController : Controller
     {
         private readonly IItemService items;
-        private readonly AccountingDbContext data;
 
-        public ItemsController(AccountingDbContext data, IItemService items)
+        public ItemsController(IItemService items)
         {
-            this.data = data;
             this.items = items;
         }
 
@@ -53,7 +48,7 @@
         {
             return View(new AddItemFormModel
             {
-                ItemCategories = this.GetItemCategories()
+                ItemCategories = this.items.AllItemsCategories()
             });
         }
 
@@ -61,46 +56,28 @@
         [Authorize]
         public IActionResult Add(AddItemFormModel item)
         {
-            if (!this.data.ItemCategories.Any(c => c.Id == item.ItemCategoryId))
+            if (this.items.ItemCategoryExists(item.ItemCategoryId))
             {
                 this.ModelState.AddModelError(nameof(item.ItemCategoryId), "Category does not exist!");
             }
 
             if (!ModelState.IsValid)
             {
-                item.ItemCategories = this.GetItemCategories();
+                item.ItemCategories = this.items.AllItemsCategories();
 
                 return View(item);
             }
 
-            var itemData = new Item
-            {
-                Name = item.Name,
-                ItemType = (ItemType)item.ItemType,
-                Measure = (Measure)item.Measure,
-                ItemCategoryId = item.ItemCategoryId,
-                UnitPriceExclVat = item.UnitPriceExclVat,
-                VatGroup = (VatGroup)item.VatGroup,
-                UnitCost = item.UnitCost,
-            };
+            this.items.Create(
+                item.Name,
+                item.ItemType,
+                item.Measure,
+                item.ItemCategoryId,
+                item.UnitPriceExclVat,
+                item.VatGroup,
+                item.UnitCost);
 
-            this.data.Items.Add(itemData);
-
-            this.data.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        private IEnumerable<ItemCategoryViewModel> GetItemCategories()
-        {
-            return this.data
-                .ItemCategories
-                .Select(c => new ItemCategoryViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name
-                })
-                .ToList();
+            return RedirectToAction(nameof(All));
         }
     }
 }

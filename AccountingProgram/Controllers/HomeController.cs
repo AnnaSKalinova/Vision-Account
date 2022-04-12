@@ -4,7 +4,6 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using AccountingProgram.Data;
     using AccountingProgram.Models.Home;
     using AccountingProgram.Services.Statistics;
     using AccountingProgram.Services.Drivers;
@@ -13,25 +12,23 @@
 
     public class HomeController : Controller
     {
-        private readonly AccountingDbContext data;
         private readonly IStatisticsService statistics;
         private readonly IConfigurationProvider mapper;
 
-        public HomeController(AccountingDbContext data, IStatisticsService statistics, IMapper mapper)
+        public HomeController(IStatisticsService statistics, IMapper mapper)
         {
-            this.data = data;
             this.statistics = statistics;
             this.mapper = mapper.ConfigurationProvider;
         }
 
         public IActionResult Index()
         {
-            var drivers = this.data
+            /*var drivers = this.data
                 .Drivers
                 .OrderByDescending(d => d.Id)
                 .ProjectTo<DriverServiceModel>(this.mapper)
                 .Take(3)
-                .ToList();
+                .ToList();*/
 
             var totalStatistics = this.statistics.Total();
 

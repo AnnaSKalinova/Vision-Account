@@ -4,6 +4,7 @@
 
     using AccountingProgram.Models.Api.Drivers;
     using AccountingProgram.Services.Drivers;
+    using AccountingProgram.Services.Drivers.Models;
 
     [ApiController]
     [Route("api/drivers")]

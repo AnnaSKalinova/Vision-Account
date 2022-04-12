@@ -1,27 +1,24 @@
 ﻿namespace AccountingProgram.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
     using AccountingProgram.Models.Customers;
-    using AccountingProgram.Data;
-    using AccountingProgram.Data.Models;
-    using AccountingProgram.Data.Models.Enums;
-    using AccountingProgram.Models.Drivers;
+    using AccountingProgram.Services.Customers.Models;
+    using AccountingProgram.Services.Routes;
     using AccountingProgram.Services.Customers;
 
     public class CustomersController : Controller
     {
         private readonly ICustomerService customers;
-        private readonly AccountingDbContext data;
+        private readonly IRouteService routes;
 
-        public CustomersController(AccountingDbContext data, ICustomerService customers)
+        public CustomersController(ICustomerService customers, IRouteService routes)
         {
-            this.data = data;
             this.customers = customers;
+            this.routes = routes;
         }
 
         public IActionResult All([FromQuery]SearchCustomersQueryModel query)
@@ -37,11 +34,13 @@
 
             query.TotalCustomers = queryResult.TotalCustomers;
             query.Chains = customersChains;
-            query.Customers = queryResult.Customers.Select(c => new CustomerServiceModel
+            query.Customers = queryResult
+                .Customers
+                .Select(c => new CustomerServiceModel
             {
                 Id = c.Id,
                 Name = c.Name,
-                Route = c.Route
+                RouteCode = c.RouteCode
             });
 
             return View(query);
@@ -52,7 +51,7 @@
         {
             return View(new AddCustomerFormModel
             {
-                Routes = GetRoutes()
+                Routes = this.customers.GetRoutes()
             });
         }
 
@@ -60,46 +59,28 @@
         [Authorize]
         public IActionResult Add(AddCustomerFormModel customer)
         {
-            if (!this.data.Routes.Any(r => r.Id == customer.RouteId))
+            if (this.routes.RouteExists(customer.RouteId))
             {
                 this.ModelState.AddModelError(nameof(customer.RouteId), "Route does not exist!");
             }
 
             if (!ModelState.IsValid)
             {
-                customer.Routes = this.GetRoutes();
+                customer.Routes = this.customers.GetRoutes();
 
                 return View(customer);
             }
 
-            var customerData = new Customer
-            {
-                Name = customer.Name,
-                ChainName = customer.ChainName,
-                Address = customer.Address,
-                ContactName = customer.ContactName,
-                Email = customer.Email,
-                PaymentTerm = (PaymentTerm)customer.PaymentTerm,
-                RouteId = customer.RouteId
-            };
+            this.customers.Create(
+                customer.Name,
+                customer.ChainName,
+                customer.Address,
+                customer.ContactName,
+                customer.Email,
+                customer.PaymentTerm,
+                customer.RouteId);
 
-            this.data.Customers.Add(customerData);
-
-            this.data.SaveChanges();
-
-            return RedirectToAction("All", "Customers");
-        }
-
-        private IEnumerable<RouteCustomerViewModel> GetRoutes()
-        {
-            return this.data
-                .Routes
-                .Select(r => new RouteCustomerViewModel
-                {
-                    Id = r.Id,
-                    Code = r.Code
-                })
-                .ToList();
+            return RedirectToAction(nameof(All));
         }
     }
 }

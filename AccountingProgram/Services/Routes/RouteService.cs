@@ -4,15 +4,21 @@
     using System.Linq;
 
     using AccountingProgram.Data;
+    using AccountingProgram.Data.Models;
     using AccountingProgram.Models.Routes;
+    using AccountingProgram.Services.Routes.Models;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class RouteService : IRouteService
     {
         private readonly AccountingDbContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public RouteService(AccountingDbContext data)
+        public RouteService(AccountingDbContext data, IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
         }
 
         public RouteQueryServiceModel All(char code, RouteSorting sorting, int currentPage, int routesPerPage)
@@ -38,11 +44,7 @@
                 .Skip((currentPage - 1) * routesPerPage)
                 .Take(routesPerPage)
                 .OrderBy(r => r.Code)
-                .Select(r => new RouteServiceModel
-                {
-                    Code = r.Code,
-                    Customers = r.Customers.Count
-                })
+                .ProjectTo<RouteServiceModel>(this.mapper)
                 .ToList();
 
             return new RouteQueryServiceModel
@@ -54,6 +56,14 @@
             };
         }
 
+        public IEnumerable<RouteServiceModel> AllRoutes()
+        {
+            return this.data
+                .Routes
+                .ProjectTo<RouteServiceModel>(this.mapper)
+                .ToList();
+        }
+
         public IEnumerable<char> AllRoutesCodes()
         {
             return this.data
@@ -62,6 +72,27 @@
                 .OrderBy(r => r)
                 .Distinct()
                 .ToList();
+        }
+
+        public int Create(char code, string description)
+        {
+            var routeData = new Route
+            {
+                Code = code,
+                Description = description,
+                Customers = new List<Customer>()
+            };
+
+            this.data.Routes.Add(routeData);
+
+            this.data.SaveChanges();
+
+            return routeData.Id;
+        }
+
+        public bool RouteExists(int id)
+        {
+            return !this.data.Routes.Any(r => r.Id == id);
         }
     }
 }

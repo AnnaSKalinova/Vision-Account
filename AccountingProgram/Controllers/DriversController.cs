@@ -1,25 +1,24 @@
 ﻿namespace AccountingProgram.Controllers
 {
     using System.Linq;
-    using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using AccountingProgram.Data;
     using AccountingProgram.Models.Drivers;
-    using AccountingProgram.Data.Models;
     using AccountingProgram.Services.Drivers;
+    using AccountingProgram.Services.Routes;
+    using AccountingProgram.Services.Drivers.Models;
 
     public class DriversController : Controller
     {
         private readonly IDriverService drivers;
-        private readonly AccountingDbContext data;
+        private readonly IRouteService routes;
 
-        public DriversController(AccountingDbContext data, IDriverService drivers)
+        public DriversController(IDriverService drivers, IRouteService routes)
         {
-            this.data = data;
             this.drivers = drivers;
+            this.routes = routes;
         }
 
         public IActionResult All([FromQuery]SearchDriversQueryModel query) 
@@ -50,7 +49,7 @@
         {
             return View(new AddDriverFormModel
             {
-                Routes = GetRoutes()
+                Routes = this.routes.AllRoutes()
             });
         }
 
@@ -58,41 +57,23 @@
         [Authorize]
         public IActionResult Add(AddDriverFormModel driver)
         {
-            if (!this.data.Routes.Any(r => r.Id == driver.RouteId))
+            if (this.routes.RouteExists(driver.RouteId))
             {
                 this.ModelState.AddModelError(nameof(driver.RouteId), "Route does not exist!");
             }
 
             if (!ModelState.IsValid)
             {
-                driver.Routes = this.GetRoutes();
+                driver.Routes = this.routes.AllRoutes();
 
                 return View(driver);
             }
 
-            var driverData = new Driver
-            {
-                Name = driver.Name,
-                RouteId = driver.RouteId
-            };
-
-            this.data.Drivers.Add(driverData);
-
-            this.data.SaveChanges();
+            this.drivers.Create(
+                driver.Name,
+                driver.RouteId);
 
             return RedirectToAction(nameof(All));
-        }
-
-        private IEnumerable<RouteDriverViewModel> GetRoutes()
-        {
-            return this.data
-                .Routes
-                .Select(r => new RouteDriverViewModel
-                {
-                    Id = r.Id,
-                    Code = r.Code
-                })
-                .ToList();
         }
     }
 }

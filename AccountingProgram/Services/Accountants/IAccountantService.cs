@@ -2,8 +2,13 @@
 {
     public interface IAccountantService
     {
-        public bool IsAccountant(string userId);
+        int Create(
+            string accountantName, 
+            string phoneNumber, 
+            string userId);
 
         public int GetIdByUser(string userId);
+
+        public bool UserIsAlreadyAccountant(string userId);
     }
 }

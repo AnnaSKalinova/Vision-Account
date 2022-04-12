@@ -4,15 +4,22 @@
     using System.Linq;
 
     using AccountingProgram.Data;
+    using AccountingProgram.Data.Models;
+    using AccountingProgram.Data.Models.Enums;
     using AccountingProgram.Models.Items;
+    using AccountingProgram.Services.Items.Models;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class ItemService : IItemService
     {
         private readonly AccountingDbContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public ItemService(AccountingDbContext data)
+        public ItemService(AccountingDbContext data, IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
         }
 
         public ItemQueryServiceModel All(string category, string searchTerm, ItemSorting sorting, int currentPage, int itemsPerPage)
@@ -45,13 +52,7 @@
             var items = itemsQuery
                 .Skip((currentPage - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-                .Select(i => new ItemServiceModel
-                {
-                    Name = i.Name,
-                    ItemCategory = i.ItemCategory.Name,
-                    UnitPriceExclVat = i.UnitPriceExclVat,
-                    UnitCost = i.UnitCost
-                })
+                .ProjectTo<ItemServiceModel>(this.mapper)
                 .ToList();
 
             return new ItemQueryServiceModel
@@ -67,24 +68,41 @@
         {
             return this.data
                 .Items
-                .Select(i => new ItemServiceModel
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    UnitPriceExclVat = i.UnitPriceExclVat,
-                    VatGroup = (int)i.VatGroup
-                })
+                .ProjectTo<ItemServiceModel>(mapper)
                 .ToList();
         }
 
-        public IEnumerable<string> AllItemsCategories()
+        public IEnumerable<ItemCategoryServiceModel> AllItemsCategories()
         {
             return this.data
-                .Items
-                .Select(c => c.ItemCategory.Name)
-                .OrderBy(c => c)
-                .Distinct()
+                .ItemCategories
+                .ProjectTo<ItemCategoryServiceModel>(this.mapper)
                 .ToList();
+        }
+
+        public int Create(string name, int itemType, int measure, int itemCategoryId, decimal UnitPriceExclVat, int vatGroup, decimal unitCost)
+        {
+            var itemData = new Item
+            {
+                Name = name,
+                ItemType = (ItemType)itemType,
+                Measure = (Measure)measure,
+                ItemCategoryId = itemCategoryId,
+                UnitPriceExclVat = UnitPriceExclVat,
+                VatGroup = (VatGroup)vatGroup,
+                UnitCost = unitCost
+            };
+
+            this.data.Items.Add(itemData);
+
+            this.data.SaveChanges();
+
+            return itemData.Id;
+        }
+
+        public bool ItemCategoryExists(int id)
+        {
+            return !this.data.ItemCategories.Any(ic => ic.Id == id);
         }
 
         public bool ItemExists(int id)

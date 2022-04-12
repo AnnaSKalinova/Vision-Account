@@ -3,7 +3,8 @@
     using System.Collections.Generic;
 
     using AccountingProgram.Services.Routes;
-    
+    using AccountingProgram.Services.Routes.Models;
+
     public class SearchRoutesQueryModel
     {
         public const int RoutesPerPage = 6;

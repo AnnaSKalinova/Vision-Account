@@ -2,20 +2,18 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
-    using AccountingProgram.Data;
+    
     using AccountingProgram.Models.Accountants;
-    using System.Linq;
     using AccountingProgram.Infrastructure;
-    using AccountingProgram.Data.Models;
+    using AccountingProgram.Services.Accountants;
 
     public class AccountantsController : Controller
     {
-        private readonly AccountingDbContext data;
+        private readonly IAccountantService accountants;
 
-        public AccountantsController(AccountingDbContext data)
+        public AccountantsController(IAccountantService accountants)
         {
-            this.data = data;
+            this.accountants = accountants;
         }
 
         [Authorize]
@@ -30,9 +28,7 @@
         {
             var userId = this.User.GetId();
 
-            var userIsAlreadyAccountant = this.data
-                .Accountants
-                .Any(a => a.UserId == userId);
+            var userIsAlreadyAccountant = this.accountants.UserIsAlreadyAccountant(userId);
 
             if (userIsAlreadyAccountant)
             {
@@ -41,21 +37,15 @@
 
             if (!ModelState.IsValid)
             {
-                return View(accountant);    
+                return View(accountant);
             }
 
-            var accountantData = new Accountant
-            {
-                Name = accountant.Name,
-                PhoneNumber = accountant.PhoneNumber,
-                UserId = userId
-            };
+            this.accountants.Create(
+                accountant.Name,
+                accountant.PhoneNumber,
+                userId);
 
-            this.data.Accountants.Add(accountantData);
-
-            this.data.SaveChanges();
-
-            return RedirectToAction("All", "SalesInvoices");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

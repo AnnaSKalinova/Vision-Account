@@ -52,7 +52,7 @@
                 new ItemCategory { Name = "Sandwiches", Items = new List<Item>() },
                 new ItemCategory { Name = "Wraps", Items = new List<Item>() },
                 new ItemCategory { Name = "Salads", Items = new List<Item>() },
-                new ItemCategory { Name = "ReadyMeals", Items = new List<Item>() },
+                new ItemCategory { Name = "Ready Meals", Items = new List<Item>() },
                 new ItemCategory { Name = "Soups", Items = new List<Item>() },
                 new ItemCategory { Name = "Desserts", Items = new List<Item>() },
                 new ItemCategory { Name = "Services", Items = new List<Item>() },

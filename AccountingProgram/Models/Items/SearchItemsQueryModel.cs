@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using AccountingProgram.Services.Items;
+    using AccountingProgram.Services.Items.Models;
 
     public class SearchItemsQueryModel
     {
@@ -11,7 +12,7 @@
 
         public string Category { get; init; }
 
-        public IEnumerable<string> Categories { get; set; }
+        public IEnumerable<ItemCategoryServiceModel> Categories { get; set; }
 
         [Display(Name = "Item name")]
         public string SearchTerm { get; init; }

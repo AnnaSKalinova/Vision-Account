@@ -44,7 +44,7 @@
             <div class="card mr-3" style="width: 18rem;">
                 <div class="card-body">
                     <h3 class="card-title">@customer.Name</h3>
-                    <h5 class="card-title">Route: @customer.Route</h5>
+                    <h5 class="card-title">Route: @customer.RouteCode</h5>
                     <h5 class="card-title">Total invoices: @customer.SalesInvoices</h5>
                     <a asp-controller="Customers" asp-action="Details" asp-route-id="@customer.Id" class="card-link">More details</a>
                 </div>

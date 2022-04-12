@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using AccountingProgram.Services.Customers;
+    using AccountingProgram.Services.Customers.Models;
     
     public class SearchCustomersQueryModel
     {

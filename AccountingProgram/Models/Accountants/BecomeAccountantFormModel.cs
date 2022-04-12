@@ -18,5 +18,7 @@
         [RegularExpression(PhoneNumberRegex,
             ErrorMessage = ErrorPhoneNumberRegex)]
         public string PhoneNumber { get; init; }
+
+        public string UserId { get; init; }
     }
 }

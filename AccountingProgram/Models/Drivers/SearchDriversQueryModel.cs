@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using AccountingProgram.Services.Drivers;
+    using AccountingProgram.Services.Drivers.Models;
    
     public class SearchDriversQueryModel
     {

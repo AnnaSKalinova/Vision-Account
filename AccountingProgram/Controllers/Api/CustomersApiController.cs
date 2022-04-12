@@ -4,7 +4,8 @@
 
     using AccountingProgram.Models.Api.Customers;
     using AccountingProgram.Services.Customers;
-    
+    using AccountingProgram.Services.Customers.Models;
+
     [ApiController]
     [Route("api/customers")]
     public class CustomersApiController : ControllerBase

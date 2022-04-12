@@ -4,15 +4,22 @@
     using System.Linq;
 
     using AccountingProgram.Data;
+    using AccountingProgram.Data.Models;
+    using AccountingProgram.Data.Models.Enums;
     using AccountingProgram.Models.Customers;
+    using AccountingProgram.Services.Customers.Models;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class CustomerService : ICustomerService
     {
         private readonly AccountingDbContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public CustomerService(AccountingDbContext data)
+        public CustomerService(AccountingDbContext data, IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
         }
 
         public CustomerQueryServiceModel All(string chain, string searchTerm, CustomerSorting sorting, int currentPage, int customersPerPage)
@@ -46,12 +53,7 @@
             var customers = customersQuery
                 .Skip((currentPage - 1) * customersPerPage)
                 .Take(customersPerPage)
-                .Select(c => new CustomerServiceModel
-                {
-                    Name = c.Name,
-                    Route = c.Route.Code,
-                    SalesInvoices = c.SalesInvoices.Count
-                })
+                .ProjectTo<CustomerServiceModel>(this.mapper)
                 .ToList();
 
             return new CustomerQueryServiceModel
@@ -67,12 +69,7 @@
         {
             return this.data
                 .Customers
-                .Select(c => new CustomerServiceModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    PaymentTerm = (int)c.PaymentTerm
-                })
+                .ProjectTo<CustomerServiceModel>(this.mapper)
                 .ToList();
         }
 
@@ -86,9 +83,37 @@
                 .ToList();
         }
 
+        public int Create(string name, string chainName, string address, string contactName, string email, int paymentTerm, int routeId)
+        {
+            var customerData = new Customer
+            {
+                Name = name,
+                ChainName = chainName,
+                Address = address,
+                ContactName = contactName,
+                Email = email,
+                PaymentTerm = (PaymentTerm)paymentTerm,
+                RouteId = routeId
+            };
+
+            this.data.Customers.Add(customerData);
+
+            this.data.SaveChanges();
+
+            return customerData.Id;
+        }
+
         public bool CustomerExists(int id)
         {
             return !this.data.Customers.Any(c => c.Id == id);
+        }
+
+        public IEnumerable<RouteCustomerServiceModel> GetRoutes()
+        {
+            return this.data
+                .Routes
+                .ProjectTo<RouteCustomerServiceModel>(this.mapper)
+                .ToList();
         }
     }
 }

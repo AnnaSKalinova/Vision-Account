@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using AccountingProgram.Models.Drivers;
+    using AccountingProgram.Services.Customers.Models;
     using static AccountingProgram.Data.DataConstants.Customer;
 
     public class AddCustomerFormModel
@@ -43,6 +43,6 @@
         public int PaymentTerm { get; set; }
 
         public int RouteId { get; init; }
-        public IEnumerable<RouteCustomerViewModel> Routes { get; set; }
+        public IEnumerable<RouteCustomerServiceModel> Routes { get; set; }
     }
 }

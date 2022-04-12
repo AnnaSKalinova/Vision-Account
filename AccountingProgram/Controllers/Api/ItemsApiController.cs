@@ -4,7 +4,8 @@
 
     using AccountingProgram.Models.Api.Items;
     using AccountingProgram.Services.Items;
-    
+    using AccountingProgram.Services.Items.Models;
+
     [ApiController]
     [Route("api/items")]
     public class ItemsApiController : ControllerBase

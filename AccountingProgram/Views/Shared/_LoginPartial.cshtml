@@ -9,15 +9,16 @@
     {
         var userId = User.GetId();
         var userIsAccountant = Accountants.IsAccountant(userId);
+        var userIsChiefAccountant = User.IsAdmin();
 
-        @if (userIsAccountant)
+        @if (userIsAccountant && !userIsChiefAccountant)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="Mine">My invoices</a>
             </li>
         }
-        else
-        { 
+        @if (!userIsChiefAccountant)
+        {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Accountant" asp-action="Become">Accountant</a>
             </li>

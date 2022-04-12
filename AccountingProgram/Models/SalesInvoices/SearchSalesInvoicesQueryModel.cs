@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using AccountingProgram.Services.SalesInvoices;
+    using AccountingProgram.Services.SalesInvoices.Models;
     
     public class SearchSalesInvoicesQueryModel
     {

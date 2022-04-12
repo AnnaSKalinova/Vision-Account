@@ -8,14 +8,19 @@
     using AccountingProgram.Data;
     using AccountingProgram.Data.Models;
     using AccountingProgram.Models.SalesInvoices;
+    using AccountingProgram.Services.SalesInvoices.Models;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class SalesInvoiceService : ISalesInvoiceService
     {
         private readonly AccountingDbContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public SalesInvoiceService(AccountingDbContext data)
+        public SalesInvoiceService(AccountingDbContext data, IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
         }
 
         public SalesInvoiceQueryServiceModel All(string chain, string searchTerm, SalesInvoiceSorting sorting, int currentPage, int salesInvoicesPerPage)
@@ -63,21 +68,7 @@
             return this.data
                 .SalesInvoices
                 .Where(si => si.Id == id)
-                .Select(si => new SalesInvoiceDetailsServiceModel
-                {
-                    Id = si.Id,
-                    Customer = si.Customer.Name,
-                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
-                    TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
-                    TotalAmountInclVat = si.Item.UnitPriceIncVat * si.Count,
-                    DueDate = si.DueDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
-                    AccountantName = si.Accountant.Name,
-                    AccountantId = si.Accountant.Id,
-                    Count = si.Count,
-                    Item = si.Item.Name,
-                    UserId = si.Accountant.UserId,
-                    Vat = si.Vat
-                })
+                .ProjectTo<SalesInvoiceDetailsServiceModel>(this.mapper)
                 .FirstOrDefault();
         }
 
@@ -104,7 +95,7 @@
                 .Select(si => new SalesInvoiceServiceModel
                 {
                     Id = si.Id,
-                    Customer = si.Customer.Name,
+                    CustomerName = si.Customer.Name,
                     PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
                     TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
                     TotalAmountInclVat = si.Item.UnitPriceIncVat * si.Count,

@@ -4,6 +4,7 @@
 
     using AccountingProgram.Models.Api.SalesInvoices;
     using AccountingProgram.Services.SalesInvoices;
+    using AccountingProgram.Services.SalesInvoices.Models;
 
     [ApiController]
     [Route("api/salesInvoices")]

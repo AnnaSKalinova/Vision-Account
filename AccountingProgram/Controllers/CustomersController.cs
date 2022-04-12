@@ -87,7 +87,7 @@
 
             this.data.SaveChanges();
 
-            return RedirectToAction("Customers", "All");
+            return RedirectToAction("All", "Customers");
         }
 
         private IEnumerable<RouteCustomerViewModel> GetRoutes()

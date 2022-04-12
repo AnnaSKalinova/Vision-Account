@@ -3,7 +3,8 @@
     using System.Collections.Generic;
 
     using AccountingProgram.Models.SalesInvoices;
-    
+    using AccountingProgram.Services.SalesInvoices.Models;
+
     public interface ISalesInvoiceService
     {
         SalesInvoiceQueryServiceModel All(

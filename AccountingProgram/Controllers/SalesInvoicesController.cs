@@ -6,11 +6,13 @@
     using Microsoft.AspNetCore.Authorization;
 
     using AccountingProgram.Models.SalesInvoices;
-    using AccountingProgram.Services.SalesInvoices;
+    using AccountingProgram.Services.SalesInvoices.Models;
     using AccountingProgram.Infrastructure;
     using AccountingProgram.Services.Accountants;
     using AccountingProgram.Services.Items;
     using AccountingProgram.Services.Customers;
+    using AccountingProgram.Services.SalesInvoices;
+    using AutoMapper;
 
     public class SalesInvoicesController : Controller
     {
@@ -18,17 +20,20 @@
         private readonly IAccountantService accountants;
         private readonly IItemService items;
         private readonly ICustomerService customers;
+        private readonly IMapper mapper;
 
         public SalesInvoicesController(
             IAccountantService accountants,
             ISalesInvoiceService salesInvoices,
             IItemService items,
-            ICustomerService customers)
+            ICustomerService customers, 
+            IMapper mapper)
         {
             this.accountants = accountants;
             this.salesInvoices = salesInvoices;
             this.items = items;
             this.customers = customers;
+            this.mapper = mapper;
         }
 
         public IActionResult All([FromQuery] SearchSalesInvoicesQueryModel query)
@@ -47,7 +52,7 @@
             query.SalesInvoices = queryResult.SalesInvoices.Select(si => new SalesInvoiceServiceModel
             {
                 Id = si.Id,
-                Customer = si.Customer,
+                CustomerName = si.CustomerName,
                 PostingDate = si.PostingDate,
                 TotalAmountExclVat = si.TotalAmountExclVat,
                 TotalAmountInclVat = si.TotalAmountInclVat
@@ -114,7 +119,7 @@
                 salesInvoice.PostingDate,
                 salesInvoice.ItemId,
                 salesInvoice.Count,
-                salesInvoice.AccountantId);
+                accountantId);
 
             return RedirectToAction(nameof(All));
         }
@@ -124,28 +129,24 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.accountants.IsAccountant(userId))
+            if (!this.accountants.IsAccountant(userId) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
             }
 
             var salesInvoice = this.salesInvoices.Details(id);
 
-            if (salesInvoice.UserId != userId)
+            if (salesInvoice.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
 
-            return View(new SalesInvoiceFormModel
-            {
-                Customers = this.customers.AllCustomers(),
-                Items = this.items.AllItems(),
-                PostingDate = salesInvoice.PostingDate,
-                AccountantId = salesInvoice.AccountantId,
-                Count = salesInvoice.Count,
-                CustomerId = salesInvoice.CustomerId,
-                ItemId = salesInvoice.ItemId
-            });
+            var salesInvoiceForm = this.mapper.Map<SalesInvoiceFormModel>(salesInvoice);
+
+            salesInvoiceForm.Customers = this.customers.AllCustomers();
+            salesInvoiceForm.Items = this.items.AllItems();
+
+            return View(salesInvoiceForm);
         }
 
         [HttpPost]
@@ -154,7 +155,7 @@
         {
             var accountantId = this.accountants.GetIdByUser(this.User.GetId());
 
-            if (accountantId == 0)
+            if (accountantId == 0 && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
             }
@@ -169,7 +170,7 @@
                 this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
             }
 
-            if (!this.salesInvoices.IsByAccountant(id, accountantId))
+            if (!this.salesInvoices.IsByAccountant(id, accountantId) && !User.IsAdmin())
             {
                 return BadRequest();
             }

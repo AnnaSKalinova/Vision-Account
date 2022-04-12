@@ -8,7 +8,7 @@
 
     public class User : IdentityUser
     {
-        [MaxLength(UserFillNameMaxLength)]
+        [MaxLength(UserFullNameMaxLength)]
         public string FullName { get; set; }
     }
 }

@@ -1,34 +1,47 @@
 ﻿namespace AccountingProgram.Infrastructure
 {
+    using System;
     using System.Linq;
     using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
 
     using AccountingProgram.Data;
     using AccountingProgram.Data.Models;
-    
+
+    using static AccountingProgram.Areas.Admin.AdminConstants;
+    using System.Threading.Tasks;
+
     public static class ApplicationBuilderExtentions
     {
         public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app) 
         {
-            using var scopedServices = app.ApplicationServices.CreateScope();
+            using var serviceScope = app.ApplicationServices.CreateScope();
 
-            var data = scopedServices.ServiceProvider.GetService<AccountingDbContext>();
+            var services = serviceScope.ServiceProvider;
 
-            data.Database.Migrate();
+            MigrateDatabase(services);
 
-            SeedItemCategories(data);
-            //SeedRoutes(data);
-            //SeedDrivers(data);
+            SeedItemCategories(services);
+            SeedAdministrator(services);
 
             return app;
         }
 
-        private static void SeedItemCategories(AccountingDbContext data)
+        private static void MigrateDatabase(IServiceProvider services)
         {
+            var data = services.GetRequiredService<AccountingDbContext>();
+
+            data.Database.Migrate();
+        }
+
+        private static void SeedItemCategories(IServiceProvider services)
+        {
+            var data = services.GetRequiredService<AccountingDbContext>();
+
             if (data.ItemCategories.Any())
             {
                 return;
@@ -42,56 +55,45 @@
                 new ItemCategory { Name = "ReadyMeals", Items = new List<Item>() },
                 new ItemCategory { Name = "Soups", Items = new List<Item>() },
                 new ItemCategory { Name = "Desserts", Items = new List<Item>() },
+                new ItemCategory { Name = "Services", Items = new List<Item>() },
             });
 
             data.SaveChanges();
         }
 
-
-        /*private static void SeedRoutes(AccountingDbContext data)
+        private static void SeedAdministrator(IServiceProvider services)
         {
-            if (data.Routes.Any())
-            {
-                return;
-            }
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-            data.Routes.AddRange(new[]
-            {
-                new Route { Code = 'A', Description = "Airport and Pick up", DriverId = 1 },
-                new Route { Code = 'B', Description = "Downtown", DriverId = 2 },
-                new Route { Code = 'C', Description = "Kringlan", DriverId = 3 },
-                new Route { Code = 'D', Description = "Breidholt", DriverId = 4 },
-                new Route { Code = 'E', Description = "Keflavik", DriverId = 5 },
-                new Route { Code = 'F', Description = "Countryside East", DriverId = 6 },
-                new Route { Code = 'L', Description = "Countryside North", DriverId = 7 },
-                new Route { Code = 'M', Description = "Countryside Sounth", DriverId = 8 },
-                new Route { Code = 'R', Description = "Hafnarfjordur", DriverId = 9 },
-            });
+            Task.
+                Run(async () =>
+                {
+                    if (await roleManager.RoleExistsAsync(AdministratorRoleName))
+                    {
+                        return;
+                    }
 
-            data.SaveChanges();
+                    var role = new IdentityRole { Name = AdministratorRoleName };
+
+                    await roleManager.CreateAsync(role);
+
+                    const string adminEmail = "admin@visionaccount.com";
+                    const string adminPassword = "admin12";
+
+                    var user = new User
+                    {
+                        Email = adminEmail,
+                        UserName = adminEmail,
+                        FullName = "Admin"
+                    };
+
+                    await userManager.CreateAsync(user, adminPassword);
+
+                    await userManager.AddToRoleAsync(user, role.Name);
+                })
+                .GetAwaiter()
+                .GetResult();
         }
-
-        private static void SeedDrivers(AccountingDbContext data)
-        {
-            if (data.Drivers.Any())
-            {
-                return;
-            }
-
-            data.Drivers.AddRange(new[]
-            {
-                new Driver { Name = "Georgi Georgiev", RouteId = 1 },
-                new Driver { Name = "Petur Petrov", RouteId = 2 },
-                new Driver { Name = "Stamat Stamatov", RouteId = 3 },
-                new Driver { Name = "Asen Asenov", RouteId = 4 },
-                new Driver { Name = "Dimitur Dimitrov", RouteId = 5 },
-                new Driver { Name = "Ivan Ivanov", RouteId = 6 },
-                new Driver { Name = "Kiril Kirilov", RouteId = 7 },
-                new Driver { Name = "Todor Todorov", RouteId = 8 },
-                new Driver { Name = "Vasil Vasilev", RouteId = 9 },
-            });
-
-            data.SaveChanges();
-        }*/
     }
 }

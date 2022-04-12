@@ -39,7 +39,7 @@
             {
                 Id = d.Id,
                 Name = d.Name,
-                Route = d.Route
+                RouteCode = d.RouteCode
             });
 
             return View(query);

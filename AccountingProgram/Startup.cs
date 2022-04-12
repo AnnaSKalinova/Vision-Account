@@ -47,6 +47,8 @@ namespace AccountingProgram
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AccountingDbContext>();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
@@ -82,6 +84,10 @@ namespace AccountingProgram
                .UseAuthorization()
                .UseEndpoints(endpoints =>
                {
+                   endpoints.MapControllerRoute(
+                       name: "Areas",
+                       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                    endpoints.MapDefaultControllerRoute();
                    endpoints.MapRazorPages();
                });

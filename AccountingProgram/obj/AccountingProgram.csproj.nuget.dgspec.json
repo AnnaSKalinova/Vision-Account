@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AnNI\\Programming\\Final Project\\4. UsersRoles\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {}
+    "E:\\AnNI\\Programming\\Final Project\\5. UsersRoles2\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {}
   },
   "projects": {
-    "E:\\AnNI\\Programming\\Final Project\\4. UsersRoles\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
+    "E:\\AnNI\\Programming\\Final Project\\5. UsersRoles2\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\4. UsersRoles\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\5. UsersRoles2\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "projectName": "AccountingProgram",
-        "projectPath": "E:\\AnNI\\Programming\\Final Project\\4. UsersRoles\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectPath": "E:\\AnNI\\Programming\\Final Project\\5. UsersRoles2\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "E:\\AnNI\\Programming\\Final Project\\4. UsersRoles\\AccountingProgram\\AccountingProgram\\obj\\",
+        "outputPath": "E:\\AnNI\\Programming\\Final Project\\5. UsersRoles2\\AccountingProgram\\AccountingProgram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -43,6 +43,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.15, )"

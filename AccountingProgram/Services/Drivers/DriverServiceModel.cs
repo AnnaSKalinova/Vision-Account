@@ -6,6 +6,6 @@
 
         public string Name { get; init; }
 
-        public char Route { get; init; }
+        public char RouteCode { get; init; }
     }
 }

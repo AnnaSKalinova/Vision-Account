@@ -38,6 +38,8 @@
             public const string ErrorAddressLength = "The Address must be with a minimum length of {2} and a maximum length of {1}.";
             public const string ErrorContactNameLength = "The Name of the Contact must be with a minimum length of {2} and a maximum length of {1}.";
             public const string ErrorEmailFormat = "The Email must be in the following format: \"user@example.com\".";
+            public const string ErrorValuePostingDate = "Posting Date must be a date in year 2022";
+
         }
 
         public class Driver
@@ -89,7 +91,8 @@
 
         public class User
         {
-            public const int UserFillNameMaxLength = 50;
+            public const int UserFullNameMaxLength = 50;
+            public const int UserFullNameMinLength = 2;
         }
     }
 }

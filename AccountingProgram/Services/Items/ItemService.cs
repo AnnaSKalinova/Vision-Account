@@ -89,7 +89,7 @@
 
         public bool ItemExists(int id)
         {
-            return this.data.Items.Any(i => i.Id == id);
+            return !this.data.Items.Any(i => i.Id == id);
         }
     }
 }

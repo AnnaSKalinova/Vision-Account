@@ -7,7 +7,11 @@
 
     public interface IRouteService
     {
-        RouteQueryServiceModel All(char code, RouteSorting sorting, int currentPage, int routesPerPage);
+        RouteQueryServiceModel All(
+            char code, 
+            RouteSorting sorting,
+            int currentPage = 1,
+            int salesInvoicesPerPage = int.MaxValue);
 
         IEnumerable<char> AllRoutesCodes();
 

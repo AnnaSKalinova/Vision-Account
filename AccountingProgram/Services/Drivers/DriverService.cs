@@ -21,7 +21,12 @@
             this.mapper = mapper.ConfigurationProvider;
         }
 
-        public DriverQueryServiceModel All(char route, string searchTerm, DriverSorting sorting, int currentPage, int driversPerPage)
+        public DriverQueryServiceModel All(
+            char route, 
+            string searchTerm, 
+            DriverSorting sorting, 
+            int currentPage = 1, 
+            int driversPerPage = int.MaxValue)
         {
             var driverQuery = this.data.Drivers.AsQueryable();
 

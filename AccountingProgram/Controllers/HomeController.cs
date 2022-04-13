@@ -22,13 +22,6 @@
 
         public IActionResult Index()
         {
-            /*var drivers = this.data
-                .Drivers
-                .OrderByDescending(d => d.Id)
-                .ProjectTo<DriverServiceModel>(this.mapper)
-                .Take(3)
-                .ToList();*/
-
             const string totalStatisticsCacheKey = "TotalStatisticsCacheKey";
 
             var totalStatistics = this.cache.Get<StatisticsServiceModel>(totalStatisticsCacheKey);

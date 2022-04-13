@@ -18,61 +18,64 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 justify-content-center">
-                        <li class="nav-item mr-3">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Sales Invoices
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="Add">Add Sales Invoice</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="All">All Sales Invoices</a>
+                        @if (!User.IsChefAccountant())
+                        {
+                            <li class="nav-item mr-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sales Invoices
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="Add">Add Sales Invoice</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="All">All Sales Invoices</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="nav-item mr-3">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Customers
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Add">Add Customer</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="All">All Customers</a>
+                            </li>
+                            <li class="nav-item mr-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Customers
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Add">Add Customer</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="All">All Customers</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="nav-item mr-3">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Items
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Add">Add Item</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="All">All Items</a>
+                            </li>
+                            <li class="nav-item mr-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Items
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Add">Add Item</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="All">All Items</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="nav-item mr-3">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Drivers
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Drivers" asp-action="Add">Add Driver</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Drivers" asp-action="All">All Drivers</a>
+                            </li>
+                            <li class="nav-item mr-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Drivers
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Drivers" asp-action="Add">Add Driver</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Drivers" asp-action="All">All Drivers</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="nav-item mr-3">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Routes
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="Add">Add Route</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="All">All Routes</a>
+                            </li>
+                            <li class="nav-item mr-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Routes
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="Add">Add Route</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="All">All Routes</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

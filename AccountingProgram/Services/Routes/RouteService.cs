@@ -21,7 +21,11 @@
             this.mapper = mapper.ConfigurationProvider;
         }
 
-        public RouteQueryServiceModel All(char code, RouteSorting sorting, int currentPage, int routesPerPage)
+        public RouteQueryServiceModel All(
+            char code, 
+            RouteSorting sorting, 
+            int currentPage = 1, 
+            int routesPerPage = int.MaxValue)
         {
             var routesQuery = this.data.Routes.AsQueryable();
 

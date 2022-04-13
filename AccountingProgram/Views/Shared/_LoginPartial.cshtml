@@ -9,7 +9,7 @@
     {
         var userId = User.GetId();
         var userIsAccountant = Accountants.UserIsAlreadyAccountant(userId);
-        var userIsChiefAccountant = User.IsAdmin();
+        var userIsChiefAccountant = User.IsChefAccountant();
 
         @if (userIsAccountant && !userIsChiefAccountant)
         {
@@ -17,12 +17,20 @@
                 <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="Mine">My invoices</a>
             </li>
         }
-        @if (!userIsAccountant && !userIsChiefAccountant)
+        else if (!userIsChiefAccountant)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Accountants" asp-action="Become">Accountant</a>
             </li>
         }
+        else if (userIsChiefAccountant)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Admin" asp-controller="SalesInvoices" asp-action="All">Administration</a>
+            </li>
+        }
+
+
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @User.Identity.Name!</a>
         </li>

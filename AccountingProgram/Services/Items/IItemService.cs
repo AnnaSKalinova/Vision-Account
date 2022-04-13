@@ -6,7 +6,12 @@
 
     public interface IItemService
     {
-        ItemQueryServiceModel All(string category, string searchTerm, ItemSorting sorting, int currentPage, int itemsPerPage);
+        ItemQueryServiceModel All(
+            string category, 
+            string searchTerm, 
+            ItemSorting sorting,
+            int currentPage = 1,
+            int salesInvoicesPerPage = int.MaxValue);
 
         IEnumerable<ItemCategoryServiceModel> AllItemsCategories();
 

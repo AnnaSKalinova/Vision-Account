@@ -15,7 +15,6 @@
     using AutoMapper;
 
     using static WebConstants;
-    using System.Globalization;
 
     public class SalesInvoicesController : Controller
     {
@@ -123,7 +122,7 @@
                 salesInvoice.Count,
                 accountantId);
 
-            TempData[GlobalMessageKey] = "You successfully added a new sales invoice!";
+            TempData[GlobalMessageKey] = "You created the sales invoice successfully. It is now waiting for approval!";
 
             return RedirectToAction(nameof(All));
         }
@@ -133,7 +132,7 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.accountants.UserIsAlreadyAccountant(userId) && !User.IsAdmin())
+            if (!this.accountants.UserIsAlreadyAccountant(userId) && !User.IsChefAccountant())
             {
                 return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
             }
@@ -154,7 +153,7 @@
         {
             var accountantId = this.accountants.GetIdByUser(this.User.GetId());
 
-            if (accountantId == 0 && !User.IsAdmin())
+            if (accountantId == 0 && !User.IsChefAccountant())
             {
                 return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
             }
@@ -169,7 +168,7 @@
                 this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
             }
 
-            if (!this.salesInvoices.IsByAccountant(id, accountantId) && !User.IsAdmin())
+            if (!this.salesInvoices.IsByAccountant(id, accountantId) && !User.IsChefAccountant())
             {
                 return BadRequest();
             }
@@ -179,9 +178,10 @@
                 salesInvoice.CustomerId,
                 salesInvoice.PostingDate,
                 salesInvoice.ItemId,
-                salesInvoice.Count);
+                salesInvoice.Count,
+                this.User.IsChefAccountant());
 
-            TempData[GlobalMessageKey] = "You successfully edited the invoice!";
+            TempData[GlobalMessageKey] = $"You eddited the sales invoice successfully! {(this.User.IsChefAccountant() ? string.Empty : "It is now waiting for approval!")}";
 
             return RedirectToAction(nameof(All));
         }

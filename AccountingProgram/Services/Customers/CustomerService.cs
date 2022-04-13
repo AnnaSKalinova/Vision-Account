@@ -22,7 +22,12 @@
             this.mapper = mapper.ConfigurationProvider;
         }
 
-        public CustomerQueryServiceModel All(string chain, string searchTerm, CustomerSorting sorting, int currentPage, int customersPerPage)
+        public CustomerQueryServiceModel All(
+            string chain, 
+            string searchTerm, 
+            CustomerSorting sorting, 
+            int currentPage = 1, 
+            int customersPerPage = int.MaxValue)
         {
             var customersQuery = this.data.Customers.AsQueryable();
 

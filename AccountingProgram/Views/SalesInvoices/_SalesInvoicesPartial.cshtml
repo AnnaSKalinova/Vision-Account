@@ -11,7 +11,7 @@
                     <h6 class="card-title">Posting date: @salesInvoice.PostingDate</h6>
                     <h6 class="card-title">Total amount excl. VAT: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h6>
                     <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" asp-route-information="@(salesInvoice.CustomerName + "-" + salesInvoice.PostingDate)" class="btn btn-secondary">More details</a>
-                    @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsAdmin())
+                    @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsChefAccountant())
                     {
                         <a asp-controller="SalesInvoices" asp-action="Edit" asp-route-id="@salesInvoice.Id" class="btn btn-warning">Edit</a>
                         <a asp-controller="SalesInvoices" asp-action="Delete" asp-route-id="@salesInvoice.Id" class="btn btn-danger">Delete</a>

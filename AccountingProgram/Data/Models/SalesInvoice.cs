@@ -30,5 +30,7 @@
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal Profit { get; init; }
+
+        public bool isPosted { get; set; }
     }
 }

@@ -16,7 +16,7 @@
         public StatisticsServiceModel Total()
         {
             var totalDrivers = this.data.Drivers.Count();
-            var totalSalesInvoices = this.data.SalesInvoices.Count();
+            var totalSalesInvoices = this.data.SalesInvoices.Count(si => si.isPosted);
             var totalItems = this.data.Items.Count();
             var totaCustomers = this.data.Customers.Count();
 

@@ -10,9 +10,9 @@
         CustomerQueryServiceModel All(
             string chain, 
             string searchTerm, 
-            CustomerSorting sorting, 
-            int currentPage, 
-            int customersPerPage);
+            CustomerSorting sorting,
+            int currentPage = 1,
+            int salesInvoicesPerPage = int.MaxValue);
 
         IEnumerable<string> AllCustomersChains();
 

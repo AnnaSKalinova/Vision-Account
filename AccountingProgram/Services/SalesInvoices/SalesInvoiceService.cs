@@ -20,9 +20,16 @@
             this.data = data;
         }
 
-        public SalesInvoiceQueryServiceModel All(string chain, string searchTerm, SalesInvoiceSorting sorting, int currentPage, int salesInvoicesPerPage)
+        public SalesInvoiceQueryServiceModel All(
+            string chain = null,
+            string searchTerm = null,
+            SalesInvoiceSorting sorting = SalesInvoiceSorting.Id,
+            int currentPage = 1,
+            int salesInvoicesPerPage = int.MaxValue,
+            bool postedOnly = true)
         {
-            var salesInvoicesQuery = this.data.SalesInvoices.AsQueryable();
+            var salesInvoicesQuery = this.data.SalesInvoices
+                .Where(si => !postedOnly || si.isPosted);
 
             if (!string.IsNullOrWhiteSpace(chain))
             {
@@ -111,6 +118,7 @@
                     CustomerName = si.Customer.Name,
                     PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
                     TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
+                    IsPosted = si.isPosted
                 })
                 .ToList();
         }
@@ -144,7 +152,8 @@
                 Vat = vat,
                 TotalAmountInclVat = totalAmountInclVat,
                 AccountantId = accountantId,
-                Profit = profit
+                Profit = profit,
+                isPosted = false
             };
 
             this.data.SalesInvoices.Add(salesInvoiceData);
@@ -154,7 +163,13 @@
             return salesInvoiceData.Id;
         }
 
-        public bool Edit(int id, int customerId, string postingDate, int itemId, int count)
+        public bool Edit(
+            int id, 
+            int customerId, 
+            string postingDate, 
+            int itemId, 
+            int count,
+            bool isPosted)
         {
             var salesInvoiceData = this.data.SalesInvoices.Find(id);
 
@@ -170,6 +185,7 @@
             salesInvoiceData.PostingDate = salesInvPostingDate;
             salesInvoiceData.ItemId = itemId;
             salesInvoiceData.Count = count;
+            salesInvoiceData.isPosted = false;
 
             this.data.SaveChanges();
 
@@ -181,6 +197,15 @@
             return this.data
                 .SalesInvoices
                 .Any(si => si.Id == salesInvoiceId && si.AccountantId == accountantId);
+        }
+
+        public void ChangeStatus(int id)
+        {
+            var salesInvoice = this.data.SalesInvoices.Find(id);
+
+            salesInvoice.isPosted = !salesInvoice.isPosted;
+
+            this.data.SaveChanges();
         }
     }
 }

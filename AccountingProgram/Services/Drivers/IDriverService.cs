@@ -10,9 +10,9 @@
         DriverQueryServiceModel All(
             char route, 
             string searchTerm, 
-            DriverSorting sorting, 
-            int currentPage, 
-            int driversPerPage);
+            DriverSorting sorting,
+            int currentPage = 1,
+            int salesInvoicesPerPage = int.MaxValue);
 
         IEnumerable<char> AllDriversRoutes();
 

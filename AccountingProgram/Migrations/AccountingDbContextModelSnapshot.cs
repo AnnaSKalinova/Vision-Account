@@ -202,11 +202,26 @@ namespace AccountingProgram.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PostingDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Profit")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("TotalAmountExclVat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalAmountInclVat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Vat")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

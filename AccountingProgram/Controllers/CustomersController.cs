@@ -10,6 +10,8 @@
     using AccountingProgram.Services.Routes;
     using AccountingProgram.Services.Customers;
 
+    using static WebConstants;
+
     public class CustomersController : Controller
     {
         private readonly ICustomerService customers;
@@ -40,7 +42,8 @@
             {
                 Id = c.Id,
                 Name = c.Name,
-                RouteCode = c.RouteCode
+                RouteCode = c.RouteCode,
+                SalesInvoices = c.SalesInvoices
             });
 
             return View(query);
@@ -79,6 +82,8 @@
                 customer.Email,
                 customer.PaymentTerm,
                 customer.RouteId);
+
+            TempData[GlobalMessageKey] = "You successfully added a new customer!";
 
             return RedirectToAction(nameof(All));
         }

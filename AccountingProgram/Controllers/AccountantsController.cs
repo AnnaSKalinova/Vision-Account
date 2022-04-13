@@ -7,6 +7,8 @@
     using AccountingProgram.Infrastructure;
     using AccountingProgram.Services.Accountants;
 
+    using static WebConstants;
+
     public class AccountantsController : Controller
     {
         private readonly IAccountantService accountants;
@@ -44,6 +46,8 @@
                 accountant.Name,
                 accountant.PhoneNumber,
                 userId);
+
+            TempData[GlobalMessageKey] = "You are already Accountant!";
 
             return RedirectToAction("Index", "Home");
         }

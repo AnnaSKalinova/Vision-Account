@@ -43,13 +43,7 @@
                 this.cache.Set(totalStatisticsCacheKey, totalStatistics, cacheOptions);
             }
 
-            return View(new IndexViewModel
-            {
-                TotalCustomers = totalStatistics.TotalCustomers,
-                TotalDrivers = totalStatistics.TotalDrivers,
-                TotalItems = totalStatistics.TotalItems,
-                TotalSalesInvoices = totalStatistics.TotalSalesInvoices
-            });
+            return View(totalStatistics);
         }
         
         public IActionResult Error()

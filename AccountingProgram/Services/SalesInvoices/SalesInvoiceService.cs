@@ -98,7 +98,6 @@
                     CustomerName = si.Customer.Name,
                     PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
                     TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
-                    TotalAmountInclVat = si.Item.UnitPriceIncVat * si.Count,
                 })
                 .ToList();
         }
@@ -108,13 +107,31 @@
             DateTime salesInvPostingDate;
             DateTime.TryParseExact(postingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
 
+            var customer = this.data.Customers
+                .Where(c => c.Id == customerId)
+                .FirstOrDefault();
+
+            var item = this.data.Items
+                .Where(i => i.Id == itemId)
+                .FirstOrDefault();
+
+            var totalAmountExclVat = item.UnitPriceExclVat * count;
+            var vat = totalAmountExclVat * ((int)item.VatGroup) * 0.01m;
+            var totalAmountInclVat = totalAmountExclVat + vat;
+            var profit = totalAmountExclVat - count * (item.UnitPriceExclVat - item.UnitCost);
+
             var salesInvoiceData = new SalesInvoice
             {
                 CustomerId = customerId,
                 PostingDate = salesInvPostingDate,
+                DueDate = salesInvPostingDate.AddDays((int)customer.PaymentTerm),
                 ItemId = itemId,
                 Count = count,
-                AccountantId = accountantId
+                TotalAmountExclVat = totalAmountExclVat,
+                Vat = vat,
+                TotalAmountInclVat = totalAmountInclVat,
+                AccountantId = accountantId,
+                Profit = profit
             };
 
             this.data.SalesInvoices.Add(salesInvoiceData);

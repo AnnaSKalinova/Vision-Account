@@ -49,6 +49,7 @@
 
             var totalItems = itemsQuery.Count();
 
+
             var items = itemsQuery
                 .Skip((currentPage - 1) * itemsPerPage)
                 .Take(itemsPerPage)

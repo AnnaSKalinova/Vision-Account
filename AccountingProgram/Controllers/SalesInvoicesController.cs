@@ -14,6 +14,8 @@
     using AccountingProgram.Services.SalesInvoices;
     using AutoMapper;
 
+    using static WebConstants;
+
     public class SalesInvoicesController : Controller
     {
         private readonly ISalesInvoiceService salesInvoices;
@@ -55,7 +57,6 @@
                 CustomerName = si.CustomerName,
                 PostingDate = si.PostingDate,
                 TotalAmountExclVat = si.TotalAmountExclVat,
-                TotalAmountInclVat = si.TotalAmountInclVat
             });
 
             return View(query);
@@ -121,6 +122,8 @@
                 salesInvoice.Count,
                 accountantId);
 
+            TempData[GlobalMessageKey] = "You successfully added a new sales invoice!";
+
             return RedirectToAction(nameof(All));
         }
 
@@ -182,7 +185,16 @@
                 salesInvoice.ItemId,
                 salesInvoice.Count);
 
+            TempData[GlobalMessageKey] = "You successfully edited the invoice!";
+
             return RedirectToAction(nameof(All));
+        }
+
+        public IActionResult Details(int id)
+        {
+            var salesInvoice = this.salesInvoices.Details(id);
+
+            return View(salesInvoice);
         }
     }
 }

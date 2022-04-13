@@ -10,6 +10,8 @@
     using AccountingProgram.Services.Routes;
     using AccountingProgram.Services.Drivers.Models;
 
+    using static WebConstants;
+
     public class DriversController : Controller
     {
         private readonly IDriverService drivers;
@@ -72,6 +74,8 @@
             this.drivers.Create(
                 driver.Name,
                 driver.RouteId);
+
+            TempData[GlobalMessageKey] = "You successfully added a new driver!";
 
             return RedirectToAction(nameof(All));
         }

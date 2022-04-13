@@ -9,6 +9,8 @@
     using AccountingProgram.Services.Items;
     using AccountingProgram.Services.Items.Models;
 
+    using static WebConstants;
+
     public class ItemsController : Controller
     {
         private readonly IItemService items;
@@ -76,6 +78,8 @@
                 item.UnitPriceExclVat,
                 item.VatGroup,
                 item.UnitCost);
+
+            TempData[GlobalMessageKey] = "You successfully added a new item!";
 
             return RedirectToAction(nameof(All));
         }

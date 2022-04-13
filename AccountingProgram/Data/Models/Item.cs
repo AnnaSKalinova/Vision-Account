@@ -32,8 +32,5 @@
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal UnitCost { get; set; }
-
-        [Column(TypeName = "decimal(18,4)")]
-        public decimal Profit { get; }
     }
 }

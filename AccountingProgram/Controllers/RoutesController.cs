@@ -5,10 +5,11 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using AccountingProgram.Data;
     using AccountingProgram.Models.Routes;
     using AccountingProgram.Services.Routes;
     using AccountingProgram.Services.Routes.Models;
+
+    using static WebConstants;
 
     public class RoutesController : Controller
     {
@@ -59,6 +60,8 @@
             this.routes.Create(
                 route.Code,
                 route.Description);
+
+            TempData[GlobalMessageKey] = "You successfully added a new route!";
 
             return RedirectToAction(nameof(All));
         }

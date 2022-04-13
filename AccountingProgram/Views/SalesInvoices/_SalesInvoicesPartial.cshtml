@@ -7,10 +7,9 @@
             <div class="card mr-3" style="width: 18rem;">
                 <div class="card-body">
                     <h3 class="card-title">@salesInvoice.Id</h3>
-                    <h5 class="card-title">Customer: @salesInvoice.CustomerName</h5>
-                    <h5 class="card-title">Posting Date: @salesInvoice.PostingDate</h5>
-                    <h5 class="card-title">Total Amount Excl. Vat: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h5>
-                    <h5 class="card-title">Total Amount Incl. Vat: @salesInvoice.TotalAmountInclVat.ToString("0.00") lv.</h5>
+                    <h6 class="card-title">Customer: @salesInvoice.CustomerName</h6>
+                    <h6 class="card-title">Posting Date: @salesInvoice.PostingDate</h6>
+                    <h6 class="card-title">Total Amount Excl. Vat: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h6>
                     <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" class="btn btn-secondary">More details</a>
                     @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsAdmin())
                     {

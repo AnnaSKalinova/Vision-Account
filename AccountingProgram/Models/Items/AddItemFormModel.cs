@@ -4,7 +4,6 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using AccountingProgram.Services.Items;
     using AccountingProgram.Services.Items.Models;
     using static AccountingProgram.Data.DataConstants.Item;
 

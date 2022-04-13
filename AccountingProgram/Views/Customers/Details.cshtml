@@ -1,0 +1,23 @@
+﻿@model CustomerDetailsServiceModel
+
+@{
+    ViewBag.Title = "Customer details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="card mr-3" style="width: 18rem;">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Name</h3>
+                <h6 class="card-title">Chain name: @Model.ChainName</h6>
+                <h6 class="card-title">Address: @Model.Address</h6>
+                <h6 class="card-title">Contact: @Model.ContactName</h6>
+                <h6 class="card-title">E-mail: @Model.Email</h6>
+                <h6 class="card-title">Payment term: @Model.PaymentTerm days</h6>
+                <h6 class="card-title">Route: @Model.RouteCode route</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,30 @@
+﻿@model SalesInvoiceDetailsServiceModel
+
+@{
+    ViewBag.Title = "Sales invoice details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="card mr-3" style="width: 18rem;">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Id</h3>
+                <h6 class="card-title">Customer: @Model.CustomerName</h6>
+                @{
+                    String.Format("dd.MM.yyyy", Model.PostingDate);
+                 }
+                <h6 class="card-title">Posting date: @Model.PostingDate</h6>
+                <h6 class="card-title">Due date: @Model.DueDate</h6>
+                <h6 class="card-title">Item: @Model.ItemName</h6>
+                <h6 class="card-title">Count: @Model.Count</h6>
+                <h6 class="card-title">Total amount excl. VAT: @Model.TotalAmountExclVat.ToString("0.00") lv.</h6>
+                <h6 class="card-title">VAT: @Model.Vat.ToString("0.00") lv.</h6>
+                <h6 class="card-title">Total Amount incl. VAT: @Model.TotalAmountInclVat.ToString("0.00") lv.</h6>
+                <h6 class="card-title">Created by: @Model.AccountantName</h6>
+                <h6 class="card-title">Profit: @Model.Profit.ToString("0.00") lv.</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+

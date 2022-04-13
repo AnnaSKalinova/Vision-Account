@@ -1,0 +1,23 @@
+﻿@model RouteDetailsServiceModel
+
+@{
+    ViewBag.Title = "Route details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="card mr-3" style="width: 18rem;">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Code route</h3>
+                <h6 class="card-title">Description: @Model.Description</h6>
+                <h6 class="card-title">Customers:</h6>
+                @foreach (var customer in Model.Customers)
+                {
+                    <h6 class="card-title">- @customer.Name</h6>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

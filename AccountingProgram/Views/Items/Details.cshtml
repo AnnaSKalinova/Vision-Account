@@ -1,0 +1,25 @@
+﻿@model ItemDetailsServiceModel
+
+@{
+    ViewBag.Title = "Item details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="card mr-3" style="width: 18rem;">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Name</h3>
+                <h6 class="card-title">Type: @Model.ItemType.ToString()</h6>
+                <h6 class="card-title">Measure: @Model.Measure</h6>
+                <h6 class="card-title">Category: @Model.ItemCategory</h6>
+                <h6 class="card-title">Unit price excl. VAT: @Model.UnitPriceExclVat.ToString("0.00") lv.</h6>
+                <h6 class="card-title">VAT: @Model.VatGroup %</h6>
+                <h6 class="card-title">Unit price incl. VAT: @Model.UnitPriceInclVat.ToString("0.00") lv.</h6>
+                <h6 class="card-title">Unit cost: @Model.UnitCost.ToString("0.00") lv.</h6>
+                <h6 class="card-title">Profit: @Model.Profit %</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+

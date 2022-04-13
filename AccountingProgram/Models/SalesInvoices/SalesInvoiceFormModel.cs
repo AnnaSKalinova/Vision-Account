@@ -16,7 +16,7 @@
         public IEnumerable<CustomerServiceModel> Customers { get; set; }
 
         [Required]
-        [Display(Name = "Posting Date")]
+        [Display(Name = "Posting date")]
         [Range(typeof(DateTime), "01.01.2022", "31.12.2022",
                     ErrorMessage = ErrorValuePostingDate)]
         public string PostingDate { get; init; }

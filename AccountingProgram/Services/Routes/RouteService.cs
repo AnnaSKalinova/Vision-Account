@@ -94,5 +94,14 @@
         {
             return !this.data.Routes.Any(r => r.Id == id);
         }
+
+        public RouteDetailsServiceModel Details(int id)
+        {
+            return this.data
+                .Routes
+                .Where(r => r.Id == id)
+                .ProjectTo<RouteDetailsServiceModel>(this.mapper)
+                .FirstOrDefault();
+        }
     }
 }

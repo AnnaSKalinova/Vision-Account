@@ -13,6 +13,8 @@
 
         IEnumerable<RouteServiceModel> AllRoutes();
 
+        RouteDetailsServiceModel Details(int id);
+
         bool RouteExists(int id);
 
         int Create(

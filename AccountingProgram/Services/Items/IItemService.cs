@@ -12,6 +12,8 @@
 
         IEnumerable<ItemServiceModel> AllItems();
 
+        ItemDetailsServiceModel Details(int id);
+
         bool ItemExists(int id);
 
         bool ItemCategoryExists(int id);
@@ -21,7 +23,7 @@
             int itemType, 
             int measure, 
             int itemCategoryId, 
-            decimal UnitPriceExclVat, 
+            decimal unitPriceExclVat, 
             int vatGroup, 
             decimal unitCost);
 

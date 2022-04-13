@@ -115,5 +115,14 @@
                 .ProjectTo<RouteCustomerServiceModel>(this.mapper)
                 .ToList();
         }
+
+        public CustomerDetailsServiceModel Details(int id)
+        {
+            return this.data
+                .Customers
+                .Where(c => c.Id == id)
+                .ProjectTo<CustomerDetailsServiceModel>(this.mapper)
+                .FirstOrDefault();
+        }
     }
 }

@@ -65,5 +65,17 @@
 
             return RedirectToAction(nameof(All));
         }
+
+        public IActionResult Details(int id, string information)
+        {
+            var route = this.routes.Details(id);
+
+            if (!information.Contains(route.Code))
+            {
+                return BadRequest();
+            }
+
+            return View(route);
+        }
     }
 }

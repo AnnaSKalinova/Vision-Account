@@ -10,17 +10,14 @@
     using AccountingProgram.Models.SalesInvoices;
     using AccountingProgram.Services.SalesInvoices.Models;
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
 
     public class SalesInvoiceService : ISalesInvoiceService
     {
         private readonly AccountingDbContext data;
-        private readonly IConfigurationProvider mapper;
 
-        public SalesInvoiceService(AccountingDbContext data, IMapper mapper)
+        public SalesInvoiceService(AccountingDbContext data)
         {
             this.data = data;
-            this.mapper = mapper.ConfigurationProvider;
         }
 
         public SalesInvoiceQueryServiceModel All(string chain, string searchTerm, SalesInvoiceSorting sorting, int currentPage, int salesInvoicesPerPage)
@@ -68,7 +65,23 @@
             return this.data
                 .SalesInvoices
                 .Where(si => si.Id == id)
-                .ProjectTo<SalesInvoiceDetailsServiceModel>(this.mapper)
+                .Select(si => new SalesInvoiceDetailsServiceModel
+                { 
+                    Id = si.Id,
+                    CustomerName = si.Customer.Name,
+                    CustomerId = si.CustomerId,
+                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    DueDate = si.DueDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    ItemName = si.Item.Name,
+                    ItemId = si.ItemId,
+                    Count = si.Count,
+                    TotalAmountExclVat = si.TotalAmountExclVat,
+                    Vat = si.Vat,
+                    TotalAmountInclVat = si.TotalAmountInclVat,
+                    AccountantName = si.Accountant.Name,
+                    UserId = si.AccountantId.ToString(),
+                    Profit = si.Profit
+                })
                 .FirstOrDefault();
         }
 

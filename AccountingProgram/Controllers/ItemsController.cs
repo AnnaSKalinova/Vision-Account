@@ -83,5 +83,17 @@
 
             return RedirectToAction(nameof(All));
         }
+
+        public IActionResult Details(int id, string information)
+        {
+            var item = this.items.Details(id);
+
+            if (!information.Contains(item.Name) || !information.Contains(item.ItemCategory))
+            {
+                return BadRequest();
+            }
+
+            return View(item);
+        }
     }
 }

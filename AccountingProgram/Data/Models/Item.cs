@@ -28,9 +28,11 @@
         public VatGroup VatGroup { get; set; }
 
         [Column(TypeName = "decimal(18,4)")]
-        public decimal UnitPriceIncVat { get; }
+        public decimal UnitPriceInclVat { get; set; }
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal UnitCost { get; set; }
+
+        public decimal Profit { get; set; }
     }
 }

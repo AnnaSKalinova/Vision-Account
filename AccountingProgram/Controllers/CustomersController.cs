@@ -87,5 +87,17 @@
 
             return RedirectToAction(nameof(All));
         }
+
+        public IActionResult Details(int id, string information)
+        {
+            var customer = this.customers.Details(id);
+
+            if (!information.Contains(customer.Name) || !information.Contains(customer.RouteCode))
+            {
+                return BadRequest();
+            }
+
+            return View(customer);
+        }
     }
 }

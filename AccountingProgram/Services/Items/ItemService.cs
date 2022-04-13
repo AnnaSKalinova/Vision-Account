@@ -81,17 +81,22 @@
                 .ToList();
         }
 
-        public int Create(string name, int itemType, int measure, int itemCategoryId, decimal UnitPriceExclVat, int vatGroup, decimal unitCost)
+        public int Create(string name, int itemType, int measure, int itemCategoryId, decimal unitPriceExclVat, int vatGroup, decimal unitCost)
         {
+            var unitPriceInclVat = unitPriceExclVat + (unitPriceExclVat * vatGroup / 100);
+            var profit = (1 - unitCost / unitPriceExclVat) * 100;
+
             var itemData = new Item
             {
                 Name = name,
                 ItemType = (ItemType)itemType,
                 Measure = (Measure)measure,
                 ItemCategoryId = itemCategoryId,
-                UnitPriceExclVat = UnitPriceExclVat,
+                UnitPriceExclVat = unitPriceExclVat,
                 VatGroup = (VatGroup)vatGroup,
-                UnitCost = unitCost
+                UnitPriceInclVat = unitPriceInclVat,
+                UnitCost = unitCost,
+                Profit = profit
             };
 
             this.data.Items.Add(itemData);
@@ -99,6 +104,15 @@
             this.data.SaveChanges();
 
             return itemData.Id;
+        }
+
+        public ItemDetailsServiceModel Details(int id)
+        {
+            return this.data
+                .Items
+                .Where(i => i.Id == id)
+                .ProjectTo<ItemDetailsServiceModel>(this.mapper)
+                .FirstOrDefault();
         }
 
         public bool ItemCategoryExists(int id)

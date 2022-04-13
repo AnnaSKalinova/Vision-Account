@@ -130,10 +130,16 @@ namespace AccountingProgram.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<decimal>("Profit")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("UnitCost")
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("UnitPriceExclVat")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("UnitPriceInclVat")
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<int>("VatGroup")

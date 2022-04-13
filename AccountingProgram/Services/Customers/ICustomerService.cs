@@ -20,6 +20,8 @@
 
         IEnumerable<RouteCustomerServiceModel> GetRoutes();
 
+        CustomerDetailsServiceModel Details(int id);
+
         bool CustomerExists(int id);
 
         int Create(

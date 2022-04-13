@@ -15,6 +15,7 @@
     using AutoMapper;
 
     using static WebConstants;
+    using System.Globalization;
 
     public class SalesInvoicesController : Controller
     {
@@ -139,11 +140,6 @@
 
             var salesInvoice = this.salesInvoices.Details(id);
 
-            if (salesInvoice.UserId != userId && !User.IsAdmin())
-            {
-                return Unauthorized();
-            }
-
             var salesInvoiceForm = this.mapper.Map<SalesInvoiceFormModel>(salesInvoice);
 
             salesInvoiceForm.Customers = this.customers.AllCustomers();
@@ -190,9 +186,14 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, string information)
         {
             var salesInvoice = this.salesInvoices.Details(id);
+
+            if (!information.Contains(salesInvoice.CustomerName) || !information.Contains(salesInvoice.PostingDate))
+            {
+                return BadRequest();
+            }
 
             return View(salesInvoice);
         }

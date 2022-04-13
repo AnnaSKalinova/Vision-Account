@@ -8,9 +8,9 @@
                 <div class="card-body">
                     <h3 class="card-title">@salesInvoice.Id</h3>
                     <h6 class="card-title">Customer: @salesInvoice.CustomerName</h6>
-                    <h6 class="card-title">Posting Date: @salesInvoice.PostingDate</h6>
-                    <h6 class="card-title">Total Amount Excl. Vat: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h6>
-                    <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" class="btn btn-secondary">More details</a>
+                    <h6 class="card-title">Posting date: @salesInvoice.PostingDate</h6>
+                    <h6 class="card-title">Total amount excl. VAT: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h6>
+                    <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" asp-route-information="@(salesInvoice.CustomerName + "-" + salesInvoice.PostingDate)" class="btn btn-secondary">More details</a>
                     @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsAdmin())
                     {
                         <a asp-controller="SalesInvoices" asp-action="Edit" asp-route-id="@salesInvoice.Id" class="btn btn-warning">Edit</a>

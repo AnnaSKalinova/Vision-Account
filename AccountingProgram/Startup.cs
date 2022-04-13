@@ -89,7 +89,26 @@ namespace AccountingProgram
                    endpoints.MapControllerRoute(
                        name: "Areas",
                        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+                   endpoints.MapControllerRoute(
+                       name: "Customer Details",
+                       pattern: "Customers/Details/{id}/{information}",
+                       defaults: new { controller = "Customers", action = "Details" });
+                   endpoints.MapControllerRoute(
+                       name: "Driver Details",
+                       pattern: "Drivers/Details/{id}/{information}",
+                       defaults: new { controller = "Drivers", action = "Details" });
+                   endpoints.MapControllerRoute(
+                       name: "Item Details",
+                       pattern: "Items/Details/{id}/{information}",
+                       defaults: new { controller = "Items", action = "Details" });
+                   endpoints.MapControllerRoute(
+                       name: "Route Details",
+                       pattern: "Routes/Details/{id}/{information}",
+                       defaults: new { controller = "Routes", action = "Details" });
+                   endpoints.MapControllerRoute(
+                       name: "Sales Invoice Details",
+                       pattern: "SalesInvoices/Details/{id}/{information}",
+                       defaults: new { controller = "SalesInvoices", action = "Details" });
                    endpoints.MapDefaultControllerRoute();
                    endpoints.MapRazorPages();
                });

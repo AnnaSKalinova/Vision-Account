@@ -46,7 +46,7 @@
                     <h6 class="card-title">Category: @item.ItemCategory</h6>
                     <h6 class="card-title">Unit price excl. VAT: @item.UnitPriceExclVat.ToString("0.00") lv.</h6>
                     <h6 class="card-title">Unit cost: @item.UnitCost.ToString("0.00") lv.</h6>
-                    <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Id" class="card-link">More details</a>
+                    <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Id" asp-route-information="@(item.Name + "-" + item.ItemCategory)" class="card-link">More details</a>
                 </div>
             </div>
         }

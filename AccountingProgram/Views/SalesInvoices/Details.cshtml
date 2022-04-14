@@ -4,27 +4,55 @@
     ViewBag.Title = "Sales invoice details";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="card mr-3" style="width: 18rem;">
-            <div class="card-body">
-                <h3 class="card-title">@Model.Id</h3>
-                <h6 class="card-title">Customer: @Model.CustomerName</h6>
-                @{
-                    String.Format("dd.MM.yyyy", Model.PostingDate);
-                 }
-                <h6 class="card-title">Posting date: @Model.PostingDate</h6>
-                <h6 class="card-title">Due date: @Model.DueDate</h6>
-                <h6 class="card-title">Item: @Model.ItemName</h6>
-                <h6 class="card-title">Count: @Model.Count</h6>
-                <h6 class="card-title">Total amount excl. VAT: @Model.TotalAmountExclVat.ToString("0.00") lv.</h6>
-                <h6 class="card-title">VAT: @Model.Vat.ToString("0.00") lv.</h6>
-                <h6 class="card-title">Total Amount incl. VAT: @Model.TotalAmountInclVat.ToString("0.00") lv.</h6>
-                <h6 class="card-title">Created by: @Model.AccountantName</h6>
-                <h6 class="card-title">Profit: @Model.Profit.ToString("0.00") lv.</h6>
-            </div>
-        </div>
-    </div>
+<h1 class="heading-margin text-center">@Model.Id</h1>
+
+<div class="container col-6">
+    <table class="table table-striped">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font-weight-bold">Customer</td>
+                <td>@Model.CustomerName</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Posting date</td>
+                <td>@Model.PostingDate</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Due date</td>
+                <td>@Model.DueDate</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Item</td>
+                <td>@Model.ItemName</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Count</td>
+                <td>@Model.Count</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Total amount excl. VAT</td>
+                <td>@Model.TotalAmountExclVat.ToString("0.00") lv.</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">VAT</td>
+                <td>@Model.Vat.ToString("0.00") lv.</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Total amount incl. VAT</td>
+                <td>@Model.TotalAmountInclVat.ToString("0.00") lv.</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Profit</td>
+                <td>@Model.Profit.ToString("0.00") lv.</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Accountant</td>
+                <td>@Model.AccountantName</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {}
+    "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {}
   },
   "projects": {
-    "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {
+    "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
+        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
         "projectName": "AccountingProgram.Test",
-        "projectPath": "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
+        "projectPath": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram.Test\\obj\\",
+        "outputPath": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram.Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -31,8 +31,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
-                "projectPath": "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj"
+              "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
+                "projectPath": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj"
               }
             }
           }
@@ -95,14 +95,14 @@
         }
       }
     },
-    "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
+    "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "projectName": "AccountingProgram",
-        "projectPath": "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectPath": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "E:\\AnNI\\Programming\\Final Project\\10. URL Details\\AccountingProgram\\AccountingProgram\\obj\\",
+        "outputPath": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons\\AccountingProgram\\AccountingProgram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

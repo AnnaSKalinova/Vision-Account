@@ -1,11 +1,8 @@
 ﻿namespace AccountingProgram.Controllers.Api
 {
-    using AccountingProgram.Services.Statistics;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+
+    using AccountingProgram.Services.Statistics;
 
     [ApiController]
     [Route("api/statistics")]

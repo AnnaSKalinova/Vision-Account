@@ -12,7 +12,7 @@
     using AccountingProgram.Data;
     using AccountingProgram.Data.Models;
 
-    using static AccountingProgram.Areas.Admin.AdminConstants;
+    using static AccountingProgram.Areas.ChefAccountant.ChefAccountantConstants;
     using System.Threading.Tasks;
 
     public static class ApplicationBuilderExtentions
@@ -26,7 +26,7 @@
             MigrateDatabase(services);
 
             SeedItemCategories(services);
-            SeedAdministrator(services);
+            SeedChefAccountant(services);
 
             return app;
         }
@@ -61,7 +61,7 @@
             data.SaveChanges();
         }
 
-        private static void SeedAdministrator(IServiceProvider services)
+        private static void SeedChefAccountant(IServiceProvider services)
         {
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
@@ -69,26 +69,26 @@
             Task.
                 Run(async () =>
                 {
-                    if (await roleManager.RoleExistsAsync(AdministratorRoleName))
+                    if (await roleManager.RoleExistsAsync(ChefAccountantRoleName))
                     {
                         return;
                     }
 
-                    var role = new IdentityRole { Name = AdministratorRoleName };
+                    var role = new IdentityRole { Name = ChefAccountantRoleName };
 
                     await roleManager.CreateAsync(role);
 
-                    const string adminEmail = "admin@visionaccount.com";
-                    const string adminPassword = "admin12";
+                    const string ChefAccountantEmail = "admin@visionaccount.com";
+                    const string ChefAccountantPassword = "admin12";
 
                     var user = new User
                     {
-                        Email = adminEmail,
-                        UserName = adminEmail,
+                        Email = ChefAccountantEmail,
+                        UserName = "Admin",
                         FullName = "Admin"
                     };
 
-                    await userManager.CreateAsync(user, adminPassword);
+                    await userManager.CreateAsync(user, ChefAccountantPassword);
 
                     await userManager.AddToRoleAsync(user, role.Name);
                 })

@@ -9,7 +9,6 @@
     using AccountingProgram.Data.Models;
     using AccountingProgram.Models.SalesInvoices;
     using AccountingProgram.Services.SalesInvoices.Models;
-    using AutoMapper;
 
     public class SalesInvoiceService : ISalesInvoiceService
     {
@@ -139,7 +138,7 @@
             var totalAmountExclVat = item.UnitPriceExclVat * count;
             var vat = totalAmountExclVat * ((int)item.VatGroup) * 0.01m;
             var totalAmountInclVat = totalAmountExclVat + vat;
-            var profit = totalAmountExclVat - count * (item.UnitPriceExclVat - item.UnitCost);
+            var profit = totalAmountExclVat - count * item.UnitCost;
 
             var salesInvoiceData = new SalesInvoice
             {
@@ -181,10 +180,29 @@
             DateTime salesInvPostingDate;
             DateTime.TryParseExact(postingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
 
+            var customer = this.data
+                .Customers
+                .Where(c => c.Id == customerId)
+                .FirstOrDefault();
+
+            var item = this.data.Items
+                .Where(i => i.Id == itemId)
+                .FirstOrDefault();
+
+            var totalAmountExclVat = item.UnitPriceExclVat * count;
+            var vat = totalAmountExclVat * ((int)item.VatGroup) * 0.01m;
+            var totalAmountInclVat = totalAmountExclVat + vat;
+            var profit = totalAmountExclVat - count * item.UnitCost;
+
             salesInvoiceData.CustomerId = customerId;
             salesInvoiceData.PostingDate = salesInvPostingDate;
+            salesInvoiceData.DueDate = salesInvPostingDate.AddDays((int)customer.PaymentTerm);
             salesInvoiceData.ItemId = itemId;
             salesInvoiceData.Count = count;
+            salesInvoiceData.TotalAmountExclVat = totalAmountExclVat;
+            salesInvoiceData.Vat = vat;
+            salesInvoiceData.TotalAmountInclVat = totalAmountInclVat;
+            salesInvoiceData.Profit = profit;
             salesInvoiceData.isPosted = false;
 
             this.data.SaveChanges();

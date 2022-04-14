@@ -9,5 +9,7 @@
         public int TotalCustomers { get; init; }
 
         public int TotalItems { get; init; }
+
+        public decimal TotalProfit { get; init; }
     }
 }

@@ -29,7 +29,7 @@
         public Accountant Accountant { get; init; }
 
         [Column(TypeName = "decimal(18,4)")]
-        public decimal Profit { get; init; }
+        public decimal Profit { get; set; }
 
         public bool isPosted { get; set; }
     }

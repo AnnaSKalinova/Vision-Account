@@ -1,7 +1,7 @@
 ﻿namespace AccountingProgram.Services.SalesInvoices
 {
     using System.Collections.Generic;
-
+    using AccountingProgram.Data.Models;
     using AccountingProgram.Models.SalesInvoices;
     using AccountingProgram.Services.SalesInvoices.Models;
 

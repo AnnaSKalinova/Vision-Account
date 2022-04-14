@@ -38,18 +38,30 @@
 
 <div class="container">
     <div class="row">
-        @foreach (var item in Model.Items)
-        {
-            <div class="card mr-3" style="width: 18rem;">
-                <div class="card-body">
-                    <h3 class="card-title">@item.Name</h3>
-                    <h6 class="card-title">Category: @item.ItemCategory</h6>
-                    <h6 class="card-title">Unit price excl. VAT: @item.UnitPriceExclVat.ToString("0.00") lv.</h6>
-                    <h6 class="card-title">Unit cost: @item.UnitCost.ToString("0.00") lv.</h6>
-                    <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Id" asp-route-information="@(item.Name + "-" + item.ItemCategory)" class="card-link">More details</a>
-                </div>
-            </div>
-        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Item name</th>
+                    <th class="text-center" scope="col">Category</th>
+                    <th class="text-center" scope="col">Unit price excl. VAT</th>
+                    <th class="text-center" scope="col">Unit cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <th scope="row">@item.Name</th>
+                        <td class="text-center">@item.ItemCategory</td>
+                        <td class="text-center">@item.UnitPriceExclVat.ToString("0.00") lv.</td>
+                        <td class="text-center">@item.UnitCost.ToString("0.00") lv.</td>
+                        <td>
+                            <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Id" asp-route-information="@(item.Name + "-" + item.ItemCategory)" class="btn btn-secondary float-right">More details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 

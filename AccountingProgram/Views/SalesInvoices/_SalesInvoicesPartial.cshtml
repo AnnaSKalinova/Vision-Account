@@ -1,23 +1,37 @@
 ﻿@model IEnumerable<SalesInvoiceServiceModel>
 
+
 <div class="container">
     <div class="row">
-        @foreach (var salesInvoice in Model)
-        {
-            <div class="card mr-3" style="width: 18rem;">
-                <div class="card-body">
-                    <h3 class="card-title">@salesInvoice.Id</h3>
-                    <h6 class="card-title">Customer: @salesInvoice.CustomerName</h6>
-                    <h6 class="card-title">Posting date: @salesInvoice.PostingDate</h6>
-                    <h6 class="card-title">Total amount excl. VAT: @salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</h6>
-                    <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" asp-route-information="@(salesInvoice.CustomerName + "-" + salesInvoice.PostingDate)" class="btn btn-secondary">More details</a>
-                    @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsChefAccountant())
-                    {
-                        <a asp-controller="SalesInvoices" asp-action="Edit" asp-route-id="@salesInvoice.Id" class="btn btn-warning">Edit</a>
-                        <a asp-controller="SalesInvoices" asp-action="Delete" asp-route-id="@salesInvoice.Id" class="btn btn-danger">Delete</a>
-                    }
-                </div>
-            </div>
-        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Number</th>
+                    <th class="text-center" scope="col">Customer</th>
+                    <th class="text-center" scope="col">Posting date</th>
+                    <th class="text-center" scope="col">Total amount excl. VAT</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var salesInvoice in Model)
+                {
+                    <tr>
+                        <th scope="row">@salesInvoice.Id</th>
+                        <td class="text-center">@salesInvoice.CustomerName</td>
+                        <td class="text-center">@salesInvoice.PostingDate</td>
+                        <td class="text-center">@salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</td>
+                        <td>
+                            @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsChefAccountant())
+                            {
+                                <a asp-area="" asp-controller="SalesInvoices" asp-action="ChangeStatus" asp-route-id="@salesInvoice.Id" class="btn btn-info ml-1 float-right disabled">@(salesInvoice.IsPosted ? "Posted" : "Unposted")</a>
+                                <a asp-controller="SalesInvoices" asp-action="Delete" asp-route-id="@salesInvoice.Id" class="btn btn-danger float-right ml-1">Delete</a>
+                                <a asp-controller="SalesInvoices" asp-action="Edit" asp-route-id="@salesInvoice.Id" asp-route-information="@(salesInvoice.CustomerName + "-" + salesInvoice.PostingDate)" class="btn btn-warning float-right ml-1">Edit</a>
+                            }
+                            <a asp-controller="SalesInvoices" asp-action="Details" asp-route-id="@salesInvoice.Id" asp-route-information="@(salesInvoice.CustomerName + "-" + salesInvoice.PostingDate)" class="btn btn-secondary float-right ml-1">More details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

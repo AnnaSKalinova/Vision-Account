@@ -94,10 +94,6 @@ namespace AccountingProgram
                        pattern: "Customers/Details/{id}/{information}",
                        defaults: new { controller = "Customers", action = "Details" });
                    endpoints.MapControllerRoute(
-                       name: "Driver Details",
-                       pattern: "Drivers/Details/{id}/{information}",
-                       defaults: new { controller = "Drivers", action = "Details" });
-                   endpoints.MapControllerRoute(
                        name: "Item Details",
                        pattern: "Items/Details/{id}/{information}",
                        defaults: new { controller = "Items", action = "Details" });
@@ -109,6 +105,10 @@ namespace AccountingProgram
                        name: "Sales Invoice Details",
                        pattern: "SalesInvoices/Details/{id}/{information}",
                        defaults: new { controller = "SalesInvoices", action = "Details" });
+                   endpoints.MapControllerRoute(
+                       name: "Sales Invoice Edit",
+                       pattern: "SalesInvoices/Edit/{id}/{information}",
+                       defaults: new { controller = "SalesInvoices", action = "Edit" });
                    endpoints.MapDefaultControllerRoute();
                    endpoints.MapRazorPages();
                });

@@ -57,6 +57,7 @@
                 CustomerName = si.CustomerName,
                 PostingDate = si.PostingDate,
                 TotalAmountExclVat = si.TotalAmountExclVat,
+                IsPosted = si.IsPosted
             });
 
             return View(query);
@@ -128,7 +129,7 @@
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, string information)
         {
             var userId = this.User.GetId();
 
@@ -138,6 +139,11 @@
             }
 
             var salesInvoice = this.salesInvoices.Details(id);
+
+            if (!information.Contains(salesInvoice.CustomerName) || !information.Contains(salesInvoice.PostingDate))
+            {
+                return BadRequest();
+            }
 
             var salesInvoiceForm = this.mapper.Map<SalesInvoiceFormModel>(salesInvoice);
 

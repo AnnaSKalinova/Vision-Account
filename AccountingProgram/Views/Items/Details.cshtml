@@ -4,22 +4,48 @@
     ViewBag.Title = "Item details";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="card mr-3" style="width: 18rem;">
-            <div class="card-body">
-                <h3 class="card-title">@Model.Name</h3>
-                <h6 class="card-title">Type: @Model.ItemType.ToString()</h6>
-                <h6 class="card-title">Measure: @Model.Measure</h6>
-                <h6 class="card-title">Category: @Model.ItemCategory</h6>
-                <h6 class="card-title">Unit price excl. VAT: @Model.UnitPriceExclVat.ToString("0.00") lv.</h6>
-                <h6 class="card-title">VAT: @Model.VatGroup %</h6>
-                <h6 class="card-title">Unit price incl. VAT: @Model.UnitPriceInclVat.ToString("0.00") lv.</h6>
-                <h6 class="card-title">Unit cost: @Model.UnitCost.ToString("0.00") lv.</h6>
-                <h6 class="card-title">Profit: @Model.Profit %</h6>
-            </div>
-        </div>
-    </div>
+<h1 class="heading-margin text-center">@Model.Name</h1>
+
+
+<div class="container col-6">
+    <table class="table table-striped">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font-weight-bold">Type</td>
+                <td>@Model.ItemType.ToString()</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Measure</td>
+                <td>@Model.Measure</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Category</td>
+                <td>@Model.ItemCategory</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Unit price excl. VAT</td>
+                <td>@Model.UnitPriceExclVat.ToString("0.00") lv.</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">VAT</td>
+                <td>@Model.VatGroup %</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Unit price incl. VAT</td>
+                <td>@Model.UnitPriceInclVat.ToString("0.00") lv.</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Unit cost</td>
+                <td>@Model.UnitCost.ToString("0.00") lv.</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Profit</td>
+                <td>@Model.Profit %</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 

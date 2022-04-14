@@ -36,14 +36,23 @@
 
 <div class="container">
     <div class="row">
-        @foreach (var driver in Model.Drivers)
-        {
-            <div class="card mr-3" style="width: 18rem;">
-                <div class="card-body">
-                    <h6 class="card-title">@driver.Name -> @driver.RouteCode route</h6>
-                </div>
-            </div>
-        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Driver name</th>
+                    <th scope="col">Route</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var driver in Model.Drivers)
+                {
+                    <tr>
+                        <th scope="row">@driver.Name</th>
+                        <td>@driver.RouteCode route</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 

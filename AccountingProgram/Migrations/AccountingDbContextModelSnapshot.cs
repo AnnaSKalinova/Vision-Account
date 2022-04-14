@@ -211,9 +211,6 @@ namespace AccountingProgram.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("isPosted")
-                        .HasColumnType("bit");
-
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
@@ -231,6 +228,9 @@ namespace AccountingProgram.Migrations
 
                     b.Property<decimal>("Vat")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("isPosted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

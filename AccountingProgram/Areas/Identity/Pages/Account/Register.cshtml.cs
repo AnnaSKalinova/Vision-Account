@@ -1,17 +1,12 @@
 ﻿namespace AccountingProgram.Areas.Identity.Pages.Account
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
-    using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.AspNetCore.WebUtilities;
-    using Microsoft.Extensions.Logging;
 
     using AccountingProgram.Data.Models;
     using static AccountingProgram.Data.DataConstants.User;
@@ -24,9 +19,7 @@
 
         public RegisterModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -44,7 +37,7 @@
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Display(Name = "Full Name")]
+            [Display(Name = "Full name")]
             [StringLength(UserFullNameMaxLength, MinimumLength = UserFullNameMinLength)]
             public string FullName { get; set; }
 
@@ -72,10 +65,10 @@
             if (ModelState.IsValid)
             {
                 var user = new User 
-                { 
-                    UserName = Input.Email, 
-                    Email = Input.Email ,
-                    FullName = Input.FullName
+                {
+                    Email = Input.Email,
+                    FullName = Input.FullName,
+                    UserName = Input.Email
                 };
 
                 var result = await userManager.CreateAsync(user, Input.Password);

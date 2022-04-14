@@ -4,6 +4,21 @@
     ViewBag.Title = "Home Page";
 }
 
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <h1 class="col-md-3 text-center">
+                Vision account
+            </h1>
+        </div>
+        <div class="carousel-item">
+            <h1 class="col-md-3 text-center">
+                Total profit: @Model.TotalProfit.ToString("0.00") lv.
+            </h1>
+        </div>
+    </div>
+</div>
+
 <div class="jumbotron">
     <div class="row">
         <h2 class="col-md-3 text-center">

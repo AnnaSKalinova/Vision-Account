@@ -225,5 +225,17 @@
 
             this.data.SaveChanges();
         }
+
+        public void Delete(int id)
+        {
+            var salesInvoice = this.data
+                .SalesInvoices
+                .Where(si => si.Id == id)
+                .FirstOrDefault();
+
+            this.data.Remove(salesInvoice);
+
+            this.data.SaveChanges();
+        }
     }
 }

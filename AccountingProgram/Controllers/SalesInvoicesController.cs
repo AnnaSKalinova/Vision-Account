@@ -203,5 +203,12 @@
 
             return View(salesInvoice);
         }
+
+        public IActionResult Delete(int id)
+        {
+            this.salesInvoices.Delete(id);
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

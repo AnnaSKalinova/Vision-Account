@@ -11,6 +11,8 @@
 
     public class SalesInvoiceFormModel
     {
+        public int Id { get; init; }
+
         [Display(Name = "Customer")]
         public int CustomerId { get; init; }
         public IEnumerable<CustomerServiceModel> Customers { get; set; }

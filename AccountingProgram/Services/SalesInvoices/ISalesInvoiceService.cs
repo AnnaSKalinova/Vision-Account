@@ -1,7 +1,7 @@
 ﻿namespace AccountingProgram.Services.SalesInvoices
 {
     using System.Collections.Generic;
-    using AccountingProgram.Data.Models;
+
     using AccountingProgram.Models.SalesInvoices;
     using AccountingProgram.Services.SalesInvoices.Models;
 
@@ -37,6 +37,8 @@
         IEnumerable<SalesInvoiceServiceModel> ByUser(string userId);
 
         bool IsByAccountant(int salesInvoiceId, int accountantId);
+
+        void Delete(int id);
 
         IEnumerable<string> AllSalesInvoicesChains();
     }

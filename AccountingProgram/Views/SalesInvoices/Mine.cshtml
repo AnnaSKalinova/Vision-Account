@@ -6,11 +6,11 @@
     ViewBag.AllowSalesInvoiceEdit = true;
 }
 
+<partial name="_SalesInvoicesPartial" model="@Model" />
+
 @{
     if (!Model.Any())
     {
-        <h2 class="text-center">You do not have any sales invoices yet.</h2>
+        <h2 class="text-center">You have no sales invoices yet!</h2>
     }
 }
-
-<partial name="_SalesInvoicesPartial" model="@Model" />

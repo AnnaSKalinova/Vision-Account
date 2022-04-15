@@ -14,8 +14,8 @@
         public string Name { get; set; }
 
         [Required]
-        [RegularExpression(PhoneNumberRegex)]
-        public string PhoneNumber { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         public string UserId { get; set; }

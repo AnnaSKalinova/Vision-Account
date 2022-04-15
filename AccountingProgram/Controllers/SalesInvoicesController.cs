@@ -74,11 +74,6 @@
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.accountants.UserIsAlreadyAccountant(this.User.GetId()))
-            {
-                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
-            }
-
             return View(new SalesInvoiceFormModel
             {
                 Customers = this.customers.AllCustomers(),
@@ -94,7 +89,7 @@
 
             if (accountantId == 0)
             {
-                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
+                this.ModelState.AddModelError(nameof(salesInvoice.AccountantId), "Accountant does not exist!");
             }
 
             if (this.customers.CustomerExists(salesInvoice.CustomerId))
@@ -133,9 +128,9 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.accountants.UserIsAlreadyAccountant(userId) && !User.IsChefAccountant())
+            if (!this.accountants.IsUserAccountant(userId) && !User.IsChefAccountant())
             {
-                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
+                return BadRequest();
             }
 
             var salesInvoice = this.salesInvoices.Details(id);
@@ -161,7 +156,7 @@
 
             if (accountantId == 0 && !User.IsChefAccountant())
             {
-                return RedirectToAction(nameof(AccountantsController.Become), "Accountants");
+                return BadRequest();
             }
 
             if (this.customers.CustomerExists(salesInvoice.CustomerId))

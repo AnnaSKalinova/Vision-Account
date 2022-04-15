@@ -18,7 +18,7 @@
             var accountantService = new AccountantService(data);
 
             //Act
-            var result = accountantService.UserIsAlreadyAccountant(userId);
+            var result = accountantService.IsUserAccountant(userId);
 
             //Assert
             Assert.True(result);
@@ -33,7 +33,7 @@
             var accountantService = new AccountantService(data);
 
             //Act
-            var result = accountantService.UserIsAlreadyAccountant("AnotherUserId");
+            var result = accountantService.IsUserAccountant("AnotherUserId");
 
             //Assert
             Assert.False(result);

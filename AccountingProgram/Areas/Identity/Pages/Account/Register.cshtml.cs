@@ -9,20 +9,26 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
 
     using AccountingProgram.Data.Models;
+    using static AccountingProgram.Areas.UserConstants;
     using static AccountingProgram.Data.DataConstants.User;
+    using AccountingProgram.Data;
+    using AccountingProgram.Services.Accountants;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
+        private readonly IAccountantService accountants;
 
         public RegisterModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IAccountantService accountants)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.accountants = accountants;
         }
 
         [BindProperty]
@@ -51,6 +57,8 @@
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string UserType { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -68,10 +76,16 @@
                 {
                     Email = Input.Email,
                     FullName = Input.FullName,
-                    UserName = Input.Email
+                    UserName = Input.Email,
+                    IsAccountant = Input.UserType == UserTypeAccountant
                 };
 
                 var result = await userManager.CreateAsync(user, Input.Password);
+
+                if (user.IsAccountant)
+                {
+                    this.accountants.AddAccountant(user);
+                }
 
                 if (result.Succeeded)
                 {

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1Rnjy+dKd+/1JFho83YdgAKXT1+5GBWitBZhCkH/ioHThz9EMJrZywNi1UnXLnaczAxdL0vaQJVNehDA8eg33A==",
+  "dgSpecHash": "y+dt5h3s5mw5/C3fy6C13X3uNi/yEIhuxpcSRc/Vv92uFL1qWDj5vwtV0yZJJ/8Wx/XkvhqM6uiMH3eqmTs7bw==",
   "success": true,
-  "projectFilePath": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons - Copy\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
+  "projectFilePath": "E:\\AnNI\\Programming\\Final Project\\12. Adding Post Unpost Buttons - Copy - Copy\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ivan\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Ivan\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

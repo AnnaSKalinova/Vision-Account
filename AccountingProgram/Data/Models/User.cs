@@ -10,5 +10,7 @@
     {
         [MaxLength(UserFullNameMaxLength)]
         public string FullName { get; set; }
+
+        public bool IsAccountant { get; set; }
     }
 }

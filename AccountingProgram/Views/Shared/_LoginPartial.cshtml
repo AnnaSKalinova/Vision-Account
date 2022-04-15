@@ -8,19 +8,13 @@
     @if (SignInManager.IsSignedIn(User))
     {
         var userId = User.GetId();
-        var userIsAccountant = Accountants.UserIsAlreadyAccountant(userId);
+        var userIsAccountant = Accountants.IsUserAccountant(userId);
         var userIsChiefAccountant = User.IsChefAccountant();
 
         @if (userIsAccountant && !userIsChiefAccountant)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="Mine">My invoices</a>
-            </li>
-        }
-        else if (!userIsChiefAccountant)
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Accountants" asp-action="Become">Accountant</a>
             </li>
         }
         else if (userIsChiefAccountant)

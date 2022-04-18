@@ -58,7 +58,7 @@
         [Authorize]
         public IActionResult Add(AddItemFormModel item)
         {
-            if (this.items.ItemCategoryExists(item.ItemCategoryId))
+            if (!this.items.ItemCategoryExists(item.ItemCategoryId))
             {
                 this.ModelState.AddModelError(nameof(item.ItemCategoryId), "Category does not exist!");
             }

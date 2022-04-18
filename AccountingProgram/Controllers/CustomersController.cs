@@ -62,7 +62,7 @@
         [Authorize]
         public IActionResult Add(AddCustomerFormModel customer)
         {
-            if (this.routes.RouteExists(customer.RouteId))
+            if (!this.routes.RouteExists(customer.RouteId))
             {
                 this.ModelState.AddModelError(nameof(customer.RouteId), "Route does not exist!");
             }

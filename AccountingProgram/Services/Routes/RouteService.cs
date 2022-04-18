@@ -96,7 +96,7 @@
 
         public bool RouteExists(int id)
         {
-            return !this.data.Routes.Any(r => r.Id == id);
+            return this.data.Routes.Any(r => r.Id == id);
         }
 
         public RouteDetailsServiceModel Details(int id)

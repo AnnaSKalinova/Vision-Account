@@ -14,13 +14,13 @@
         @if (userIsAccountant && !userIsChiefAccountant)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="SalesInvoices" asp-action="Mine">My invoices</a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="SalesInvoices" asp-action="Mine">My invoices</a>
             </li>
         }
         else if (userIsChiefAccountant)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="ChefAccountant" asp-controller="SalesInvoices" asp-action="All">All sales invoices</a>
+                <a class="btn btn-outline-primary" asp-area="ChefAccountant" asp-controller="SalesInvoices" asp-action="All">All sales invoices</a>
             </li>
         }
 

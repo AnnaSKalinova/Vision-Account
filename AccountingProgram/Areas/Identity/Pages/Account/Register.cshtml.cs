@@ -84,7 +84,7 @@
 
                 if (user.IsAccountant)
                 {
-                    this.accountants.AddAccountant(user);
+                    this.accountants.AddAccountant(user.Id);
                 }
 
                 if (result.Succeeded)

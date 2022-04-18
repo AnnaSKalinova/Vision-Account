@@ -92,12 +92,12 @@
                 this.ModelState.AddModelError(nameof(salesInvoice.AccountantId), "Accountant does not exist!");
             }
 
-            if (this.customers.CustomerExists(salesInvoice.CustomerId))
+            if (!this.customers.CustomerExists(salesInvoice.CustomerId))
             {
                 this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), "Customer does not exist!");
             }
 
-            if (this.items.ItemExists(salesInvoice.ItemId))
+            if (!this.items.ItemExists(salesInvoice.ItemId))
             {
                 this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
             }
@@ -159,12 +159,12 @@
                 return BadRequest();
             }
 
-            if (this.customers.CustomerExists(salesInvoice.CustomerId))
+            if (!this.customers.CustomerExists(salesInvoice.CustomerId))
             {
                 this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), "Customer does not exist!");
             }
 
-            if (this.items.ItemExists(salesInvoice.ItemId))
+            if (!this.items.ItemExists(salesInvoice.ItemId))
             {
                 this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
             }

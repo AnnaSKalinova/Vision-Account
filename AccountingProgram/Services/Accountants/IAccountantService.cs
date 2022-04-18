@@ -8,6 +8,6 @@ namespace AccountingProgram.Services.Accountants
 
         public bool IsUserAccountant(string userId);
 
-        public void AddAccountant(User user);
+        public void AddAccountant(string userId);
     }
 }

@@ -6,7 +6,7 @@
     using Microsoft.Extensions.Caching.Memory;
 
     using AccountingProgram.Services.Statistics;
-    
+    using static WebConstants.Cache;
 
     public class HomeController : Controller
     {
@@ -21,7 +21,7 @@
 
         public IActionResult Index()
         {
-            const string totalStatisticsCacheKey = "TotalStatisticsCacheKey";
+            const string totalStatisticsCacheKey = TotalStatisticsCacheKey;
 
             var totalStatistics = this.cache.Get<StatisticsServiceModel>(totalStatisticsCacheKey);
 

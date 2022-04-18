@@ -110,7 +110,7 @@
 
         public bool CustomerExists(int id)
         {
-            return !this.data.Customers.Any(c => c.Id == id);
+            return this.data.Customers.Any(c => c.Id == id);
         }
 
         public IEnumerable<RouteCustomerServiceModel> GetRoutes()

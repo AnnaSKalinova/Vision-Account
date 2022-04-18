@@ -59,7 +59,7 @@
         [Authorize]
         public IActionResult Add(AddDriverFormModel driver)
         {
-            if (this.routes.RouteExists(driver.RouteId))
+            if (!this.routes.RouteExists(driver.RouteId))
             {
                 this.ModelState.AddModelError(nameof(driver.RouteId), "Route does not exist!");
             }

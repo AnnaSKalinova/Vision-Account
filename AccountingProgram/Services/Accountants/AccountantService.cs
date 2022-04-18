@@ -24,8 +24,12 @@
                 .FirstOrDefault();
         }
 
-        public void AddAccountant(User user)
+        public void AddAccountant(string userId)
         {
+            var user = this.data
+                .Users.Where(u => u.Id == userId && u.IsAccountant == true)
+                .FirstOrDefault();
+
             var accountantData = new Accountant
             {
                 Name = user.FullName,

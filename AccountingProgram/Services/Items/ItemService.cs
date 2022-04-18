@@ -122,12 +122,12 @@
 
         public bool ItemCategoryExists(int id)
         {
-            return !this.data.ItemCategories.Any(ic => ic.Id == id);
+            return this.data.ItemCategories.Any(ic => ic.Id == id);
         }
 
         public bool ItemExists(int id)
         {
-            return !this.data.Items.Any(i => i.Id == id);
+            return this.data.Items.Any(i => i.Id == id);
         }
     }
 }

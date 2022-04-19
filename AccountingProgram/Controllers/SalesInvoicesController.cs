@@ -123,6 +123,7 @@
             return RedirectToAction(nameof(All));
         }
 
+        [HttpGet]
         [Authorize]
         public IActionResult Edit(int id, string information)
         {
@@ -190,6 +191,11 @@
         public IActionResult Details(int id, string information)
         {
             var salesInvoice = this.salesInvoices.Details(id);
+
+            if (salesInvoice == null)
+            {
+                return NotFound();
+            }
 
             if (!information.Contains(salesInvoice.CustomerName) || !information.Contains(salesInvoice.PostingDate))
             {

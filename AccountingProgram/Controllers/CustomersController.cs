@@ -92,6 +92,11 @@
         {
             var customer = this.customers.Details(id);
 
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
             if (!information.Contains(customer.Name) || !information.Contains(customer.RouteCode))
             {
                 return BadRequest();

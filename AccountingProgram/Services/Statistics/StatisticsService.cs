@@ -3,7 +3,7 @@
     using System.Linq;
 
     using AccountingProgram.Data;
-    
+
     public class StatisticsService : IStatisticsService
     {
         private readonly AccountingDbContext data;

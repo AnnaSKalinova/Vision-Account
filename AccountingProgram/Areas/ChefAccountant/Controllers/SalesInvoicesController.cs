@@ -4,6 +4,11 @@
 
     using AccountingProgram.Services.SalesInvoices;
 
+    using static AccountingProgram.Areas.ChefAccountant.ChefAccountantConstants;
+    using Microsoft.AspNetCore.Authorization;
+
+    [Area(AreaName)]
+    [Authorize(Roles = ChefAccountantRoleName)]
     public class SalesInvoicesController : ChefAccountantController
     {
         private readonly ISalesInvoiceService salesInvoices;

@@ -11,7 +11,6 @@
     using AccountingProgram.Data.Models;
     using static AccountingProgram.Areas.UserConstants;
     using static AccountingProgram.Data.DataConstants.User;
-    using AccountingProgram.Data;
     using AccountingProgram.Services.Accountants;
 
     [AllowAnonymous]

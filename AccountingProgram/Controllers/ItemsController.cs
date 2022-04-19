@@ -88,6 +88,11 @@
         {
             var item = this.items.Details(id);
 
+            if (item == null)
+            {
+                return NotFound();
+            }
+
             if (!information.Contains(item.Name) || !information.Contains(item.ItemCategory))
             {
                 return BadRequest();

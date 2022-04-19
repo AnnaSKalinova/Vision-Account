@@ -2,8 +2,19 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class SalesInvoiceDetailsServiceModel : SalesInvoiceServiceModel
+    public class SalesInvoiceDetailsServiceModel
     {
+        public int Id { get; init; }
+
+        public string CustomerName { get; init; }
+
+        public string PostingDate { get; init; }
+
+        [Display(Name = "Total amount excl. VAT")]
+        public decimal TotalAmountExclVat { get; init; }
+
+        public bool IsPosted { get; init; }
+
         public string DueDate { get; init; }
 
         public string ItemName { get; init; }

@@ -70,6 +70,11 @@
         {
             var route = this.routes.Details(id);
 
+            if (route == null)
+            {
+                return NotFound();
+            }
+
             if (!information.Contains(route.Code))
             {
                 return BadRequest();

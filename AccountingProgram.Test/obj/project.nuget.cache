@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mCK0zihTWf0LnwyRxMUukW3zB20+g1PhdX6Oq5GPTM+KAR9KXmwhHGkJeK2+M7nFIXvsuVn6P0s7S/Nb+T7tuA==",
+  "dgSpecHash": "ef4BakgohrvUXEKr9BpSwmCNIqwWRT6IydfLmzCoMp6UsNvgZbDRUQDmyCMbjOXKgwNrzYqJfH/cJOY7cTzXAQ==",
   "success": true,
-  "projectFilePath": "E:\\AnNI\\Programming\\Final Project\\16 Tests\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
+  "projectFilePath": "E:\\AnNI\\Programming\\Final Project\\17 More tests\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ivan\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Ivan\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

@@ -8425,11 +8425,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\17 More tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+      "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
       "projectName": "AccountingProgram",
-      "projectPath": "E:\\AnNI\\Programming\\Final Project\\17 More tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+      "projectPath": "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
       "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-      "outputPath": "E:\\AnNI\\Programming\\Final Project\\17 More tests\\AccountingProgram\\AccountingProgram\\obj\\",
+      "outputPath": "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

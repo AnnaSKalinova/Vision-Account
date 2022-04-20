@@ -120,7 +120,7 @@
 
             TempData[GlobalMessageKey] = "You created the sales invoice successfully. It is now waiting for approval!";
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(this.Mine));
         }
 
         [HttpGet]

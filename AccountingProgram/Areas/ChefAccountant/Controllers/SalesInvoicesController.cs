@@ -1,11 +1,11 @@
 ﻿namespace AccountingProgram.Areas.ChefAccountant.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using AccountingProgram.Services.SalesInvoices;
 
     using static AccountingProgram.Areas.ChefAccountant.ChefAccountantConstants;
-    using Microsoft.AspNetCore.Authorization;
 
     [Area(AreaName)]
     [Authorize(Roles = ChefAccountantRoleName)]

@@ -27,7 +27,7 @@
             string searchTerm, 
             CustomerSorting sorting, 
             int currentPage = 1, 
-            int customersPerPage = int.MaxValue)
+            int customersPerPage = SearchCustomersQueryModel.CustomersPerPage)
         {
             var customersQuery = this.data.Customers.AsQueryable();
 

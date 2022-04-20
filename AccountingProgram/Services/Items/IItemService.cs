@@ -11,7 +11,7 @@
             string searchTerm, 
             ItemSorting sorting,
             int currentPage = 1,
-            int salesInvoicesPerPage = int.MaxValue);
+            int itemsPerPage = SearchItemsQueryModel.ItemsPerPage);
 
         IEnumerable<ItemCategoryServiceModel> AllItemsCategories();
 

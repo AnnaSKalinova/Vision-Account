@@ -23,16 +23,29 @@
             this.routes = routes;
         }
 
-        public IActionResult All([FromQuery]SearchCustomersQueryModel query)
+        public IActionResult All(
+            [FromQuery]string chain,
+            [FromQuery]string searchTerm,
+            [FromQuery]CustomerSorting sorting,
+            [FromQuery]int currentPage = 1,
+            [FromQuery]int customersPerPage = SearchCustomersQueryModel.CustomersPerPage)
         {
             var queryResult = this.customers.All(
-                query.Chain,
-                query.SearchTerm,
-                query.Sorting,
-                query.CurrentPage,
-                SearchCustomersQueryModel.CustomersPerPage);
+                chain,
+                searchTerm,
+                sorting,
+                currentPage,
+                customersPerPage);
 
             var customersChains = this.customers.AllCustomersChains();
+
+            SearchCustomersQueryModel query = new SearchCustomersQueryModel
+            {
+                Chain = chain,
+                SearchTerm = searchTerm,
+                Sorting = sorting,
+                CurrentPage = currentPage
+            };
 
             query.TotalCustomers = queryResult.TotalCustomers;
             query.Chains = customersChains;

@@ -38,16 +38,29 @@
             this.mapper = mapper;
         }
 
-        public IActionResult All([FromQuery] SearchSalesInvoicesQueryModel query)
+        public IActionResult All(
+            [FromQuery] string chain,
+            [FromQuery] string searchTerm,
+            [FromQuery] SalesInvoiceSorting sorting,
+            [FromQuery] int currentPage = 1,
+            [FromQuery] int salesInvoicesPerPage = SearchSalesInvoicesQueryModel.SalesInvoicesPerPage)
         {
             var queryResult = this.salesInvoices.All(
-                query.Chain,
-                query.SearchTerm,
-                query.Sorting,
-                query.CurrentPage,
-                SearchSalesInvoicesQueryModel.SalesInvoicesPerPage);
+                chain,
+                searchTerm,
+                sorting,
+                currentPage,
+                salesInvoicesPerPage);
 
             var salesInvoiceChains = this.salesInvoices.AllSalesInvoicesChains();
+
+            SearchSalesInvoicesQueryModel query = new SearchSalesInvoicesQueryModel
+            {
+                Chain = chain,
+                SearchTerm = searchTerm,
+                Sorting = sorting,
+                CurrentPage = currentPage
+            };
 
             query.TotalSalesInvoices = queryResult.TotalSalesInvoices;
             query.Chains = salesInvoiceChains;

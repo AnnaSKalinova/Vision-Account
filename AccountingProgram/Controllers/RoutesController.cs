@@ -20,15 +20,26 @@
             this.routes = routes;
         }
 
-        public IActionResult All([FromQuery] SearchRoutesQueryModel query)
+        public IActionResult All(
+            [FromQuery] char code,
+            [FromQuery] RouteSorting sorting,
+            [FromQuery] int currentPage = 1,
+            [FromQuery] int routesPerPage = SearchRoutesQueryModel.RoutesPerPage)
         {
             var queryResult = this.routes.All(
-                query.Code,
-                query.Sorting,
-                query.CurrentPage,
-                SearchRoutesQueryModel.RoutesPerPage);
+                code,
+                sorting,
+                currentPage,
+                routesPerPage);
 
             var routesCodes = this.routes.AllRoutesCodes();
+
+            SearchRoutesQueryModel query = new SearchRoutesQueryModel
+            {
+                Code = code,
+                Sorting = sorting,
+                CurrentPage = currentPage
+            };
 
             query.TotalRoutes = queryResult.TotalRoutes;
             query.Codes = routesCodes;

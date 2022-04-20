@@ -24,7 +24,7 @@
             string searchTerm = null,
             SalesInvoiceSorting sorting = SalesInvoiceSorting.Id,
             int currentPage = 1,
-            int salesInvoicesPerPage = int.MaxValue,
+            int salesInvoicesPerPage = SearchSalesInvoicesQueryModel.SalesInvoicesPerPage,
             bool postedOnly = true)
         {
             var salesInvoicesQuery = this.data.SalesInvoices

@@ -25,7 +25,7 @@
             char code, 
             RouteSorting sorting, 
             int currentPage = 1, 
-            int routesPerPage = int.MaxValue)
+            int routesPerPage = SearchRoutesQueryModel.RoutesPerPage)
         {
             var routesQuery = this.data.Routes.AsQueryable();
 

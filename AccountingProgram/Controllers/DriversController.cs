@@ -23,16 +23,29 @@
             this.routes = routes;
         }
 
-        public IActionResult All([FromQuery]SearchDriversQueryModel query) 
+        public IActionResult All(
+            [FromQuery] char route,
+            [FromQuery] string searchTerm,
+            [FromQuery] DriverSorting sorting,
+            [FromQuery] int currentPage = 1,
+            [FromQuery] int driversPerPage = SearchDriversQueryModel.DriversPerPage) 
         {
             var queryResult = this.drivers.All(
-                query.Route,
-                query.SearchTerm,
-                query.Sorting,
-                query.CurrentPage,
-                SearchDriversQueryModel.DriversPerPage);
+                route,
+                searchTerm,
+                sorting,
+                currentPage,
+                driversPerPage);
 
             var driverRoutes = this.drivers.AllDriversRoutes();
+
+            SearchDriversQueryModel query = new SearchDriversQueryModel
+            {
+                Route = route,
+                SearchTerm = searchTerm,
+                Sorting = sorting,
+                CurrentPage = currentPage
+            };
 
             query.TotalDrivers = queryResult.TotalDrivers;
             query.Routes = driverRoutes;

@@ -20,16 +20,29 @@
             this.items = items;
         }
 
-        public IActionResult All([FromQuery]SearchItemsQueryModel query)
+        public IActionResult All(
+            [FromQuery] string category,
+            [FromQuery] string searchTerm,
+            [FromQuery] ItemSorting sorting,
+            [FromQuery] int currentPage = 1,
+            [FromQuery] int itemsPerPage = SearchItemsQueryModel.ItemsPerPage)
         {
             var queryResult = this.items.All(
-                query.Category,
-                query.SearchTerm,
-                query.Sorting,
-                query.CurrentPage,
-                SearchItemsQueryModel.ItemsPerPage);
+                category,
+                searchTerm,
+                sorting,
+                currentPage,
+                itemsPerPage);
 
             var itemsCategories = this.items.AllItemsCategories();
+
+            SearchItemsQueryModel query = new SearchItemsQueryModel
+            {
+                Category = category,
+                SearchTerm = searchTerm,
+                Sorting = sorting,
+                CurrentPage = currentPage
+            };
 
             query.TotalItems = queryResult.TotalItems;
             query.Categories = itemsCategories;

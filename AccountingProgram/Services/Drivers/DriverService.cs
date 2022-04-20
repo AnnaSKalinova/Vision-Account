@@ -26,7 +26,7 @@
             string searchTerm, 
             DriverSorting sorting, 
             int currentPage = 1, 
-            int driversPerPage = int.MaxValue)
+            int driversPerPage = SearchDriversQueryModel.DriversPerPage)
         {
             var driverQuery = this.data.Drivers.AsQueryable();
 

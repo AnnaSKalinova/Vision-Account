@@ -11,7 +11,7 @@
             char code, 
             RouteSorting sorting,
             int currentPage = 1,
-            int salesInvoicesPerPage = int.MaxValue);
+            int routesPerPage = SearchRoutesQueryModel.RoutesPerPage);
 
         IEnumerable<char> AllRoutesCodes();
 

@@ -12,7 +12,7 @@
             string searchTerm, 
             DriverSorting sorting,
             int currentPage = 1,
-            int salesInvoicesPerPage = int.MaxValue);
+            int driversPerPage = SearchDriversQueryModel.DriversPerPage);
 
         IEnumerable<char> AllDriversRoutes();
 

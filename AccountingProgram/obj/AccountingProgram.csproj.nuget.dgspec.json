@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {}
+    "E:\\AnNI\\Programming\\Final Project\\18 More more tests - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {}
   },
   "projects": {
-    "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
+    "E:\\AnNI\\Programming\\Final Project\\18 More more tests - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\18 More more tests - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "projectName": "AccountingProgram",
-        "projectPath": "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectPath": "E:\\AnNI\\Programming\\Final Project\\18 More more tests - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "E:\\AnNI\\Programming\\Final Project\\18 More more tests\\AccountingProgram\\AccountingProgram\\obj\\",
+        "outputPath": "E:\\AnNI\\Programming\\Final Project\\18 More more tests - Copy\\AccountingProgram\\AccountingProgram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -84,6 +84,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.2, )"
+            },
+            "Shouldly": {
+              "target": "Package",
+              "version": "[4.0.3, )"
             }
           },
           "imports": [

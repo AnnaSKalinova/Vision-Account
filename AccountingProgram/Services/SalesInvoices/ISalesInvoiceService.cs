@@ -12,7 +12,7 @@
             string searchTerm = null,
             SalesInvoiceSorting sorting = SalesInvoiceSorting.Id,
             int currentPage = 1,
-            int salesInvoicesPerPage = int.MaxValue,
+            int salesInvoicesPerPage = SearchSalesInvoicesQueryModel.SalesInvoicesPerPage,
             bool postedOnly = true);
 
         SalesInvoiceDetailsServiceModel Details(int id);

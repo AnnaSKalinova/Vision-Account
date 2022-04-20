@@ -12,7 +12,7 @@
             string searchTerm, 
             CustomerSorting sorting,
             int currentPage = 1,
-            int salesInvoicesPerPage = int.MaxValue);
+            int customersPerPage = SearchCustomersQueryModel.CustomersPerPage);
 
         IEnumerable<string> AllCustomersChains();
 

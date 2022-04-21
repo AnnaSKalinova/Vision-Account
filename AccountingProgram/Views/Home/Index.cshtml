@@ -5,29 +5,32 @@
 }
 
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
+    <div class="carousel-inner m-5">
         <div class="carousel-item active">
-            <h1 class="col-md-3 text-center">
-                Vision account
+            <h1 class="col-md-11 text-center">
+                Vision Account
             </h1>
         </div>
         <div class="carousel-item">
-            <h1 class="col-md-3 text-center">
-                Total profit: @Model.TotalProfit.ToString("0.00") lv.
+            <h1 class="col-md-11 text-center">
+                Total profit for year @DateTime.UtcNow.Year:
+            </h1>
+            <h1 class="col-md-11 text-center font-weight-bold">
+                @Model.TotalProfit.ToString("0.00") lv.
             </h1>
         </div>
     </div>
 </div>
 
-<div class="jumbotron">
-    <div class="row">
-        <h2 class="col-md-3 text-center">
+<div class="jumbotron m-5">
+    <div class="row m-5">
+        <h2 class="col-md-4 text-center">
             @Model.TotalSalesInvoices Sales Invoices
         </h2>
         <h2 class="col-md-3 text-center">
             @Model.TotalCustomers Customers
         </h2>
-        <h2 class="col-md-3 text-center">
+        <h2 class="col-md-2 text-center">
             @Model.TotalItems Items
         </h2>
         <h2 class="col-md-3 text-center">

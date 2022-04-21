@@ -15,6 +15,10 @@
     using AutoMapper;
 
     using static WebConstants;
+    using static Data.DataConstants.SalesInvoices;
+    using static Data.DataConstants.Customer;
+    using static Data.DataConstants.Item;
+    using static Data.DataConstants.Accountant;
 
     public class SalesInvoicesController : Controller
     {
@@ -69,7 +73,7 @@
                 Id = si.Id,
                 CustomerName = si.CustomerName,
                 PostingDate = si.PostingDate,
-                TotalAmountExclVat = si.TotalAmountExclVat,
+                TotalPriceExclVat = si.TotalPriceExclVat,
                 IsPosted = si.IsPosted
             });
 
@@ -102,17 +106,17 @@
 
             if (accountantId == 0)
             {
-                this.ModelState.AddModelError(nameof(salesInvoice.AccountantId), "Accountant does not exist!");
+                this.ModelState.AddModelError(nameof(salesInvoice.AccountantId), ErrorAccountantDoesNotExist);
             }
 
             if (!this.customers.CustomerExists(salesInvoice.CustomerId))
             {
-                this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), "Customer does not exist!");
+                this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), ErrorCustomerDoesNotExist);
             }
 
             if (!this.items.ItemExists(salesInvoice.ItemId))
             {
-                this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
+                this.ModelState.AddModelError(nameof(salesInvoice.ItemId), ErrorItemDoesNotExist);
             }
 
 
@@ -131,7 +135,7 @@
                 salesInvoice.Count,
                 accountantId);
 
-            TempData[GlobalMessageKey] = "You created the sales invoice successfully. It is now waiting for approval!";
+            TempData[GlobalMessageKey] = AddedSalesInvoiceMessage;
 
             return RedirectToAction(nameof(this.Mine));
         }
@@ -142,7 +146,7 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.accountants.IsUserAccountant(userId) && !User.IsChefAccountant())
+            if (!this.accountants.IsUserAccountant(userId) && !User.IsChiefAccountant())
             {
                 return BadRequest();
             }
@@ -168,22 +172,22 @@
         {
             var accountantId = this.accountants.GetIdByUser(this.User.GetId());
 
-            if (accountantId == 0 && !User.IsChefAccountant())
+            if (accountantId == 0 && !User.IsChiefAccountant())
             {
                 return BadRequest();
             }
 
             if (!this.customers.CustomerExists(salesInvoice.CustomerId))
             {
-                this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), "Customer does not exist!");
+                this.ModelState.AddModelError(nameof(salesInvoice.CustomerId), ErrorCustomerDoesNotExist);
             }
 
             if (!this.items.ItemExists(salesInvoice.ItemId))
             {
-                this.ModelState.AddModelError(nameof(salesInvoice.ItemId), "Item does not exist!");
+                this.ModelState.AddModelError(nameof(salesInvoice.ItemId), ErrorItemDoesNotExist);
             }
 
-            if (!this.salesInvoices.IsByAccountant(id, accountantId) && !User.IsChefAccountant())
+            if (!this.salesInvoices.IsByAccountant(id, accountantId) && !User.IsChiefAccountant())
             {
                 return BadRequest();
             }
@@ -194,11 +198,11 @@
                 salesInvoice.PostingDate,
                 salesInvoice.ItemId,
                 salesInvoice.Count,
-                this.User.IsChefAccountant());
+                this.User.IsChiefAccountant());
 
-            TempData[GlobalMessageKey] = $"You eddited the sales invoice successfully! {(this.User.IsChefAccountant() ? string.Empty : "It is now waiting for approval!")}";
+            TempData[GlobalMessageKey] = $"You eddited the sales invoice successfully! {(this.User.IsChiefAccountant() ? string.Empty : "It is now waiting for approval!")}";
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(this.Mine));
         }
 
         public IActionResult Details(int id, string information)
@@ -222,7 +226,7 @@
         {
             this.salesInvoices.Delete(id);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(this.Mine));
         }
     }
 }

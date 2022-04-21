@@ -24,6 +24,7 @@
         [MaxLength(ContactNameMaxLength)]
         public string ContactName { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
 
         public PaymentTerm PaymentTerm { get; set; }

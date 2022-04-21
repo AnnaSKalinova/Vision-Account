@@ -22,17 +22,22 @@
         public int ItemCategoryId { get; set; }
         public ItemCategory ItemCategory { get; init; }
 
-        [Column(TypeName = "decimal(18,4)")]
+        [Range(RangeMinValueDecimal, double.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
         public decimal UnitPriceExclVat { get; set; }
 
         public VatGroup VatGroup { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
+        [Range(RangeMinValueDecimal, int.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
         public decimal UnitPriceInclVat { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
+        [Range(RangeMinValueDecimal, double.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
         public decimal UnitCost { get; set; }
 
+        [Range(RangeMaxValueInt, double.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
         public decimal Profit { get; set; }
     }
 }

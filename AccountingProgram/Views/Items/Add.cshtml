@@ -12,7 +12,7 @@
             <form method="post">
                 <div class="form-group">
                     <label asp-for="Name"></label>
-                    <input asp-for="Name" class="form-control" placeholder="Item name here...">
+                    <input asp-for="Name" class="form-control" placeholder="Item name...">
                     <span asp-validation-for="Name" class=" small text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -62,3 +62,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

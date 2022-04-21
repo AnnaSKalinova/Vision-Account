@@ -3,8 +3,9 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using AccountingProgram.Services.Items;
     using AccountingProgram.Services.Items.Models;
+
+    using static AccountingProgram.Data.DataConstants.Item;
 
     public class SearchItemsQueryModel
     {
@@ -14,7 +15,7 @@
 
         public IEnumerable<ItemCategoryServiceModel> Categories { get; set; }
 
-        [Display(Name = "Item name")]
+        [Display(Name = ItemNameAttribute)]
         public string SearchTerm { get; init; }
 
         public int CurrentPage { get; init; } = 1;

@@ -14,10 +14,12 @@
             int currentPage = 1,
             int driversPerPage = SearchDriversQueryModel.DriversPerPage);
 
-        IEnumerable<char> AllDriversRoutes();
-
         int Create(
             string name, 
             int routeId);
+
+        IEnumerable<char> AllDriversRoutes();
+
+        bool DriverExists(string name);
     }
 }

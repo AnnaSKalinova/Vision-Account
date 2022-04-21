@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using static AccountingProgram.Data.DataConstants.SalesInvoices;
+
     public class SalesInvoiceDetailsServiceModel
     {
         public int Id { get; init; }
@@ -10,8 +12,8 @@
 
         public string PostingDate { get; init; }
 
-        [Display(Name = "Total amount excl. VAT")]
-        public decimal TotalAmountExclVat { get; init; }
+        [Display(Name = TotalPriceExclVatAttribute)]
+        public decimal TotalPriceExclVat { get; init; }
 
         public bool IsPosted { get; init; }
 
@@ -22,11 +24,11 @@
 
         public int Count { get; init; }
 
-        [Display(Name = "VAT")]
+        [Display(Name = VatAttribute)]
         public decimal Vat { get; init; }
 
-        [Display(Name = "Total amount incl. VAT")]
-        public decimal TotalAmountInclVat { get; init; }
+        [Display(Name = TotalPriceInclVatAttribute)]
+        public decimal TotalPriceInclVat { get; init; }
 
         public int CustomerId { get; init; }
 

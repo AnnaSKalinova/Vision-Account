@@ -7,6 +7,7 @@
     using AccountingProgram.Data.Models;
     using AccountingProgram.Models.Drivers;
     using AccountingProgram.Services.Drivers.Models;
+
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
@@ -66,16 +67,6 @@
             };
         }
 
-        public IEnumerable<char> AllDriversRoutes()
-        {
-            return this.data
-                .Drivers
-                .Select(d => d.Route.Code)
-                .OrderBy(d => d)
-                .Distinct()
-                .ToList();
-        }
-
         public int Create(string name, int routeId)
         {
             var driverData = new Driver
@@ -89,6 +80,21 @@
             this.data.SaveChanges();
 
             return driverData.Id;
+        }
+
+        public IEnumerable<char> AllDriversRoutes()
+        {
+            return this.data
+                .Drivers
+                .Select(d => d.Route.Code)
+                .OrderBy(d => d)
+                .Distinct()
+                .ToList();
+        }
+
+        public bool DriverExists(string name)
+        {
+            return data.Drivers.Any(d => d.Name == name);
         }
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +13,7 @@
     using AccountingProgram.Data;
     using AccountingProgram.Data.Models;
 
-    using static AccountingProgram.Areas.ChefAccountant.ChefAccountantConstants;
-    using System.Threading.Tasks;
+    using static AccountingProgram.Areas.ChiefAccountant.ChiefAccountantConstants;
 
     public static class ApplicationBuilderExtentions
     {
@@ -26,7 +26,7 @@
             MigrateDatabase(services);
 
             SeedItemCategories(services);
-            SeedChefAccountant(services);
+            SeedChiefAccountant(services);
 
             return app;
         }
@@ -52,16 +52,16 @@
                 new ItemCategory { Name = "Sandwiches", Items = new List<Item>() },
                 new ItemCategory { Name = "Wraps", Items = new List<Item>() },
                 new ItemCategory { Name = "Salads", Items = new List<Item>() },
-                new ItemCategory { Name = "Ready Meals", Items = new List<Item>() },
+                new ItemCategory { Name = "Ready meals", Items = new List<Item>() },
                 new ItemCategory { Name = "Soups", Items = new List<Item>() },
                 new ItemCategory { Name = "Desserts", Items = new List<Item>() },
-                new ItemCategory { Name = "Services", Items = new List<Item>() },
+                new ItemCategory { Name = "Services", Items = new List<Item>() }
             });
 
             data.SaveChanges();
         }
 
-        private static void SeedChefAccountant(IServiceProvider services)
+        private static void SeedChiefAccountant(IServiceProvider services)
         {
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
@@ -69,26 +69,26 @@
             Task.
                 Run(async () =>
                 {
-                    if (await roleManager.RoleExistsAsync(ChefAccountantRoleName))
+                    if (await roleManager.RoleExistsAsync(ChiefAccountantRoleName))
                     {
                         return;
                     }
 
-                    var role = new IdentityRole { Name = ChefAccountantRoleName };
+                    var role = new IdentityRole { Name = ChiefAccountantRoleName };
 
                     await roleManager.CreateAsync(role);
 
-                    const string ChefAccountantEmail = "admin@visionaccount.com";
-                    const string ChefAccountantPassword = "admin12";
+                    const string ChiefAccountantEmail = "chief@va.com";
+                    const string ChiefAccountantPassword = "chief12";
 
                     var user = new User
                     {
-                        Email = ChefAccountantEmail,
-                        UserName = ChefAccountantEmail,
-                        FullName = ChefAccountantRoleName
+                        Email = ChiefAccountantEmail,
+                        UserName = ChiefAccountantEmail,
+                        FullName = ChiefAccountantRoleName
                     };
 
-                    await userManager.CreateAsync(user, ChefAccountantPassword);
+                    await userManager.CreateAsync(user, ChiefAccountantPassword);
 
                     await userManager.AddToRoleAsync(user, role.Name);
                 })

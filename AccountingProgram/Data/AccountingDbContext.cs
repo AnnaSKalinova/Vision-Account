@@ -4,7 +4,6 @@
     using Microsoft.EntityFrameworkCore;
 
     using AccountingProgram.Data.Models;
-    using Microsoft.AspNetCore.Identity;
 
     public class AccountingDbContext : IdentityDbContext<User>
     {

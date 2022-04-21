@@ -8,6 +8,7 @@
     using AccountingProgram.Data.Models.Enums;
     using AccountingProgram.Models.Customers;
     using AccountingProgram.Services.Customers.Models;
+
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
@@ -108,19 +109,6 @@
             return customerData.Id;
         }
 
-        public bool CustomerExists(int id)
-        {
-            return this.data.Customers.Any(c => c.Id == id);
-        }
-
-        public IEnumerable<RouteCustomerServiceModel> GetRoutes()
-        {
-            return this.data
-                .Routes
-                .ProjectTo<RouteCustomerServiceModel>(this.mapper)
-                .ToList();
-        }
-
         public CustomerDetailsServiceModel Details(int id)
         {
             return this.data
@@ -128,6 +116,23 @@
                 .Where(c => c.Id == id)
                 .ProjectTo<CustomerDetailsServiceModel>(this.mapper)
                 .FirstOrDefault();
+        }
+
+        public bool CustomerExists(int id)
+        {
+            return this.data.Customers.Any(c => c.Id == id);
+        }
+
+        public bool CustomerNameExists(string name)
+        {
+            return this.data.Customers.Any(c => c.Name == name);
+        }
+        public IEnumerable<RouteCustomerServiceModel> GetRoutes()
+        {
+            return this.data
+                .Routes
+                .ProjectTo<RouteCustomerServiceModel>(this.mapper)
+                .ToList();
         }
     }
 }

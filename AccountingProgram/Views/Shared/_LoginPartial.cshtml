@@ -9,7 +9,7 @@
     {
         var userId = User.GetId();
         var userIsAccountant = Accountants.IsUserAccountant(userId);
-        var userIsChiefAccountant = User.IsChefAccountant();
+        var userIsChiefAccountant = User.IsChiefAccountant();
 
         @if (userIsAccountant && !userIsChiefAccountant)
         {
@@ -20,7 +20,7 @@
         else if (userIsChiefAccountant)
         {
             <li class="nav-item">
-                <a class="btn btn-outline-primary" asp-area="ChefAccountant" asp-controller="SalesInvoices" asp-action="All">All sales invoices</a>
+                <a class="btn btn-outline-primary" asp-area="ChiefAccountant" asp-controller="SalesInvoices" asp-action="All">All sales invoices</a>
             </li>
         }
 

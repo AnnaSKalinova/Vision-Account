@@ -19,9 +19,9 @@
                         <th scope="row">@salesInvoice.Id</th>
                         <td class="text-center">@salesInvoice.CustomerName</td>
                         <td class="text-center">@salesInvoice.PostingDate</td>
-                        <td class="text-center">@salesInvoice.TotalAmountExclVat.ToString("0.00") lv.</td>
+                        <td class="text-center">@salesInvoice.TotalPriceExclVat.ToString("0.00") lv.</td>
                         <td>
-                            @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsChefAccountant())
+                            @if (ViewBag.AllowSalesInvoiceEdit == true || User.IsChiefAccountant())
                             {
                                 <a asp-area="" asp-controller="SalesInvoices" asp-action="ChangeStatus" asp-route-id="@salesInvoice.Id" class="btn btn-info ml-1 float-right disabled">@(salesInvoice.IsPosted ? "Posted" : "Unposted")</a>
                                 <a asp-controller="SalesInvoices" asp-action="Delete" asp-route-id="@salesInvoice.Id" class="btn btn-danger float-right ml-1">Delete</a>

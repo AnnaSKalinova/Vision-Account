@@ -4,7 +4,9 @@
     using System.ComponentModel.DataAnnotations;
 
     using AccountingProgram.Services.Customers.Models;
+
     using static AccountingProgram.Data.DataConstants.Customer;
+    using static AccountingProgram.Data.DataConstants.Item;
 
     public class AddCustomerFormModel
     {
@@ -15,7 +17,7 @@
             ErrorMessage = ErrorCustomerNameLength)]
         public string Name { get; init; }
 
-        [Display(Name = "Chain Name")]
+        [Display(Name = ChainNameAttribute)]
         [StringLength(
             ChainNameMaxLength, 
             MinimumLength = ChainNameMinLength,
@@ -28,7 +30,7 @@
             ErrorMessage = ErrorAddressLength)]
         public string Address { get; init; }
 
-        [Display(Name = "Contact Name")]
+        [Display(Name = ContactNameAttribute)]
         [StringLength(
             ContactNameMaxLength,
             MinimumLength = ContactNameMinLength,
@@ -38,8 +40,9 @@
         [EmailAddress(ErrorMessage = ErrorEmailFormat)]
         public string Email { get; init; }
 
-        [Range(0, 100)]
-        [Display(Name = "Payment Terms Code")]
+        [Range(RangeMinValueInt, RangeMaxValueInt,
+            ErrorMessage = ErrorPaymentTermRequired)]
+        [Display(Name = PaymentTermAttribute)]
         public int PaymentTerm { get; set; }
 
         public int RouteId { get; init; }

@@ -10,6 +10,8 @@
     using AccountingProgram.Models.SalesInvoices;
     using AccountingProgram.Services.SalesInvoices.Models;
 
+    using static AccountingProgram.Data.DataConstants.SalesInvoices;
+
     public class SalesInvoiceService : ISalesInvoiceService
     {
         private readonly AccountingDbContext data;
@@ -47,7 +49,7 @@
                 SalesInvoiceSorting.Id => salesInvoicesQuery.OrderBy(si => si.Id),
                 SalesInvoiceSorting.Customer => salesInvoicesQuery.OrderBy(si => si.Customer.Name),
                 SalesInvoiceSorting.PostingDate => salesInvoicesQuery.OrderBy(si => si.PostingDate),
-                SalesInvoiceSorting.TotalAmountExclVat => salesInvoicesQuery.OrderBy(si => si.Item.UnitPriceExclVat * si.Count),
+                SalesInvoiceSorting.TotalPriceExclVat => salesInvoicesQuery.OrderBy(si => si.Item.UnitPriceExclVat * si.Count),
                 _ => salesInvoicesQuery.OrderBy(si => si.Id)
             };
 
@@ -66,6 +68,106 @@
             };
         }
 
+        public int Create(int customerId, string postingDate, int itemId, int count, int accountantId)
+        {
+            DateTime salesInvPostingDate;
+            DateTime.TryParseExact(postingDate, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
+
+            var customer = this.data.Customers
+                .Where(c => c.Id == customerId)
+                .FirstOrDefault();
+
+            var item = this.data.Items
+                .Where(i => i.Id == itemId)
+                .FirstOrDefault();
+
+            var TotalPriceExclVat = item.UnitPriceExclVat * count;
+            var vat = TotalPriceExclVat * ((int)item.VatGroup) * 0.01m;
+            var TotalPriceInclVat = TotalPriceExclVat + vat;
+            var profit = TotalPriceExclVat - count * item.UnitCost;
+
+            var salesInvoiceData = new SalesInvoice
+            {
+                CustomerId = customerId,
+                PostingDate = salesInvPostingDate,
+                DueDate = salesInvPostingDate.AddDays((int)customer.PaymentTerm),
+                ItemId = itemId,
+                Count = count,
+                TotalPriceExclVat = TotalPriceExclVat,
+                Vat = vat,
+                TotalPriceInclVat = TotalPriceInclVat,
+                AccountantId = accountantId,
+                Profit = profit,
+                isPosted = false
+            };
+
+            this.data.SalesInvoices.Add(salesInvoiceData);
+
+            this.data.SaveChanges();
+
+            return salesInvoiceData.Id;
+        }
+
+        public bool Edit(
+            int id,
+            int customerId,
+            string postingDate,
+            int itemId,
+            int count,
+            bool isPosted)
+        {
+            var salesInvoiceData = this.data.SalesInvoices.Find(id);
+
+            if (salesInvoiceData == null)
+            {
+                return false;
+            }
+
+            DateTime salesInvPostingDate;
+            DateTime.TryParseExact(postingDate, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
+
+            var customer = this.data
+                .Customers
+                .Where(c => c.Id == customerId)
+                .FirstOrDefault();
+
+            var item = this.data.Items
+                .Where(i => i.Id == itemId)
+                .FirstOrDefault();
+
+            var TotalPriceExclVat = item.UnitPriceExclVat * count;
+            var vat = TotalPriceExclVat * ((int)item.VatGroup) * 0.01m;
+            var TotalPriceInclVat = TotalPriceExclVat + vat;
+            var profit = TotalPriceExclVat - count * item.UnitCost;
+
+            salesInvoiceData.CustomerId = customerId;
+            salesInvoiceData.PostingDate = salesInvPostingDate;
+            salesInvoiceData.DueDate = salesInvPostingDate.AddDays((int)customer.PaymentTerm);
+            salesInvoiceData.ItemId = itemId;
+            salesInvoiceData.Count = count;
+            salesInvoiceData.TotalPriceExclVat = TotalPriceExclVat;
+            salesInvoiceData.Vat = vat;
+            salesInvoiceData.TotalPriceInclVat = TotalPriceInclVat;
+            salesInvoiceData.Profit = profit;
+            salesInvoiceData.isPosted = false;
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
+        public void Delete(int id)
+        {
+            var salesInvoice = this.data
+                .SalesInvoices
+                .Where(si => si.Id == id)
+                .FirstOrDefault();
+
+            this.data.Remove(salesInvoice);
+
+            this.data.SaveChanges();
+        }
+
         public SalesInvoiceDetailsServiceModel Details(int id)
         {
             return this.data
@@ -76,14 +178,14 @@
                     Id = si.Id,
                     CustomerName = si.Customer.Name,
                     CustomerId = si.CustomerId,
-                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
-                    DueDate = si.DueDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    PostingDate = si.PostingDate.ToString(DateFormat, CultureInfo.InvariantCulture),
+                    DueDate = si.DueDate.ToString(DateFormat, CultureInfo.InvariantCulture),
                     ItemName = si.Item.Name,
                     ItemId = si.ItemId,
                     Count = si.Count,
-                    TotalAmountExclVat = si.TotalAmountExclVat,
+                    TotalPriceExclVat = si.TotalPriceExclVat,
                     Vat = si.Vat,
-                    TotalAmountInclVat = si.TotalAmountInclVat,
+                    TotalPriceInclVat = si.TotalPriceInclVat,
                     AccountantName = si.Accountant.Name,
                     UserId = si.AccountantId.ToString(),
                     Profit = si.Profit
@@ -115,99 +217,11 @@
                 {
                     Id = si.Id,
                     CustomerName = si.Customer.Name,
-                    PostingDate = si.PostingDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture),
-                    TotalAmountExclVat = si.Item.UnitPriceExclVat * si.Count,
+                    PostingDate = si.PostingDate.ToString(DateFormat, CultureInfo.InvariantCulture),
+                    TotalPriceExclVat = si.Item.UnitPriceExclVat * si.Count,
                     IsPosted = si.isPosted
                 })
                 .ToList();
-        }
-
-        public int Create(int customerId, string postingDate, int itemId, int count, int accountantId)
-        {
-            DateTime salesInvPostingDate;
-            DateTime.TryParseExact(postingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
-
-            var customer = this.data.Customers
-                .Where(c => c.Id == customerId)
-                .FirstOrDefault();
-
-            var item = this.data.Items
-                .Where(i => i.Id == itemId)
-                .FirstOrDefault();
-
-            var totalAmountExclVat = item.UnitPriceExclVat * count;
-            var vat = totalAmountExclVat * ((int)item.VatGroup) * 0.01m;
-            var totalAmountInclVat = totalAmountExclVat + vat;
-            var profit = totalAmountExclVat - count * item.UnitCost;
-
-            var salesInvoiceData = new SalesInvoice
-            {
-                CustomerId = customerId,
-                PostingDate = salesInvPostingDate,
-                DueDate = salesInvPostingDate.AddDays((int)customer.PaymentTerm),
-                ItemId = itemId,
-                Count = count,
-                TotalAmountExclVat = totalAmountExclVat,
-                Vat = vat,
-                TotalAmountInclVat = totalAmountInclVat,
-                AccountantId = accountantId,
-                Profit = profit,
-                isPosted = false
-            };
-
-            this.data.SalesInvoices.Add(salesInvoiceData);
-
-            this.data.SaveChanges();
-
-            return salesInvoiceData.Id;
-        }
-
-        public bool Edit(
-            int id, 
-            int customerId, 
-            string postingDate, 
-            int itemId, 
-            int count,
-            bool isPosted)
-        {
-            var salesInvoiceData = this.data.SalesInvoices.Find(id);
-
-            if (salesInvoiceData == null)
-            {
-                return false;
-            }
-
-            DateTime salesInvPostingDate;
-            DateTime.TryParseExact(postingDate, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out salesInvPostingDate);
-
-            var customer = this.data
-                .Customers
-                .Where(c => c.Id == customerId)
-                .FirstOrDefault();
-
-            var item = this.data.Items
-                .Where(i => i.Id == itemId)
-                .FirstOrDefault();
-
-            var totalAmountExclVat = item.UnitPriceExclVat * count;
-            var vat = totalAmountExclVat * ((int)item.VatGroup) * 0.01m;
-            var totalAmountInclVat = totalAmountExclVat + vat;
-            var profit = totalAmountExclVat - count * item.UnitCost;
-
-            salesInvoiceData.CustomerId = customerId;
-            salesInvoiceData.PostingDate = salesInvPostingDate;
-            salesInvoiceData.DueDate = salesInvPostingDate.AddDays((int)customer.PaymentTerm);
-            salesInvoiceData.ItemId = itemId;
-            salesInvoiceData.Count = count;
-            salesInvoiceData.TotalAmountExclVat = totalAmountExclVat;
-            salesInvoiceData.Vat = vat;
-            salesInvoiceData.TotalAmountInclVat = totalAmountInclVat;
-            salesInvoiceData.Profit = profit;
-            salesInvoiceData.isPosted = false;
-
-            this.data.SaveChanges();
-
-            return true;
         }
 
         public bool IsByAccountant(int salesInvoiceId, int accountantId)
@@ -222,18 +236,6 @@
             var salesInvoice = this.data.SalesInvoices.Find(id);
 
             salesInvoice.isPosted = !salesInvoice.isPosted;
-
-            this.data.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var salesInvoice = this.data
-                .SalesInvoices
-                .Where(si => si.Id == id)
-                .FirstOrDefault();
-
-            this.data.Remove(salesInvoice);
 
             this.data.SaveChanges();
         }

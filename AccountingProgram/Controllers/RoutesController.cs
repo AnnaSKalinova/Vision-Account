@@ -10,6 +10,7 @@
     using AccountingProgram.Services.Routes.Models;
 
     using static WebConstants;
+    using static Data.DataConstants.Route;
 
     public class RoutesController : Controller
     {
@@ -63,6 +64,11 @@
         [Authorize]
         public IActionResult Add(AddRouteFormModel route)
         {
+            if (this.routes.RouteCodeExists(route.Code))
+            {
+                this.ModelState.AddModelError(nameof(route.Code), ErrorRouteExists);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(route);
@@ -72,7 +78,7 @@
                 route.Code,
                 route.Description);
 
-            TempData[GlobalMessageKey] = "You successfully added a new route!";
+            TempData[GlobalMessageKey] = AddedRouteMessage;
 
             return RedirectToAction(nameof(All));
         }

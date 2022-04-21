@@ -8,6 +8,7 @@
     using AccountingProgram.Data.Models.Enums;
     using AccountingProgram.Models.Items;
     using AccountingProgram.Services.Items.Models;
+
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
@@ -70,22 +71,6 @@
             };
         }
 
-        public IEnumerable<ItemServiceModel> AllItems()
-        {
-            return this.data
-                .Items
-                .ProjectTo<ItemServiceModel>(mapper)
-                .ToList();
-        }
-
-        public IEnumerable<ItemCategoryServiceModel> AllItemsCategories()
-        {
-            return this.data
-                .ItemCategories
-                .ProjectTo<ItemCategoryServiceModel>(this.mapper)
-                .ToList();
-        }
-
         public int Create(string name, int itemType, int measure, int itemCategoryId, decimal unitPriceExclVat, int vatGroup, decimal unitCost)
         {
             var unitPriceInclVat = unitPriceExclVat + (unitPriceExclVat * vatGroup / 100);
@@ -120,6 +105,22 @@
                 .FirstOrDefault();
         }
 
+        public IEnumerable<ItemServiceModel> AllItems()
+        {
+            return this.data
+                .Items
+                .ProjectTo<ItemServiceModel>(mapper)
+                .ToList();
+        }
+
+        public IEnumerable<ItemCategoryServiceModel> AllItemsCategories()
+        {
+            return this.data
+                .ItemCategories
+                .ProjectTo<ItemCategoryServiceModel>(this.mapper)
+                .ToList();
+        }
+
         public bool ItemCategoryExists(int id)
         {
             return this.data.ItemCategories.Any(ic => ic.Id == id);
@@ -128,6 +129,11 @@
         public bool ItemExists(int id)
         {
             return this.data.Items.Any(i => i.Id == id);
+        }
+
+        public bool ItemNameExists(string name)
+        {
+            return this.data.Items.Any(i => i.Name == name);
         }
     }
 }

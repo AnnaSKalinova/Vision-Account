@@ -7,6 +7,7 @@
     using AccountingProgram.Data.Models;
     using AccountingProgram.Models.Routes;
     using AccountingProgram.Services.Routes.Models;
+
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
@@ -60,6 +61,31 @@
             };
         }
 
+        public int Create(char code, string description)
+        {
+            var routeData = new Route
+            {
+                Code = code,
+                Description = description,
+                Customers = new List<Customer>()
+            };
+
+            this.data.Routes.Add(routeData);
+
+            this.data.SaveChanges();
+
+            return routeData.Id;
+        }
+
+        public RouteDetailsServiceModel Details(int id)
+        {
+            return this.data
+                .Routes
+                .Where(r => r.Id == id)
+                .ProjectTo<RouteDetailsServiceModel>(this.mapper)
+                .FirstOrDefault();
+        }
+
         public IEnumerable<RouteServiceModel> AllRoutes()
         {
             return this.data
@@ -78,34 +104,14 @@
                 .ToList();
         }
 
-        public int Create(char code, string description)
-        {
-            var routeData = new Route
-            {
-                Code = code,
-                Description = description,
-                Customers = new List<Customer>()
-            };
-
-            this.data.Routes.Add(routeData);
-
-            this.data.SaveChanges();
-
-            return routeData.Id;
-        }
-
         public bool RouteExists(int id)
         {
             return this.data.Routes.Any(r => r.Id == id);
         }
 
-        public RouteDetailsServiceModel Details(int id)
+        public bool RouteCodeExists(char code)
         {
-            return this.data
-                .Routes
-                .Where(r => r.Id == id)
-                .ProjectTo<RouteDetailsServiceModel>(this.mapper)
-                .FirstOrDefault();
+            return this.data.Routes.Any(r => r.Code == code);
         }
     }
 }

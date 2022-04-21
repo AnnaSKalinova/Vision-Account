@@ -11,6 +11,8 @@
     using AccountingProgram.Services.Customers;
 
     using static WebConstants;
+    using static Data.DataConstants.Route;
+    using static Data.DataConstants.Customer;
 
     public class CustomersController : Controller
     {
@@ -75,9 +77,14 @@
         [Authorize]
         public IActionResult Add(AddCustomerFormModel customer)
         {
+            if (this.customers.CustomerNameExists(customer.Name))
+            {
+                this.ModelState.AddModelError(nameof(customer.Name), ErrorCustomerExists);
+            }
+
             if (!this.routes.RouteExists(customer.RouteId))
             {
-                this.ModelState.AddModelError(nameof(customer.RouteId), "Route does not exist!");
+                this.ModelState.AddModelError(nameof(customer.RouteId), ErrorRouteExists);
             }
 
             if (!ModelState.IsValid)
@@ -96,7 +103,7 @@
                 customer.PaymentTerm,
                 customer.RouteId);
 
-            TempData[GlobalMessageKey] = "You successfully added a new customer!";
+            TempData[GlobalMessageKey] = AddedCustomerMessage;
 
             return RedirectToAction(nameof(All));
         }

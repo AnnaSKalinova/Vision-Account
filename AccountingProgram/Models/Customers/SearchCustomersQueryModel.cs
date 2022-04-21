@@ -4,6 +4,8 @@
     using System.ComponentModel.DataAnnotations;
 
     using AccountingProgram.Services.Customers.Models;
+
+    using static AccountingProgram.Data.DataConstants.Customer;
     
     public class SearchCustomersQueryModel
     {
@@ -13,7 +15,7 @@
 
         public IEnumerable<string> Chains { get; set; }
 
-        [Display(Name = "Customer name")]
+        [Display(Name = CustomerNameAttribute)]
         public string SearchTerm { get; init; }
 
         public int CurrentPage { get; init; } = 1;

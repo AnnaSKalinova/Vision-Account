@@ -13,24 +13,26 @@
             int currentPage = 1,
             int itemsPerPage = SearchItemsQueryModel.ItemsPerPage);
 
+        int Create(
+            string name,
+            int itemType,
+            int measure,
+            int itemCategoryId,
+            decimal unitPriceExclVat,
+            int vatGroup,
+            decimal unitCost);
+
+        ItemDetailsServiceModel Details(int id);
+
         IEnumerable<ItemCategoryServiceModel> AllItemsCategories();
 
         IEnumerable<ItemServiceModel> AllItems();
-
-        ItemDetailsServiceModel Details(int id);
 
         bool ItemExists(int id);
 
         bool ItemCategoryExists(int id);
 
-        int Create(
-            string name, 
-            int itemType, 
-            int measure, 
-            int itemCategoryId, 
-            decimal unitPriceExclVat, 
-            int vatGroup, 
-            decimal unitCost);
 
+        bool ItemNameExists(string name);
     }
 }

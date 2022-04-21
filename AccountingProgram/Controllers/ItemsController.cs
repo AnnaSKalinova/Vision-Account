@@ -10,6 +10,8 @@
     using AccountingProgram.Services.Items.Models;
 
     using static WebConstants;
+    using static Data.DataConstants.Item;
+    using static Data.DataConstants.Category;
 
     public class ItemsController : Controller
     {
@@ -71,9 +73,14 @@
         [Authorize]
         public IActionResult Add(AddItemFormModel item)
         {
+            if (this.items.ItemNameExists(item.Name))
+            {
+                this.ModelState.AddModelError(nameof(item.Name), ErrorItemNameExist);
+            }
+
             if (!this.items.ItemCategoryExists(item.ItemCategoryId))
             {
-                this.ModelState.AddModelError(nameof(item.ItemCategoryId), "Category does not exist!");
+                this.ModelState.AddModelError(nameof(item.ItemCategoryId), ErrorCategoryDoesNotExist);
             }
 
             if (!ModelState.IsValid)
@@ -92,7 +99,7 @@
                 item.VatGroup,
                 item.UnitCost);
 
-            TempData[GlobalMessageKey] = "You successfully added a new item!";
+            TempData[GlobalMessageKey] = AddedItemMessage;
 
             return RedirectToAction(nameof(All));
         }

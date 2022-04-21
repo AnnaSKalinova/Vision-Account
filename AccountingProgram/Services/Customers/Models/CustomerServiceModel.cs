@@ -1,8 +1,9 @@
-﻿using AccountingProgram.Services.SalesInvoices.Models;
-using System.Collections.Generic;
-
-namespace AccountingProgram.Services.Customers.Models
+﻿namespace AccountingProgram.Services.Customers.Models
 {
+    using System.Collections.Generic;
+
+    using AccountingProgram.Services.SalesInvoices.Models;
+
     public class CustomerServiceModel
     {
         public int Id { get; init; }

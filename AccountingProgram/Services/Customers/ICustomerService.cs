@@ -18,19 +18,21 @@
 
         IEnumerable<CustomerServiceModel> AllCustomers();
 
-        IEnumerable<RouteCustomerServiceModel> GetRoutes();
+        int Create(
+            string name,
+            string chainName,
+            string address,
+            string contactName,
+            string email,
+            int paymentTerm,
+            int routeId);
 
         CustomerDetailsServiceModel Details(int id);
 
+        IEnumerable<RouteCustomerServiceModel> GetRoutes();
+
         bool CustomerExists(int id);
 
-        int Create(
-            string name, 
-            string chainName, 
-            string address, 
-            string contactName, 
-            string email, 
-            int paymentTerm, 
-            int routeId);
+        bool CustomerNameExists(string name);
     }
 }

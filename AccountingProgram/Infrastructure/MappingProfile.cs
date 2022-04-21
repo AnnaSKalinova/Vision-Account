@@ -7,6 +7,7 @@
     using AccountingProgram.Services.Items.Models;
     using AccountingProgram.Services.Routes.Models;
     using AccountingProgram.Services.SalesInvoices.Models;
+
     using AutoMapper;
 
     public class MappingProfile : Profile

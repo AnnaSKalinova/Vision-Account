@@ -13,16 +13,18 @@
             int currentPage = 1,
             int routesPerPage = SearchRoutesQueryModel.RoutesPerPage);
 
+        int Create(
+            char code,
+            string description);
+
+        RouteDetailsServiceModel Details(int id);
+
         IEnumerable<char> AllRoutesCodes();
 
         IEnumerable<RouteServiceModel> AllRoutes();
 
-        RouteDetailsServiceModel Details(int id);
-
         bool RouteExists(int id);
 
-        int Create(
-            char code, 
-            string description);
+        bool RouteCodeExists(char code);
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace AccountingProgram.Data.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -20,10 +19,5 @@
         public string Description { get; set; }
 
         public ICollection<Customer> Customers { get; init; } = new HashSet<Customer>();
-
-        public static void Any(Func<object, bool> p)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -11,6 +11,8 @@
     using AccountingProgram.Services.Drivers.Models;
 
     using static WebConstants;
+    using static Data.DataConstants.Driver;
+    using static Data.DataConstants.Route;
 
     public class DriversController : Controller
     {
@@ -72,9 +74,14 @@
         [Authorize]
         public IActionResult Add(AddDriverFormModel driver)
         {
+            if (this.drivers.DriverExists(driver.Name))
+            {
+                this.ModelState.AddModelError(nameof(driver.Name), ErrorDriverExists);
+            }
+
             if (!this.routes.RouteExists(driver.RouteId))
             {
-                this.ModelState.AddModelError(nameof(driver.RouteId), "Route does not exist!");
+                this.ModelState.AddModelError(nameof(driver.RouteId), ErrorRouteExists);
             }
 
             if (!ModelState.IsValid)
@@ -88,7 +95,7 @@
                 driver.Name,
                 driver.RouteId);
 
-            TempData[GlobalMessageKey] = "You successfully added a new driver!";
+            TempData[GlobalMessageKey] = AddedDriverMessage;
 
             return RedirectToAction(nameof(All));
         }

@@ -2,7 +2,7 @@
 {
     using System.Security.Claims;
 
-    using static AccountingProgram.Areas.ChefAccountant.ChefAccountantConstants;
+    using static AccountingProgram.Areas.ChiefAccountant.ChiefAccountantConstants;
 
     public static class ClaimsPrincipalExtensions
     {
@@ -11,9 +11,9 @@
             return user.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
-        public static bool IsChefAccountant(this ClaimsPrincipal user)
+        public static bool IsChiefAccountant(this ClaimsPrincipal user)
         {
-            return user.IsInRole(ChefAccountantRoleName);
+            return user.IsInRole(ChiefAccountantRoleName);
         }
     }
 }

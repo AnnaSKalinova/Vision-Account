@@ -1,7 +1,10 @@
 ﻿namespace AccountingProgram.Data.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
+    using static AccountingProgram.Data.DataConstants.Item;
 
     public class SalesInvoice
     {
@@ -17,18 +20,26 @@
         public int ItemId { get; set; }
         public Item Item{ get; init; }
 
+        [Range(0, int.MaxValue)]
         public int Count { get; set; }
 
-        public decimal TotalAmountExclVat { get; set; }
+        [Range(1, double.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
+        public decimal TotalPriceExclVat { get; set; }
 
+        [Range(1, double.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
         public decimal Vat { get; set; }
 
-        public decimal TotalAmountInclVat { get; set; }
+        [Range(1, double.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
+        public decimal TotalPriceInclVat { get; set; }
 
         public int AccountantId { get; init; }
         public Accountant Accountant { get; init; }
 
-        [Column(TypeName = "decimal(18,4)")]
+        [Range(1, double.MaxValue)]
+        [Column(TypeName = DecimalTypeAttribute)]
         public decimal Profit { get; set; }
 
         public bool isPosted { get; set; }

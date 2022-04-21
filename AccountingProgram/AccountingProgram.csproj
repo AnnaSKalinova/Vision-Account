@@ -27,8 +27,4 @@
     <PackageReference Include="Shouldly" Version="4.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\ChefAccountant\Models\" />
-  </ItemGroup>
-
 </Project>

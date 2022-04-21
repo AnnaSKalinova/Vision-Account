@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     using AccountingProgram.Services.Items.Models;
+
     using static AccountingProgram.Data.DataConstants.Item;
 
     public class AddItemFormModel
@@ -17,26 +18,34 @@
             ErrorMessage = ErrorItemNameLength)]
         public string Name { get; init; }
 
-        [Display(Name = "Item Type")]
-        [Range(1, 100)]
+        [Display(Name = ItemTypeAttribute)]
+        [Range(RangeMinValueInt, RangeMaxValueInt,
+            ErrorMessage = ErrorItemTypeRequired)]
         public int ItemType { get; init; }
 
-        [Range(0, 100)]
+        [Range(RangeMinValueInt, RangeMaxValueInt,
+            ErrorMessage = ErrorMeasureRequired)]
         public int Measure { get; init; }
 
-        [Display(Name = "Item Category")]
+        [Range(RangeMinValueInt, RangeMaxValueInt,
+            ErrorMessage = ErrorItemCategoryRequired)]
+        [Display(Name = ItemCategoryAttribute)]
         public int ItemCategoryId { get; init; }
         public IEnumerable<ItemCategoryServiceModel> ItemCategories { get; set; }
 
-        [Display(Name = "Unit Price excl. VAT")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Display(Name = UnitPriceExclVatAttribute)]
+        [Column(TypeName = DecimalTypeAttribute)]
+        [Range(RangeMinValueDecimal, RangeMaxValueInt,
+            ErrorMessage = ErrorUnitPriceExclVatRequired)]
         public decimal UnitPriceExclVat { get; init; }
 
-        [Display(Name = "VAT Group")]
-        [Range(0, 100)]
+        [Display(Name = VatGroupAttribute)]
+        [Range(RangeMinValueInt, RangeMaxValueInt,
+            ErrorMessage = ErrorVatGroupRequired)]
         public int VatGroup { get; init; }
 
-        [Display(Name = "Unit Price incl. VAT")]
+        [Display(Name = UnitPriceInclVatAttribute)]
+        [Range(RangeMinValueDecimal, RangeMaxValueInt)]
         public decimal UnitPriceInclVat
         {
             get
@@ -45,16 +54,26 @@
             }
         }
 
-        [Display(Name = "Unit Cost")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Display(Name = UnitCostAttribute)]
+        [Column(TypeName = DecimalTypeAttribute)]
+        [Range(RangeMinValueDecimal, RangeMaxValueInt,
+            ErrorMessage = ErrorUnitCostRequired)]
         public decimal UnitCost { get; init; }
 
-        [Display(Name = "Profit %")]
+        [Display(Name = ProfitAttribute)]
+        [Column(TypeName = DecimalTypeAttribute)]
+        [Range(RangeMinValueDecimal, RangeMaxValueInt,
+            ErrorMessage = ErrorUnitCostRequired)]
         public decimal Profit
         {
             get
             {
-                return ((1 - this.UnitCost / this.UnitPriceExclVat) * 100);
+                if (this.UnitPriceExclVat == 0)
+                {
+                    return 0;
+                }
+
+                return (1 - this.UnitCost / this.UnitPriceExclVat) * 100;
             }
         }
     }

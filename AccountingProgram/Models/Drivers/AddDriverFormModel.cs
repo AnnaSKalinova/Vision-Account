@@ -1,9 +1,9 @@
 ﻿namespace AccountingProgram.Models.Drivers
 {
-    using AccountingProgram.Services.Routes;
-    using AccountingProgram.Services.Routes.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using AccountingProgram.Services.Routes.Models;
 
     using static AccountingProgram.Data.DataConstants.Driver;
 
@@ -16,7 +16,7 @@
             ErrorMessage = ErrorDriverNameLength)]
         public string Name { get; init; }
 
-        [Display(Name = "Route")]
+        [Display(Name = RoutesAttribute)]
         public int RouteId { get; init; }
         public IEnumerable<RouteServiceModel> Routes { get; set; }
     }

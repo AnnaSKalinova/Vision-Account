@@ -15,8 +15,6 @@
             int salesInvoicesPerPage = SearchSalesInvoicesQueryModel.SalesInvoicesPerPage,
             bool postedOnly = true);
 
-        SalesInvoiceDetailsServiceModel Details(int id);
-
         int Create(
                 int customerId,
                 string postingDate,
@@ -32,13 +30,15 @@
                 int count,
                 bool isPosted);
 
+        void Delete(int id);
+
+        SalesInvoiceDetailsServiceModel Details(int id);
+
         void ChangeStatus(int id);
 
         IEnumerable<SalesInvoiceServiceModel> ByUser(string userId);
 
         bool IsByAccountant(int salesInvoiceId, int accountantId);
-
-        void Delete(int id);
 
         IEnumerable<string> AllSalesInvoicesChains();
     }

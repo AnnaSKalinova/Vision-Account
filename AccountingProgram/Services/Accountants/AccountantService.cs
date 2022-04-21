@@ -15,15 +15,6 @@
             this.data = data;
         }
 
-        public int GetIdByUser(string userId)
-        {
-            return this.data
-                .Accountants
-                .Where(a => a.UserId == userId)
-                .Select(a => a.Id)
-                .FirstOrDefault();
-        }
-
         public void AddAccountant(string userId)
         {
             var user = this.data
@@ -50,6 +41,15 @@
             return this.data
                 .Users
                 .Any(u => u.Id == userId && u.IsAccountant);
+        }
+
+        public int GetIdByUser(string userId)
+        {
+            return this.data
+                .Accountants
+                .Where(a => a.UserId == userId)
+                .Select(a => a.Id)
+                .FirstOrDefault();
         }
     }
 }

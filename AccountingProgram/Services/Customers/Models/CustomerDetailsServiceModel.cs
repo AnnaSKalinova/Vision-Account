@@ -1,8 +1,5 @@
 ﻿namespace AccountingProgram.Services.Customers.Models
 {
-    using AccountingProgram.Services.SalesInvoices.Models;
-    using System.Collections.Generic;
-
     public class CustomerDetailsServiceModel
     {
         public int Id { get; init; }

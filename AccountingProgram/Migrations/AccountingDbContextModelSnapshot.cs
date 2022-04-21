@@ -131,7 +131,7 @@ namespace AccountingProgram.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<decimal>("Profit")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("UnitCost")
                         .HasColumnType("decimal(18,4)");
@@ -220,14 +220,14 @@ namespace AccountingProgram.Migrations
                     b.Property<decimal>("Profit")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<decimal>("TotalAmountExclVat")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<decimal>("TotalPriceExclVat")
+                        .HasColumnType("decimal(18,4)");
 
-                    b.Property<decimal>("TotalAmountInclVat")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<decimal>("TotalPriceInclVat")
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Vat")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<bool>("isPosted")
                         .HasColumnType("bit");

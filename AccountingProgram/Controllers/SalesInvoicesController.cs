@@ -202,7 +202,7 @@
 
             TempData[GlobalMessageKey] = $"You eddited the sales invoice successfully! {(this.User.IsChiefAccountant() ? string.Empty : "It is now waiting for approval!")}";
 
-            return RedirectToAction(nameof(this.Mine));
+            return RedirectToAction(nameof(this.All));
         }
 
         public IActionResult Details(int id, string information)
@@ -226,7 +226,7 @@
         {
             this.salesInvoices.Delete(id);
 
-            return RedirectToAction(nameof(this.Mine));
+            return RedirectToAction(nameof(this.All));
         }
     }
 }

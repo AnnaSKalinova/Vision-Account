@@ -6,10 +6,11 @@
     using AccountingProgram.Services.Customers.Models;
 
     using static AccountingProgram.Data.DataConstants.Customer;
+    using static AccountingProgram.Data.DataConstants;
     
     public class SearchCustomersQueryModel
     {
-        public const int CustomersPerPage = 6;
+        public const int CustomersPerPage = CountPerPage;
 
         public string Chain { get; init; }
 

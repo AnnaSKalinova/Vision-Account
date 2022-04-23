@@ -2,8 +2,8 @@
 {
     public enum CustomerSorting
     {
-        Id = 0,
-        Name = 1,
+        Name = 0,
+        Id = 1,
         Chain = 2,
         Route = 3,
         TotalInvoices = 4

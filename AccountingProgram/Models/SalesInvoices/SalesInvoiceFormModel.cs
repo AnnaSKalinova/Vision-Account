@@ -33,7 +33,8 @@
         public int ItemId { get; init; }
         public IEnumerable<ItemServiceModel> Items { get; set; }
 
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue,
+            ErrorMessage = ErrorCounRange)]
         public int Count { get; init; }
 
         public int AccountantId { get; init; }

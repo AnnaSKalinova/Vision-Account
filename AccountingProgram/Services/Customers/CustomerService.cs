@@ -71,24 +71,6 @@
             };
         }
 
-        public IEnumerable<CustomerServiceModel> AllCustomers()
-        {
-            return this.data
-                .Customers
-                .ProjectTo<CustomerServiceModel>(this.mapper)
-                .ToList();
-        }
-
-        public IEnumerable<string> AllCustomersChains()
-        {
-            return this.data
-                .Customers
-                .Select(c => c.ChainName)
-                .OrderBy(c => c)
-                .Distinct()
-                .ToList();
-        }
-
         public int Create(string name, string chainName, string address, string contactName, string email, int paymentTerm, int routeId)
         {
             var customerData = new Customer
@@ -116,6 +98,23 @@
                 .Where(c => c.Id == id)
                 .ProjectTo<CustomerDetailsServiceModel>(this.mapper)
                 .FirstOrDefault();
+        }
+        public IEnumerable<CustomerServiceModel> AllCustomers()
+        {
+            return this.data
+                .Customers
+                .ProjectTo<CustomerServiceModel>(this.mapper)
+                .ToList();
+        }
+
+        public IEnumerable<string> AllCustomersChains()
+        {
+            return this.data
+                .Customers
+                .Select(c => c.ChainName)
+                .OrderBy(c => c)
+                .Distinct()
+                .ToList();
         }
 
         public bool CustomerExists(int id)

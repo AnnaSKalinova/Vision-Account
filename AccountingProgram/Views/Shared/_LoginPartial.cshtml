@@ -5,7 +5,7 @@
 @inject IAccountantService Accountants
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User))    
     {
         var userId = User.GetId();
         var userIsAccountant = Accountants.IsUserAccountant(userId);

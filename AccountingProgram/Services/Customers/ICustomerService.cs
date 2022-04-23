@@ -14,10 +14,6 @@
             int currentPage = 1,
             int customersPerPage = SearchCustomersQueryModel.CustomersPerPage);
 
-        IEnumerable<string> AllCustomersChains();
-
-        IEnumerable<CustomerServiceModel> AllCustomers();
-
         int Create(
             string name,
             string chainName,
@@ -28,6 +24,10 @@
             int routeId);
 
         CustomerDetailsServiceModel Details(int id);
+
+        IEnumerable<string> AllCustomersChains();
+
+        IEnumerable<CustomerServiceModel> AllCustomers();
 
         IEnumerable<RouteCustomerServiceModel> GetRoutes();
 

@@ -4,9 +4,11 @@
 
     using AccountingProgram.Services.Routes.Models;
 
+    using static AccountingProgram.Data.DataConstants;
+
     public class SearchRoutesQueryModel
     {
-        public const int RoutesPerPage = 6;
+        public const int RoutesPerPage = CountPerPage;
 
         public char Code { get; init; }
 

@@ -6,10 +6,11 @@
     using AccountingProgram.Services.Items.Models;
 
     using static AccountingProgram.Data.DataConstants.Item;
+    using static AccountingProgram.Data.DataConstants;
 
     public class SearchItemsQueryModel
     {
-        public const int ItemsPerPage = 6;
+        public const int ItemsPerPage = CountPerPage;
 
         public string Category { get; init; }
 

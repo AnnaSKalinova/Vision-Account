@@ -58,7 +58,7 @@
                 Id = c.Id,
                 Name = c.Name,
                 RouteCode = c.RouteCode,
-                SalesInvoices = c.SalesInvoices
+                SalesInvoices = c.SalesInvoices.Where(si => si.IsPosted).ToList()
             });
 
             return View(query);

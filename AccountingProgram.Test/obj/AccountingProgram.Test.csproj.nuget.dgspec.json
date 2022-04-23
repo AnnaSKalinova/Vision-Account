@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {}
+    "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {}
   },
   "projects": {
-    "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {
+    "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
+        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
         "projectName": "AccountingProgram.Test",
-        "projectPath": "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
+        "projectPath": "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram.Test\\AccountingProgram.Test.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram.Test\\obj\\",
+        "outputPath": "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram.Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -31,8 +31,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
-                "projectPath": "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj"
+              "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
+                "projectPath": "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj"
               }
             }
           }
@@ -99,14 +99,14 @@
         }
       }
     },
-    "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
+    "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectUniqueName": "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "projectName": "AccountingProgram",
-        "projectPath": "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
+        "projectPath": "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram\\AccountingProgram.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "E:\\AnNI\\Programming\\Final Project\\19 More more more tests\\AccountingProgram\\AccountingProgram\\obj\\",
+        "outputPath": "E:\\AnNI\\Programming\\Final Project\\20 More more more tests - Copy - Copy\\AccountingProgram\\AccountingProgram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

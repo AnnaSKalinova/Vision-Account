@@ -4,10 +4,12 @@
     using System.ComponentModel.DataAnnotations;
 
     using AccountingProgram.Services.Drivers.Models;
+
+    using static AccountingProgram.Data.DataConstants;
    
     public class SearchDriversQueryModel
     {
-        public const int DriversPerPage = 6;
+        public const int DriversPerPage = CountPerPage;
 
         public char Route { get; init; }
 

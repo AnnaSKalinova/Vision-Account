@@ -2,6 +2,8 @@
 {
     public class DataConstants
     {
+        public const int CountPerPage = 6;
+
         public class Accountant
         {
             public const int AccountantNameMaxLength = 50;
@@ -143,6 +145,9 @@
             public const string VatAttribute = "VAT";
             public const string DateFormat = "dd.MM.yyyy";
             public const string AddedSalesInvoiceMessage = "You created the sales invoice successfully. It is now waiting for approval!";
+
+            //Error messages
+            public const string ErrorCounRange = "The Count must be a positive number!";
         }
     }
 }

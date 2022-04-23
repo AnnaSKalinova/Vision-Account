@@ -6,10 +6,11 @@
     using AccountingProgram.Services.SalesInvoices.Models;
 
     using static AccountingProgram.Data.DataConstants.Customer;
+    using static AccountingProgram.Data.DataConstants;
     
     public class SearchSalesInvoicesQueryModel
     {
-        public const int SalesInvoicesPerPage = 6;
+        public const int SalesInvoicesPerPage = CountPerPage;
 
         public string Chain { get; init; }
 

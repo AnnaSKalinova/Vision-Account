@@ -6,13 +6,13 @@
 
     public class Driver
     {
-        public int Id { get; init; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(DriverNameMaxLength)]
         public string Name { get; set; }
 
         public int RouteId { get; set; }
-        public Route Route { get; init; }
+        public Route Route { get; set; }
     }
 }
